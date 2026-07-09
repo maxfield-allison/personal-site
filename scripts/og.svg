@@ -1,0 +1,21 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0f14"/>
+      <stop offset="1" stop-color="#131a22"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1200" height="6" fill="#4f9cff"/>
+
+  <text x="80" y="150" font-family="monospace" font-size="26" fill="#9aa7b6">maxfieldallison.com</text>
+
+  <text x="78" y="270" font-family="Inter, system-ui, sans-serif" font-size="76" font-weight="600" fill="#e7ecf2">Maxfield Allison</text>
+
+  <text x="80" y="345" font-family="Inter, system-ui, sans-serif" font-size="34" fill="#9aa7b6">Infrastructure engineer.</text>
+  <text x="80" y="395" font-family="Inter, system-ui, sans-serif" font-size="34" fill="#9aa7b6">Enterprise Azure by day, a Kubernetes homelab by night.</text>
+
+  <text x="80" y="540" font-family="monospace" font-size="24" fill="#4f9cff">Kubernetes / GitOps / Go / Azure</text>
+  <text x="80" y="580" font-family="monospace" font-size="20" fill="#9aa7b6">Built and directed, not vibe coded.</text>
+</svg>
