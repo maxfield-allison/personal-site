@@ -1,93 +1,83 @@
 # personal-site
 
-Personal website source
+The source for [maxfieldallison.com](https://maxfieldallison.com), my portfolio.
 
-## Getting started
+It is a static [Astro](https://astro.build) site, but the interesting part is how
+it runs: the primary origin is a container on my own Kubernetes cluster, with a
+Cloudflare Pages mirror as an automatic failover. The site is part of the
+portfolio, not just a container for it, so the source is public.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## Architecture
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.bluewillows.net/root/personal-site.git
-git branch -M main
-git push -uf origin main
+visitor --> maxfieldallison.com --> Cloudflare Worker
+                                       |-- try Kubernetes origin   (PRIMARY)
+                                       '-- on 5xx/timeout: Pages    (FALLBACK)
 ```
 
-## Integrate with your tools
+- **Primary origin:** the built site runs in nginx on a Talos Kubernetes cluster,
+  behind Traefik, with a Let's Encrypt certificate. The DNS record is managed by
+  [dnsweaver](https://github.com/maxfield-allison/dnsweaver), a tool I wrote.
+- **Fallback mirror:** the same build is published to Cloudflare Pages, on the
+  edge, with no dependency on my home internet.
+- **Edge Worker:** a small Cloudflare Worker on the apex fetches the Kubernetes
+  origin first and serves the Pages copy if that origin is unavailable. Verified
+  by pointing the Worker at a dead origin and confirming zero-downtime failover.
 
-- [ ] [Set up project integrations](https://gitlab.bluewillows.net/root/personal-site/-/settings/integrations)
+## Stack
 
-## Collaborate with your team
+- Astro + Tailwind CSS, static output
+- Typed content collections for project case studies (`src/content/projects`)
+- nginx (Alpine, non-root) container image
+- GitHub Actions: build image to `ghcr.io` + deploy to Cloudflare Pages
+- Cloudflare Worker for origin failover (`worker/`)
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+## Develop
 
-## Test and Deploy
+```bash
+pnpm install
+pnpm dev      # local dev server
+pnpm build    # static build to dist/
+pnpm preview  # serve the build locally
+```
 
-Use the built-in continuous integration in GitLab.
+Node 22 and pnpm 10 (pinned via `packageManager`).
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+## Add a project
 
-***
+Case studies are Markdown files with typed frontmatter. Drop a file in
+`src/content/projects/` and it appears on the home page (if `featured: true`) and
+the work list automatically:
 
-# Editing this README
+```yaml
+---
+title: My Project
+summary: One line on what it is and why it matters.
+role: What I did
+stack: [Go, Kubernetes]
+links:
+  - label: GitHub
+    url: https://github.com/...
+featured: true
+order: 4
+---
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Markdown body becomes the case study.
+```
 
-## Suggestions for a good README
+## Deploy
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+GitHub is the source of truth. A push to `main` builds and publishes the image
+and the Pages mirror; the Kubernetes side rolls the new image. The internal
+GitLab instance is a downstream mirror. Kubernetes manifests live in a separate
+private infrastructure repo, not here.
 
-## Name
-Choose a self-explaining name for your project.
+## Development approach
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+Built with AI-assisted engineering: I own the architecture, the standards, and
+the decisions, and direct AI agents for implementation. It is not vibe coding.
+Everything ships through linting, a build check, and review.
 
 ## License
-For open source projects, say how it is licensed.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+[MIT](LICENSE) for the code. Site content and copy are (c) Maxfield Allison.
