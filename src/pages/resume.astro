@@ -1,0 +1,196 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const skills = {
+  Cloud: ['Microsoft Azure', 'Azure Front Door', 'Application Gateway', 'Load Balancing', 'Cloud Migration'],
+  Platform: ['Kubernetes', 'Talos Linux', 'ArgoCD', 'GitOps', 'Docker', 'Infrastructure as Code'],
+  'Automation & Code': ['Go', 'Terraform / OpenTofu', 'Ansible', 'CI/CD', 'Linux'],
+  Other: ['Network Security', 'Firewalls', 'Leadership', 'SQL Server'],
+};
+
+const experience = [
+  {
+    role: 'Senior Specialist, Technical Account Support',
+    org: 'Ricoh USA, Inc.',
+    dates: 'June 2024 - Present',
+    bullets: [
+      'Global owner of an enterprise output-management platform on Azure, serving thousands of devices across four global regions; single global escalation point.',
+      'Cut platform-related support ticket volume 38% year over year by stabilizing the operating model and driving process and self-service adoption.',
+      'Re-architected the platform for geo-redundancy during an enterprise MDM migration, adding global load balancing and geo-routing.',
+      'Led design and buildout of a production-mirrored non-production environment on Azure.',
+      'Led remediation of legacy insecure protocols (TLS 1.0/1.1, legacy LDAP); automated internal certificate renewal.',
+      'Authored the platform\u2019s canonical backup and recovery runbook, now used company-wide for major-incident response.',
+      'Top-tier customer survey scores with personal recognition; contributed to a five-year contract renewal.',
+    ],
+  },
+  {
+    role: 'Specialist II, Technical Account Support',
+    org: 'Ricoh USA, Inc.',
+    dates: 'February 2020 - June 2024',
+    bullets: [
+      'Implemented and managed advanced output-management solutions for education, healthcare, and multinational corporate clients.',
+      'Led a security enhancement for a large healthcare institution, updating several thousand devices across multiple sites and applications to SNMP v3.',
+      'Led migration of an on-premises output environment to an Azure-backed platform for a large enterprise client, consolidating dozens of Windows print servers into a fraction of the footprint on Azure VMs.',
+      'Authored extensive documentation (knowledge-base articles, guides, runbooks) and served as a trusted technical consultant to client stakeholders.',
+    ],
+  },
+  {
+    role: 'Site Leader',
+    org: 'Ricoh USA, Inc.',
+    dates: 'August 2016 - February 2020',
+    bullets: [
+      'Ran a schedule of executive meetings to plan revenue, satisfaction, and cost strategy, building a team that consistently met or exceeded quarterly and annual goals.',
+      'Directly supported and trained a user base of over 35,000 students, faculty, and staff.',
+      'Consistently met and exceeded the one-hour service-call response SLA.',
+    ],
+  },
+];
+
+const projects = [
+  {
+    name: 'dnsweaver',
+    detail:
+      'Open-source Go tool that keeps DNS records in sync with your infrastructure across Technitium, Pi-hole, AdGuard, and Cloudflare. Multi-provider, split-horizon, self-hosted. Full CI/CD and semantic versioning. Author and maintainer.',
+  },
+  {
+    name: 'Kubernetes Homelab',
+    detail:
+      '9-node Talos Linux cluster under ArgoCD GitOps running ~38 services; GPU scheduling with NVIDIA MPS; OpenTofu and Ansible provisioning. Migrated from Docker Swarm without losing service.',
+  },
+  {
+    name: 'maxfieldallison.com',
+    detail:
+      'This site: self-hosted on the Kubernetes cluster as the primary origin with a Cloudflare Pages failover mirror and an edge Worker that switches between them automatically.',
+  },
+];
+---
+
+<Layout title="Resume · Maxfield Allison" description="Resume of Maxfield Allison, infrastructure engineer.">
+  <div class="resume max-w-3xl mx-auto px-6 pt-12 pb-16">
+    <div class="no-print mb-8 flex items-center justify-between">
+      <a href="/" class="font-mono text-sm text-[--color-ink-dim] no-underline">← Home</a>
+      <div class="flex items-center gap-3">
+        <a
+          href="/resume.pdf"
+          class="font-mono text-sm border border-[--color-line] rounded px-3 py-1.5 text-[--color-ink-dim] hover:text-[--color-ink] hover:border-[--color-accent]/60 transition-colors no-underline"
+        >
+          Download PDF
+        </a>
+        <button
+          onclick="window.print()"
+          class="font-mono text-sm border border-[--color-line] rounded px-3 py-1.5 text-[--color-ink-dim] hover:text-[--color-ink] hover:border-[--color-accent]/60 transition-colors"
+        >
+          Print
+        </button>
+      </div>
+    </div>
+
+    <div class="mb-6">
+      <h1 class="text-3xl font-semibold tracking-tight">Maxfield Allison</h1>
+      <p class="text-[--color-ink-dim] mt-1">Infrastructure Engineer · Alabaster, Alabama</p>
+      <p class="font-mono text-sm text-[--color-ink-dim] mt-2">
+        maxfieldallison.com · github.com/maxfield-allison · linkedin.com/in/maxfield-allison
+      </p>
+    </div>
+
+    <section class="mb-6">
+      <p class="text-[--color-ink-dim] leading-relaxed">
+        Infrastructure engineer who owns a multi-region enterprise Azure platform
+        by day and operates a production-grade Kubernetes homelab by night. I work
+        fast by directing AI agents while owning the architecture, standards, and
+        integration myself. Everything ships through linting, tests, and review.
+      </p>
+    </section>
+
+    <section class="mb-6">
+      <h2 class="resume-h2">Experience</h2>
+      {
+        experience.map((job) => (
+          <div class="mb-4">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-4">
+              <h3 class="font-semibold text-[--color-ink]">{job.role}</h3>
+              <span class="font-mono text-xs text-[--color-ink-dim]">{job.dates}</span>
+            </div>
+            <p class="text-sm text-[--color-ink-dim] mb-2">{job.org}</p>
+            <ul class="space-y-1">
+              {job.bullets.map((b) => (
+                <li class="text-sm text-[--color-ink-dim] leading-relaxed flex gap-2">
+                  <span class="text-[--color-accent]">·</span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </section>
+
+    <section class="mb-6">
+      <h2 class="resume-h2">Selected Projects</h2>
+      {
+        projects.map((p) => (
+          <div class="mb-3">
+            <h3 class="font-semibold text-[--color-ink] text-sm">{p.name}</h3>
+            <p class="text-sm text-[--color-ink-dim] leading-relaxed">{p.detail}</p>
+          </div>
+        ))
+      }
+    </section>
+
+    <section class="mb-6">
+      <h2 class="resume-h2">Skills</h2>
+      <div class="space-y-1.5">
+        {
+          Object.entries(skills).map(([group, items]) => (
+            <p class="text-sm">
+              <span class="font-semibold text-[--color-ink]">{group}:</span>
+              <span class="text-[--color-ink-dim]"> {items.join(' · ')}</span>
+            </p>
+          ))
+        }
+      </div>
+    </section>
+
+    <section>
+      <h2 class="resume-h2">Recognition & Certifications</h2>
+      <ul class="space-y-1 text-sm text-[--color-ink-dim]">
+        <li class="flex gap-2"><span class="text-[--color-accent]">·</span>Specialist of the Quarter (x2), Specialist of the Year, Ricoh STAR Award</li>
+        <li class="flex gap-2"><span class="text-[--color-accent]">·</span>Microsoft Azure Fundamentals, plus multiple enterprise product certifications</li>
+      </ul>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .resume-h2 {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+    border-bottom: 1px solid var(--color-line);
+    padding-bottom: 0.35rem;
+    margin-bottom: 0.75rem;
+  }
+
+  @media print {
+    :global(body) {
+      background: #fff !important;
+      color: #111 !important;
+    }
+    .no-print {
+      display: none !important;
+    }
+    :global(header),
+    :global(footer) {
+      display: none !important;
+    }
+    .resume :global(*) {
+      color: #111 !important;
+    }
+    .resume-h2 {
+      color: #000 !important;
+      border-color: #ccc !important;
+    }
+  }
+</style>

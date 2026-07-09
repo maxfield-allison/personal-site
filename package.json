@@ -11,7 +11,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "og": "node scripts/gen-og.mjs"
+    "og": "node scripts/gen-og.mjs",
+    "resume": "node scripts/gen-resume.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
@@ -20,6 +21,7 @@
     "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
+    "playwright-core": "^1.61.1",
     "sharp": "^0.35.3"
   }
 }
