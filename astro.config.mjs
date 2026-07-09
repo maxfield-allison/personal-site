@@ -6,6 +6,13 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://maxfieldallison.com',
+  // Flat file output (/about.html, not /about/index.html) so the static host
+  // serves clean URLs without directory redirects. Directory redirects behind a
+  // reverse proxy leak the internal origin host:port in the Location header.
+  build: {
+    format: 'file',
+  },
+  trailingSlash: 'never',
   vite: {
     plugins: [tailwindcss()]
   }
