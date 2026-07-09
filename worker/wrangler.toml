@@ -1,0 +1,21 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "maxfieldallison-failover"
+main = "failover.js"
+compatibility_date = "2026-07-01"
+workers_dev = false
+
+# K8s homelab is primary; Cloudflare Pages is the fallback mirror.
+# PRIMARY_ORIGIN is a DNS-only hostname pointing at the cluster ingress so the
+# Worker reaches Traefik directly (not proxied back through this Worker).
+[vars]
+PRIMARY_ORIGIN = "k8s.maxfieldallison.com"
+FALLBACK_ORIGIN = "personal-site-5pd.pages.dev"
+
+# Serve the apex and www from this Worker.
+[[routes]]
+pattern = "maxfieldallison.com/*"
+zone_name = "maxfieldallison.com"
+
+[[routes]]
+pattern = "www.maxfieldallison.com/*"
+zone_name = "maxfieldallison.com"
