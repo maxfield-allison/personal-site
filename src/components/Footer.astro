@@ -1,0 +1,22 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-[--color-line] mt-24">
+  <div
+    class="max-w-3xl mx-auto px-6 py-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 font-mono text-xs text-[--color-ink-dim]"
+  >
+    <p>© {year} Maxfield Allison</p>
+    <div class="flex flex-wrap gap-x-5 gap-y-2">
+      <a href="https://github.com/maxfield-allison" rel="me noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/maxfield-allison/" rel="me noopener">LinkedIn</a>
+      <a href="https://github.com/maxfield-allison/personal-site" rel="noopener">Source</a>
+    </div>
+  </div>
+  <div class="max-w-3xl mx-auto px-6 pb-10">
+    <p class="font-mono text-[11px] text-[--color-ink-dim]/70">
+      Self-hosted on a personal Kubernetes cluster with a Cloudflare Pages
+      failover mirror. Built and directed, not vibe coded.
+    </p>
+  </div>
+</footer>

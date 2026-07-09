@@ -1,14 +1,18 @@
 ---
 import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 
 interface Props {
   title?: string;
   description?: string;
+  bare?: boolean;
 }
 
 const {
   title = 'Maxfield Allison',
   description = 'Infrastructure engineer. Multi-region enterprise Azure by day, a Kubernetes homelab by night.',
+  bare = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://maxfieldallison.com');
@@ -32,7 +36,18 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://maxfieldall
     <meta property="og:url" content={canonical.href} />
     <meta name="twitter:card" content="summary_large_image" />
   </head>
-  <body>
-    <slot />
+  <body class="min-h-screen flex flex-col">
+    {bare ? (
+      <slot />
+    ) : (
+      <>
+        <Nav />
+        <main class="flex-1">
+          <slot />
+        </main>
+        <Footer />
+      </>
+    )}
   </body>
 </html>
+

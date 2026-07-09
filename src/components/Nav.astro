@@ -1,0 +1,40 @@
+---
+const { pathname } = Astro.url;
+const isActive = (href: string) =>
+  href === '/' ? pathname === '/' : pathname.startsWith(href);
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/projects', label: 'Work' },
+];
+---
+
+<header class="border-b border-[--color-line]">
+  <nav class="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="/" class="font-mono text-sm text-[--color-ink] no-underline hover:no-underline">
+      maxfield<span class="text-[--color-accent]">.</span>allison
+    </a>
+    <div class="flex items-center gap-6 font-mono text-sm">
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class:list={[
+              'no-underline hover:no-underline transition-colors',
+              isActive(l.href) ? 'text-[--color-ink]' : 'text-[--color-ink-dim] hover:text-[--color-ink]',
+            ]}
+          >
+            {l.label}
+          </a>
+        ))
+      }
+      <a
+        href="https://github.com/maxfield-allison"
+        rel="me noopener"
+        class="text-[--color-ink-dim] hover:text-[--color-ink] no-underline hover:no-underline transition-colors"
+        >GitHub</a
+      >
+    </div>
+  </nav>
+</header>

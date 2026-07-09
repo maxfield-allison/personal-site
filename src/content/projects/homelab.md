@@ -1,0 +1,54 @@
+---
+title: Kubernetes Homelab
+summary: A 9-node Talos Linux Kubernetes cluster running around 38 services under GitOps, migrated from Docker Swarm without losing service. My working lab for the patterns real infrastructure teams use.
+role: Designed, built, and operate it
+stack:
+  - Kubernetes
+  - Talos Linux
+  - ArgoCD
+  - GitOps
+  - OpenTofu
+  - Ansible
+  - NVIDIA MPS
+featured: true
+order: 2
+date: 2026-03-01
+---
+
+## The short version
+
+It started as a Plex server. It is now a 9-node Kubernetes cluster on Talos
+Linux, managed with ArgoCD, running around 38 services. I use it to learn the
+patterns real infrastructure teams use by operating them, not by reading about
+them.
+
+## What's in it
+
+- **Control plane:** 5 nodes, so losing a couple of them doesn't take the cluster
+  down.
+- **GPU workloads:** scheduled across GPU nodes with NVIDIA MPS, so several
+  workloads share a card instead of one hogging it.
+- **GitOps:** everything reconciles from git through ArgoCD. A push to the repo is
+  the deploy. Rollback is a git revert.
+- **Below the cluster:** OpenTofu provisions the VMs and LXCs, Ansible configures
+  the platform underneath. Infrastructure as code, all the way down.
+- **CI with teeth:** security scanning runs in the pipeline and blocks commits
+  that leak secrets or ship known-vulnerable images.
+
+## The migration
+
+The whole thing used to run on Docker Swarm. I moved it to Kubernetes (I call it
+Evolution 3) without losing service along the way. That meant standing up the new
+cluster, porting each stack, cutting traffic over service by service, and
+decommissioning the old managers once nothing depended on them. GPU nodes were
+repurposed from the old Swarm workers.
+
+## Why it matters
+
+Nobody vibe-codes a GitOps Kubernetes cluster into existence. Running this taught
+me the failure modes that slides never do: what happens at 2am when a node drops,
+how storage behaves under pressure, what a bad manifest does to a live service.
+That knowledge transfers straight to the enterprise Azure work I do by day.
+
+The honest test I hold it to: can I fix it at 2am without wanting to throw my
+laptop. Most of the time now, yes.
