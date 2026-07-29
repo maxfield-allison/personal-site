@@ -18,6 +18,33 @@ const {
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://maxfieldallison.com');
 // Versioned so social scrapers fetch a fresh cache key. Bump on image change.
 const ogImage = new URL('/og.png?v=1', Astro.site ?? 'https://maxfieldallison.com');
+
+// Structured data: helps search engines and recruiter tools resolve me as a
+// single entity across surfaces. Deduped by the stable @id / identity fields.
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Maxfield Allison',
+  url: 'https://maxfieldallison.com',
+  jobTitle: 'Infrastructure & Platform Engineer',
+  description:
+    'Infrastructure and platform engineer. Multi-region enterprise Azure by day, a production-grade Kubernetes homelab by night.',
+  sameAs: [
+    'https://github.com/maxfield-allison',
+    'https://www.linkedin.com/in/maxfield-allison/',
+    'https://probablyfine.dev',
+  ],
+  knowsAbout: [
+    'Kubernetes',
+    'GitOps',
+    'Go',
+    'Terraform',
+    'Ansible',
+    'CI/CD',
+    'Linux',
+    'Platform Engineering',
+  ],
+};
 ---
 
 <!doctype html>
@@ -49,6 +76,13 @@ const ogImage = new URL('/og.png?v=1', Astro.site ?? 'https://maxfieldallison.co
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage.href} />
+    <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
+    {/* Self-hosted, privacy-friendly analytics (Umami on the homelab cluster). */}
+    <script
+      defer
+      src="https://analytics.probablyfine.dev/script.js"
+      data-website-id="ff6e58e9-5a96-4b6b-a4a3-10060bc76440"
+    ></script>
   </head>
   <body class="min-h-screen flex flex-col">
     {bare ? (
