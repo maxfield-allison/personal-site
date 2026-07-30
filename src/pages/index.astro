@@ -6,6 +6,29 @@ import ProjectCard from '../components/ProjectCard.astro';
 const projects = (await getCollection('projects', ({ data }) => !data.draft && data.featured)).sort(
   (a, b) => a.data.order - b.data.order,
 );
+
+// Recent writing, pulled from the probablyfine.dev RSS feed at build time.
+// Cross-origin, but fetched during the static build so it ships as HTML. A
+// failed fetch (blog down at build time) just yields no section, never a broken build.
+type Post = { title: string; link: string; date: Date };
+let recentPosts: Post[] = [];
+try {
+  const res = await fetch('https://probablyfine.dev/rss.xml', {
+    signal: AbortSignal.timeout(8000),
+  });
+  if (res.ok) {
+    const xml = await res.text();
+    const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].slice(0, 3);
+    recentPosts = items.map((m) => {
+      const block = m[1];
+      const pick = (tag: string) =>
+        block.match(new RegExp(`<${tag}>(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?</${tag}>`))?.[1]?.trim() ?? '';
+      return { title: pick('title'), link: pick('link'), date: new Date(pick('pubDate')) };
+    });
+  }
+} catch {
+  recentPosts = [];
+}
 ---
 
 <Layout>
@@ -38,5 +61,41 @@ const projects = (await getCollection('projects', ({ data }) => !data.draft && d
       {projects.map((project) => <ProjectCard project={project} />)}
     </div>
   </section>
+
+  {
+    recentPosts.length > 0 && (
+      <section class="max-w-3xl mx-auto px-6 pt-12">
+        <div class="flex items-baseline justify-between mb-6">
+          <h2 class="font-mono text-sm text-[--color-ink-dim] uppercase tracking-wider">
+            Recent writing
+          </h2>
+          <a href="https://probablyfine.dev/blog" rel="noopener" class="font-mono text-xs">
+            probablyfine.dev →
+          </a>
+        </div>
+        <ul class="space-y-3">
+          {recentPosts.map((post) => (
+            <li>
+              <a
+                href={post.link}
+                rel="noopener"
+                class="group flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 no-underline hover:no-underline"
+              >
+                <span class="text-[--color-ink] group-hover:text-[--color-accent] transition-colors">
+                  {post.title}
+                </span>
+                <time
+                  datetime={post.date.toISOString().slice(0, 10)}
+                  class="font-mono text-xs text-[--color-ink-dim] shrink-0"
+                >
+                  {post.date.toISOString().slice(0, 10)}
+                </time>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
 </Layout>
 
