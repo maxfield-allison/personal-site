@@ -15,7 +15,12 @@ const {
   bare = false,
 } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://maxfieldallison.com');
+// Flat-file build makes Astro.url.pathname carry .html at build time, but nginx
+// serves + everyone links the clean URL. Strip .html (and /index) so canonical
+// matches the real URL and doesn't signal duplicate content.
+let cleanPath = Astro.url.pathname.replace(/\.html$/, '');
+if (cleanPath.endsWith('/index')) cleanPath = cleanPath.slice(0, -'index'.length);
+const canonical = new URL(cleanPath || '/', Astro.site ?? 'https://maxfieldallison.com');
 // Versioned so social scrapers fetch a fresh cache key. Bump on image change.
 const ogImage = new URL('/og.png?v=1', Astro.site ?? 'https://maxfieldallison.com');
 
