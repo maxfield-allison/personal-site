@@ -78,10 +78,13 @@ const personLd = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage.href} />
     <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
-    {/* Self-hosted, privacy-friendly analytics (Umami on the homelab cluster). */}
+    {/* Self-hosted, privacy-friendly analytics (Umami on the homelab cluster).
+        Served first-party from /pf-insights/* (CF Worker forwards to the K8s
+        origin, Traefik proxies to Umami) so ad-blockers don't drop it as a
+        third-party tracker domain. */}
     <script
       defer
-      src="https://analytics.probablyfine.dev/script.js"
+      src="/pf-insights/script.js"
       data-website-id="ff6e58e9-5a96-4b6b-a4a3-10060bc76440"
     ></script>
   </head>
