@@ -33,6 +33,11 @@ const PAGES = [
     title: 'Resume',
     subtitle: 'Infrastructure engineer. Alabaster, Alabama.',
   },
+  {
+    name: 'uses',
+    title: 'Uses',
+    subtitle: 'The tools and workflow I actually use to build and run infrastructure.',
+  },
 ];
 
 function frontmatter(md) {

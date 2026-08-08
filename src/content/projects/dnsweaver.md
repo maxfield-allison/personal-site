@@ -51,3 +51,7 @@ The provider abstraction is the part I'm happiest with. Adding a new DNS backend
 means implementing one interface, not rewriting the engine. That kept the code
 honest as the provider list grew, and it's the same pattern I reach for whenever
 a project needs to support several backends behind one behavior.
+
+## Related reading
+
+- [Why I built dnsweaver](https://probablyfine.dev/blog/why-i-built-dnsweaver) on the blog: the longer story behind the tool.

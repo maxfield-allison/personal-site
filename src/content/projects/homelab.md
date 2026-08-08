@@ -52,3 +52,9 @@ That knowledge transfers straight to the enterprise Azure work I do by day.
 
 The honest test I hold it to: can I fix it at 2am without wanting to throw my
 laptop. Most of the time now, yes.
+
+## Related reading
+
+- [A tour of the rack](https://probablyfine.dev/blog/a-tour-of-the-rack): the hardware behind the cluster.
+- [The day a GPU took down Ceph](https://probablyfine.dev/blog/gpu-took-down-ceph): one of the 2am failure modes, in detail.
+- [The lab, in full](https://probablyfine.dev/labs): the living hardware inventory.
