@@ -1,0 +1,14 @@
+{
+  "name": "Maxfield Allison",
+  "short_name": "Maxfield",
+  "description": "Infrastructure engineer. Enterprise Azure by day, a Kubernetes homelab by night.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0f14",
+  "theme_color": "#0b0f14",
+  "icons": [
+    { "src": "/favicon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

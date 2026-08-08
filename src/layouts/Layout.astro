@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 
@@ -54,7 +55,19 @@ const personLd = {
     'CI/CD',
     'Linux',
     'Platform Engineering',
+    'Microsoft Azure',
+    'Cloud Migration',
+    'Network Security',
+    'Ceph',
+    'Proxmox',
+    'Infrastructure as Code',
   ],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Alabaster',
+    addressRegion: 'AL',
+    addressCountry: 'US',
+  },
 };
 ---
 
@@ -69,6 +82,7 @@ const personLd = {
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
 
     <title>{title}</title>
@@ -88,6 +102,7 @@ const personLd = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage.href} />
     <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
+    <ClientRouter />
     {/* Self-hosted, privacy-friendly analytics (Umami on the homelab cluster).
         Served first-party from /pf-insights/* (CF Worker forwards to the K8s
         origin, Traefik proxies to Umami) so ad-blockers don't drop it as a

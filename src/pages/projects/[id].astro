@@ -13,9 +13,40 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const { title, summary, role, stack, links } = project.data;
 const { Content } = await render(project);
+
+const site = Astro.site ?? 'https://maxfieldallison.com';
+const pageUrl = new URL(`/projects/${project.id}`, site).href;
+const repoLink = links.find((l) => /github\.com/i.test(l.url));
+
+// Breadcrumb trail for richer search results.
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${site}/` },
+    { '@type': 'ListItem', position: 2, name: 'Work', item: `${site}/projects` },
+    { '@type': 'ListItem', position: 3, name: title, item: pageUrl },
+  ],
+};
+
+// If the project is a public repo, describe it as source code for rich results.
+const softwareLd = repoLink
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareSourceCode',
+      name: title,
+      description: summary,
+      codeRepository: repoLink.url,
+      programmingLanguage: stack.includes('Go') ? 'Go' : stack[0],
+      author: { '@type': 'Person', name: 'Maxfield Allison', url: site },
+      license: 'https://opensource.org/licenses/MIT',
+    }
+  : null;
 ---
 
 <Layout title={`${title} · Maxfield Allison`} description={summary} ogImage={`/og/${project.id}.png?v=1`} ogType="article">
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+  {softwareLd && <script type="application/ld+json" set:html={JSON.stringify(softwareLd)} />}
   <article class="max-w-3xl mx-auto px-6 pt-16">
     <a href="/projects" class="font-mono text-sm text-[--color-ink-dim] no-underline hover:no-underline hover:text-[--color-ink]">
       ← Work
@@ -61,8 +92,9 @@ const { Content } = await render(project);
 
   {/* Read-completion signal: fire a Umami event once the reader scrolls near the
       end of the case study. Powers "read" goals/funnels beyond raw pageviews.
-      No PII; only fires once per page, only if the analytics tracker is present. */}
-  <script is:inline define:vars={{ id: project.id }}>
+      No PII; only fires once per page, only if the analytics tracker is present.
+      data-astro-rerun so it re-arms after a client-side (ClientRouter) nav. */}
+  <script is:inline data-astro-rerun define:vars={{ id: project.id }}>
     (() => {
       let fired = false;
       const onScroll = () => {
