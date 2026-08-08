@@ -7,12 +7,16 @@ interface Props {
   title?: string;
   description?: string;
   bare?: boolean;
+  ogImage?: string;
+  ogType?: string;
 }
 
 const {
   title = 'Maxfield Allison',
   description = 'Infrastructure engineer. Multi-region enterprise Azure by day, a Kubernetes homelab by night.',
   bare = false,
+  ogImage: ogImageProp,
+  ogType = 'website',
 } = Astro.props;
 
 // Flat-file build makes Astro.url.pathname carry .html at build time, but nginx
@@ -22,7 +26,7 @@ let cleanPath = Astro.url.pathname.replace(/\.html$/, '');
 if (cleanPath.endsWith('/index')) cleanPath = cleanPath.slice(0, -'index'.length);
 const canonical = new URL(cleanPath || '/', Astro.site ?? 'https://maxfieldallison.com');
 // Versioned so social scrapers fetch a fresh cache key. Bump on image change.
-const ogImage = new URL('/og.png?v=1', Astro.site ?? 'https://maxfieldallison.com');
+const ogImage = new URL(ogImageProp ?? '/og.png?v=1', Astro.site ?? 'https://maxfieldallison.com');
 
 // Structured data: helps search engines and recruiter tools resolve me as a
 // single entity across surfaces. Deduped by the stable @id / identity fields.
@@ -71,7 +75,7 @@ const personLd = {
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical.href} />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical.href} />

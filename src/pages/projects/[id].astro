@@ -15,7 +15,7 @@ const { title, summary, role, stack, links } = project.data;
 const { Content } = await render(project);
 ---
 
-<Layout title={`${title} · Maxfield Allison`} description={summary}>
+<Layout title={`${title} · Maxfield Allison`} description={summary} ogImage={`/og/${project.id}.png?v=1`} ogType="article">
   <article class="max-w-3xl mx-auto px-6 pt-16">
     <a href="/projects" class="font-mono text-sm text-[--color-ink-dim] no-underline hover:no-underline hover:text-[--color-ink]">
       ← Work

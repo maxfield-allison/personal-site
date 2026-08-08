@@ -1,24 +1,25 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
 
 const skills = [
-  'Microsoft Azure',
-  'Azure Front Door',
-  'Application Gateway',
-  'Load Balancing',
-  'Cloud Migration',
-  'Kubernetes',
-  'Go',
-  'Docker',
-  'GitOps',
-  'ArgoCD',
-  'Terraform / OpenTofu',
-  'Ansible',
-  'CI/CD',
-  'Talos Linux',
-  'Infrastructure as Code',
-  'Network Security',
-  'Linux',
+  { label: 'Microsoft Azure', icon: 'azure' },
+  { label: 'Azure Front Door', icon: 'azure' },
+  { label: 'Application Gateway', icon: 'azure' },
+  { label: 'Load Balancing' },
+  { label: 'Cloud Migration' },
+  { label: 'Kubernetes', icon: 'kubernetes' },
+  { label: 'Go', icon: 'go' },
+  { label: 'Docker', icon: 'docker' },
+  { label: 'GitOps', icon: 'argo' },
+  { label: 'ArgoCD', icon: 'argo' },
+  { label: 'Terraform / OpenTofu', icon: 'opentofu' },
+  { label: 'Ansible', icon: 'ansible' },
+  { label: 'CI/CD', icon: 'gitlab' },
+  { label: 'Talos Linux', icon: 'linux' },
+  { label: 'Infrastructure as Code', icon: 'terraform' },
+  { label: 'Network Security', icon: 'cloudflare' },
+  { label: 'Linux', icon: 'linux' },
 ];
 
 const recognition = [
@@ -28,7 +29,7 @@ const recognition = [
 ];
 ---
 
-<Layout title="About · Maxfield Allison" description="Infrastructure engineer. Enterprise Azure by day, a Kubernetes homelab by night. AI-assisted engineering, not vibe coding.">
+<Layout title="About · Maxfield Allison" description="Infrastructure engineer. Enterprise Azure by day, a Kubernetes homelab by night. AI-assisted engineering, not vibe coding." ogImage="/og/about.png?v=1">
   <article class="max-w-3xl mx-auto px-6 pt-16 pb-8">
     <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight mb-8">About</h1>
 
@@ -106,8 +107,9 @@ const recognition = [
     <div class="flex flex-wrap gap-2 mb-8">
       {
         skills.map((s) => (
-          <span class="font-mono text-xs text-[--color-ink-dim] border border-[--color-line] rounded px-2.5 py-1">
-            {s}
+          <span class="inline-flex items-center gap-1.5 font-mono text-xs text-[--color-ink-dim] border border-[--color-line] rounded px-2.5 py-1">
+            {s.icon && <Icon name={s.icon} size={13} class="opacity-70" />}
+            {s.label}
           </span>
         ))
       }
@@ -127,9 +129,9 @@ const recognition = [
       about it.
     </p>
     <div class="flex flex-wrap gap-x-6 gap-y-3 font-mono text-sm">
-      <a href="mailto:hello@maxfieldallison.com" data-umami-event="email-click">Email →</a>
-      <a href="https://www.linkedin.com/in/maxfield-allison/" rel="me noopener" data-umami-event="outbound-linkedin">LinkedIn →</a>
-      <a href="https://bsky.app/profile/maxfieldallison.com" rel="me noopener" data-umami-event="outbound-bluesky">Bluesky →</a>
+      <a href="mailto:hello@maxfieldallison.com" data-umami-event="email-click" class="inline-flex items-center gap-1.5"><Icon name="email" size={14} /> Email →</a>
+      <a href="https://www.linkedin.com/in/maxfield-allison/" rel="me noopener" data-umami-event="outbound-linkedin" class="inline-flex items-center gap-1.5"><Icon name="linkedin" size={14} /> LinkedIn →</a>
+      <a href="https://bsky.app/profile/maxfieldallison.com" rel="me noopener" data-umami-event="outbound-bluesky" class="inline-flex items-center gap-1.5"><Icon name="bluesky" size={14} /> Bluesky →</a>
     </div>
   </section>
 </Layout>
