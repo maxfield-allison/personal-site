@@ -30,10 +30,11 @@ them.
   workloads share a card instead of one hogging it.
 - **GitOps:** everything reconciles from git through ArgoCD. A push to the repo is
   the deploy. Rollback is a git revert.
-- **Below the cluster:** OpenTofu provisions the VMs and LXCs, Ansible configures
-  the platform underneath. Infrastructure as code, all the way down.
-- **CI with teeth:** security scanning runs in the pipeline and blocks commits
-  that leak secrets or ship known-vulnerable images.
+- **Below the cluster:** it all runs on a five-node Proxmox cluster with Ceph
+  storage underneath. OpenTofu provisions the VMs and LXCs, Ansible configures the
+  platform. Infrastructure as code, all the way down.
+- **CI that blocks bad commits:** security scanning runs in the pipeline and stops
+  anything that leaks secrets or ships a known-vulnerable image.
 
 ## The migration
 

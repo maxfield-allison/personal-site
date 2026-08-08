@@ -19,8 +19,8 @@ date: 2026-07-09
 ## Why the site is a project
 
 Most portfolios are hosted on someone else's platform and forgotten. I wanted
-mine to be a working example of how I build and run things, so the site is part
-of the portfolio, not just a container for it. The source is public.
+mine to be a working example of how I build and run things, so the site is itself
+part of the portfolio. The source is public.
 
 ## The architecture
 

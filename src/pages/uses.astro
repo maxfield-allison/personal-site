@@ -8,20 +8,41 @@ const groups = [
   {
     heading: 'Platform and infrastructure',
     items: [
-      { name: 'Kubernetes on Talos Linux', icon: 'kubernetes', note: 'The homelab cluster. Immutable nodes, API-driven, no SSH.' },
+      { name: 'Proxmox VE', icon: 'proxmox', note: 'Five-node cluster with Ceph underneath. The metal the whole lab runs on.' },
+      { name: 'Ceph', icon: 'ceph', note: 'Storage for the cluster, on the order of 230 TiB raw. It taught me the most, mostly the hard way.' },
+      { name: 'Kubernetes on Talos Linux', icon: 'kubernetes', note: 'The workload layer. Immutable nodes, API-driven, no SSH.' },
       { name: 'ArgoCD', icon: 'argo', note: 'GitOps. A push to the repo is the deploy; rollback is a git revert.' },
-      { name: 'OpenTofu', icon: 'opentofu', note: 'Provisions the VMs and LXCs below the cluster.' },
+      { name: 'OpenTofu', icon: 'opentofu', note: 'Provisions the Proxmox VMs and LXCs below the cluster.' },
       { name: 'Ansible', icon: 'ansible', note: 'Configures the platform underneath the cluster.' },
       { name: 'Docker', icon: 'docker', note: 'Local builds and the odd one-off container.' },
+    ],
+  },
+  {
+    heading: 'Networking and edge',
+    items: [
+      { name: 'OPNsense', icon: 'opnsense', note: 'HA firewall pair with CARP failover. Routes the whole lab.' },
+      { name: 'Cilium', icon: 'cilium', note: 'The cluster CNI, doing L2/BGP so services get real routable IPs.' },
+      { name: 'Traefik', icon: 'traefik', note: 'Ingress and TLS for everything the cluster serves.' },
+      { name: 'Technitium DNS', note: 'Internal resolvers. dnsweaver keeps their records honest.' },
       { name: 'Cloudflare', icon: 'cloudflare', note: 'DNS and edge in front of the public sites.' },
+    ],
+  },
+  {
+    heading: 'Data and observability',
+    items: [
+      { name: 'PostgreSQL (Patroni)', icon: 'postgresql', note: 'HA Postgres on dedicated VMs, kept off the cluster on purpose so it stays rebuildable from git.' },
+      { name: 'MariaDB and Valkey', icon: 'mariadb', note: 'The other stateful backends the apps lean on.' },
+      { name: 'Prometheus and Grafana', icon: 'grafana', note: 'Metrics and dashboards. If it runs, it emits.' },
+      { name: 'Infisical', note: 'Runtime secrets, kept out of git.' },
     ],
   },
   {
     heading: 'Languages and tooling',
     items: [
       { name: 'Go', icon: 'go', note: 'My language for real tools. dnsweaver is Go end to end.' },
-      { name: 'Bash', icon: 'bash', note: 'Glue, automation, and the scripts that run the lab.' },
-      { name: 'GitLab CI + GitHub Actions', icon: 'gitlab', note: 'CI with teeth: lint, test, scan, release.' },
+      { name: 'Bash', icon: 'bash', note: 'The glue and the scripts that run the lab.' },
+      { name: 'GitLab CI + GitHub Actions', icon: 'gitlab', note: 'CI that lints, tests, scans for secrets, and blocks anything that fails.' },
+      { name: 'Renovate', icon: 'renovate', note: 'Keeps dependencies and container images current through reviewable pull requests.' },
       { name: 'Linux', icon: 'linux', note: 'Everywhere. WSL on the workstation, Talos on the cluster.' },
     ],
   },
@@ -30,7 +51,7 @@ const groups = [
     items: [
       { name: 'AI-assisted engineering', note: 'I direct AI agents to implement and own the engineering myself. Not vibe coding.' },
       { name: 'Trunk-based GitOps', note: 'Small changes, reviewed, reconciled from git.' },
-      { name: 'Runbooks and ADRs', note: 'If it is important, it is written down. Decisions get recorded.' },
+      { name: 'Runbooks and ADRs', note: "If it's important, it's written down. Decisions get recorded." },
     ],
   },
 ];
@@ -44,8 +65,8 @@ const groups = [
   <section class="max-w-3xl mx-auto px-6 pt-16 pb-8">
     <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight mb-3">Uses</h1>
     <p class="text-[--color-ink-dim] leading-relaxed">
-      The stack I actually reach for, kept honest and generic. Want the hardware
-      behind it? That lives on the
+      The stack I actually reach for to build and run things. Want the hardware
+      behind it? That lives on the{' '}
       <a href="https://probablyfine.dev/labs" rel="noopener" data-umami-event="outbound-labs">lab page →</a>
     </p>
   </section>
