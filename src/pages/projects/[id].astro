@@ -18,6 +18,28 @@ const site = Astro.site ?? 'https://maxfieldallison.com';
 const pageUrl = new URL(`/projects/${project.id}`, site).href;
 const repoLink = links.find((l) => /github\.com/i.test(l.url));
 
+// Live social proof: fetch the repo's star count at build time. Resilient, like
+// the RSS pull on the home page. A failed/rate-limited fetch just yields no
+// badge, never a broken build. Unauthenticated GitHub API is fine at build.
+let stars: number | null = null;
+if (repoLink) {
+  const m = repoLink.url.match(/github\.com\/([^/]+)\/([^/#?]+)/i);
+  if (m) {
+    try {
+      const res = await fetch(`https://api.github.com/repos/${m[1]}/${m[2].replace(/\.git$/, '')}`, {
+        headers: { Accept: 'application/vnd.github+json', 'User-Agent': 'maxfieldallison.com-build' },
+        signal: AbortSignal.timeout(8000),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (typeof data.stargazers_count === 'number') stars = data.stargazers_count;
+      }
+    } catch {
+      stars = null;
+    }
+  }
+}
+
 // Breadcrumb trail for richer search results.
 const breadcrumbLd = {
   '@context': 'https://schema.org',
@@ -74,12 +96,15 @@ const softwareLd = repoLink
 
       {
         links.length > 0 && (
-          <div class="flex flex-wrap gap-x-5 gap-y-2 font-mono text-sm">
+          <div class="flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-sm">
             {links.map((l) => (
               <a href={l.url} rel="noopener" data-umami-event={`outbound-${project.id}-${l.label.toLowerCase()}`}>
                 {l.label} →
               </a>
             ))}
+            {stars !== null && (
+              <span class="text-[var(--color-ink-dim)]">★ {stars.toLocaleString()} on GitHub</span>
+            )}
           </div>
         )
       }
