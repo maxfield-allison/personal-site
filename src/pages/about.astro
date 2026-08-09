@@ -33,8 +33,8 @@ const recognition = [
   <article class="max-w-3xl mx-auto px-6 pt-16 pb-8">
     <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight mb-8">About</h1>
 
-    <div class="space-y-5 text-[--color-ink-dim] leading-relaxed">
-      <p class="text-lg text-[--color-ink]">
+    <div class="space-y-5 text-[var(--color-ink-dim)] leading-relaxed">
+      <p class="text-lg text-[var(--color-ink)]">
         I keep enterprise infrastructure running, and I build my own to
         understand it deeper.
       </p>
@@ -78,9 +78,9 @@ const recognition = [
     </div>
   </article>
 
-  <section class="max-w-3xl mx-auto px-6 py-8 border-t border-[--color-line]">
+  <section class="max-w-3xl mx-auto px-6 py-8 border-t border-[var(--color-line)]">
     <h2 class="text-xl font-semibold mb-4">How I work</h2>
-    <div class="space-y-5 text-[--color-ink-dim] leading-relaxed">
+    <div class="space-y-5 text-[var(--color-ink-dim)] leading-relaxed">
       <p>
         I direct AI agents to implement, and I own the engineering. Architecture,
         standards, integration, the decision to throw out a solution and start
@@ -94,7 +94,7 @@ const recognition = [
         which is the part most people skip: you still have to understand the
         system to direct the work well.
       </p>
-      <p class="text-[--color-ink]">
+      <p class="text-[var(--color-ink)]">
         I care more about whether something works at 2am than whether it looks
         clever in a slide. I'd rather tell you what I've actually validated than
         pretend I'm certain about something I haven't.
@@ -102,12 +102,12 @@ const recognition = [
     </div>
   </section>
 
-  <section class="max-w-3xl mx-auto px-6 py-8 border-t border-[--color-line]">
+  <section class="max-w-3xl mx-auto px-6 py-8 border-t border-[var(--color-line)]">
     <h2 class="text-xl font-semibold mb-5">Skills</h2>
     <div class="flex flex-wrap gap-2 mb-8">
       {
         skills.map((s) => (
-          <span class="inline-flex items-center gap-1.5 font-mono text-xs text-[--color-ink-dim] border border-[--color-line] rounded px-2.5 py-1">
+          <span class="inline-flex items-center gap-1.5 font-mono text-xs text-[var(--color-ink-dim)] border border-[var(--color-line)] rounded px-2.5 py-1">
             {s.icon && <Icon name={s.icon} size={13} class="opacity-70" />}
             {s.label}
           </span>
@@ -116,14 +116,14 @@ const recognition = [
     </div>
 
     <h2 class="text-xl font-semibold mb-4">Recognition</h2>
-    <ul class="space-y-2 text-[--color-ink-dim] leading-relaxed">
-      {recognition.map((r) => <li class="flex gap-3"><span class="text-[--color-accent]">·</span>{r}</li>)}
+    <ul class="space-y-2 text-[var(--color-ink-dim)] leading-relaxed">
+      {recognition.map((r) => <li class="flex gap-3"><span class="text-[var(--color-accent)]">·</span>{r}</li>)}
     </ul>
   </section>
 
-  <section class="max-w-3xl mx-auto px-6 py-8 border-t border-[--color-line]">
+  <section class="max-w-3xl mx-auto px-6 py-8 border-t border-[var(--color-line)]">
     <h2 class="text-xl font-semibold mb-4">Get in touch</h2>
-    <p class="text-[--color-ink-dim] leading-relaxed mb-4">
+    <p class="text-[var(--color-ink-dim)] leading-relaxed mb-4">
       If you're building infrastructure and you want someone who can learn a new
       stack fast and move quickly without shipping garbage, I'd like to hear
       about it.

@@ -68,18 +68,18 @@ const projects = [
 <Layout title="Resume · Maxfield Allison" description="Resume of Maxfield Allison, infrastructure engineer." ogImage="/og/resume.png?v=1">
   <div class="resume max-w-3xl mx-auto px-6 pt-12 pb-16">
     <div class="no-print mb-8 flex items-center justify-between">
-      <a href="/" class="font-mono text-sm text-[--color-ink-dim] no-underline">← Home</a>
+      <a href="/" class="font-mono text-sm text-[var(--color-ink-dim)] no-underline">← Home</a>
       <div class="flex items-center gap-3">
         <a
           href="/resume.pdf"
           data-umami-event="resume-download"
-          class="font-mono text-sm border border-[--color-line] rounded px-3 py-1.5 text-[--color-ink-dim] hover:text-[--color-ink] hover:border-[--color-accent]/60 transition-colors no-underline"
+          class="font-mono text-sm border border-[var(--color-line)] rounded px-3 py-1.5 text-[var(--color-ink-dim)] hover:text-[var(--color-ink)] hover:border-[var(--color-accent)]/60 transition-colors no-underline"
         >
           Download PDF
         </a>
         <button
           onclick="window.print()"
-          class="font-mono text-sm border border-[--color-line] rounded px-3 py-1.5 text-[--color-ink-dim] hover:text-[--color-ink] hover:border-[--color-accent]/60 transition-colors"
+          class="font-mono text-sm border border-[var(--color-line)] rounded px-3 py-1.5 text-[var(--color-ink-dim)] hover:text-[var(--color-ink)] hover:border-[var(--color-accent)]/60 transition-colors"
         >
           Print
         </button>
@@ -88,14 +88,14 @@ const projects = [
 
     <div class="mb-6">
       <h1 class="text-3xl font-semibold tracking-tight">Maxfield Allison</h1>
-      <p class="text-[--color-ink-dim] mt-1">Infrastructure Engineer · Alabaster, Alabama</p>
-      <p class="font-mono text-sm text-[--color-ink-dim] mt-2">
+      <p class="text-[var(--color-ink-dim)] mt-1">Infrastructure Engineer · Alabaster, Alabama</p>
+      <p class="font-mono text-sm text-[var(--color-ink-dim)] mt-2">
         maxfieldallison.com · github.com/maxfield-allison · linkedin.com/in/maxfield-allison
       </p>
     </div>
 
     <section class="mb-6">
-      <p class="text-[--color-ink-dim] leading-relaxed">
+      <p class="text-[var(--color-ink-dim)] leading-relaxed">
         Infrastructure engineer who owns a multi-region enterprise Azure platform
         by day and operates a production-grade Kubernetes homelab by night. I work
         fast by directing AI agents while owning the architecture, standards, and
@@ -109,14 +109,14 @@ const projects = [
         experience.map((job) => (
           <div class="mb-4">
             <div class="flex flex-wrap items-baseline justify-between gap-x-4">
-              <h3 class="font-semibold text-[--color-ink]">{job.role}</h3>
-              <span class="font-mono text-xs text-[--color-ink-dim]">{job.dates}</span>
+              <h3 class="font-semibold text-[var(--color-ink)]">{job.role}</h3>
+              <span class="font-mono text-xs text-[var(--color-ink-dim)]">{job.dates}</span>
             </div>
-            <p class="text-sm text-[--color-ink-dim] mb-2">{job.org}</p>
+            <p class="text-sm text-[var(--color-ink-dim)] mb-2">{job.org}</p>
             <ul class="space-y-1">
               {job.bullets.map((b) => (
-                <li class="text-sm text-[--color-ink-dim] leading-relaxed flex gap-2">
-                  <span class="text-[--color-accent]">·</span>
+                <li class="text-sm text-[var(--color-ink-dim)] leading-relaxed flex gap-2">
+                  <span class="text-[var(--color-accent)]">·</span>
                   <span>{b}</span>
                 </li>
               ))}
@@ -131,8 +131,8 @@ const projects = [
       {
         projects.map((p) => (
           <div class="mb-3">
-            <h3 class="font-semibold text-[--color-ink] text-sm">{p.name}</h3>
-            <p class="text-sm text-[--color-ink-dim] leading-relaxed">{p.detail}</p>
+            <h3 class="font-semibold text-[var(--color-ink)] text-sm">{p.name}</h3>
+            <p class="text-sm text-[var(--color-ink-dim)] leading-relaxed">{p.detail}</p>
           </div>
         ))
       }
@@ -144,8 +144,8 @@ const projects = [
         {
           Object.entries(skills).map(([group, items]) => (
             <p class="text-sm">
-              <span class="font-semibold text-[--color-ink]">{group}:</span>
-              <span class="text-[--color-ink-dim]"> {items.join(' · ')}</span>
+              <span class="font-semibold text-[var(--color-ink)]">{group}:</span>
+              <span class="text-[var(--color-ink-dim)]"> {items.join(' · ')}</span>
             </p>
           ))
         }
@@ -154,9 +154,9 @@ const projects = [
 
     <section>
       <h2 class="resume-h2">Recognition & Certifications</h2>
-      <ul class="space-y-1 text-sm text-[--color-ink-dim]">
-        <li class="flex gap-2"><span class="text-[--color-accent]">·</span>Specialist of the Quarter (x2), Specialist of the Year, Ricoh STAR Award</li>
-        <li class="flex gap-2"><span class="text-[--color-accent]">·</span>Microsoft Azure Fundamentals, plus multiple enterprise product certifications</li>
+      <ul class="space-y-1 text-sm text-[var(--color-ink-dim)]">
+        <li class="flex gap-2"><span class="text-[var(--color-accent)]">·</span>Specialist of the Quarter (x2), Specialist of the Year, Ricoh STAR Award</li>
+        <li class="flex gap-2"><span class="text-[var(--color-accent)]">·</span>Microsoft Azure Fundamentals, plus multiple enterprise product certifications</li>
       </ul>
     </section>
   </div>

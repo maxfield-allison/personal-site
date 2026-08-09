@@ -48,24 +48,24 @@ const softwareLd = repoLink
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
   {softwareLd && <script type="application/ld+json" set:html={JSON.stringify(softwareLd)} />}
   <article class="max-w-3xl mx-auto px-6 pt-16">
-    <a href="/projects" class="font-mono text-sm text-[--color-ink-dim] no-underline hover:no-underline hover:text-[--color-ink]">
+    <a href="/projects" class="font-mono text-sm text-[var(--color-ink-dim)] no-underline hover:no-underline hover:text-[var(--color-ink)]">
       ← Work
     </a>
 
     <header class="mt-6 mb-10">
       <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight mb-3">{title}</h1>
-      <p class="text-lg text-[--color-ink-dim] leading-relaxed mb-5">{summary}</p>
+      <p class="text-lg text-[var(--color-ink-dim)] leading-relaxed mb-5">{summary}</p>
 
       {role && (
-        <p class="font-mono text-xs text-[--color-ink-dim] mb-4">
-          Role: <span class="text-[--color-ink]">{role}</span>
+        <p class="font-mono text-xs text-[var(--color-ink-dim)] mb-4">
+          Role: <span class="text-[var(--color-ink)]">{role}</span>
         </p>
       )}
 
       <div class="flex flex-wrap gap-2 mb-5">
         {
           stack.map((tag) => (
-            <span class="font-mono text-[11px] text-[--color-ink-dim] border border-[--color-line] rounded px-2 py-0.5">
+            <span class="font-mono text-[11px] text-[var(--color-ink-dim)] border border-[var(--color-line)] rounded px-2 py-0.5">
               {tag}
             </span>
           ))
@@ -85,7 +85,7 @@ const softwareLd = repoLink
       }
     </header>
 
-    <div class="prose-content space-y-4 text-[--color-ink-dim] leading-relaxed border-t border-[--color-line] pt-8">
+    <div class="prose-content space-y-4 text-[var(--color-ink-dim)] leading-relaxed border-t border-[var(--color-line)] pt-8">
       <Content />
     </div>
   </article>

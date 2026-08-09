@@ -36,12 +36,12 @@ try {
     <h1 class="text-4xl sm:text-5xl font-semibold tracking-tight mb-6 leading-tight">
       I run enterprise infrastructure by day and build my own to understand it deeper.
     </h1>
-    <p class="text-lg text-[--color-ink-dim] leading-relaxed mb-4">
+    <p class="text-lg text-[var(--color-ink-dim)] leading-relaxed mb-4">
       I'm Maxfield Allison, an infrastructure engineer. My day job is a
       multi-region enterprise Azure platform. My off hours are a 9-node
       Kubernetes homelab and the open-source tools that keep it honest.
     </p>
-    <p class="text-base text-[--color-ink-dim] leading-relaxed mb-8">
+    <p class="text-base text-[var(--color-ink-dim)] leading-relaxed mb-8">
       I work fast by directing AI agents while owning the engineering myself.
       That is AI-assisted engineering, not vibe coding. The judgment is mine;
       the typing is just faster.
@@ -54,7 +54,7 @@ try {
   </section>
 
   <section class="max-w-3xl mx-auto px-6">
-    <h2 class="font-mono text-sm text-[--color-ink-dim] uppercase tracking-wider mb-6">
+    <h2 class="font-mono text-sm text-[var(--color-ink-dim)] uppercase tracking-wider mb-6">
       Selected work
     </h2>
     <div class="grid gap-4 sm:grid-cols-2">
@@ -66,7 +66,7 @@ try {
     recentPosts.length > 0 && (
       <section class="max-w-3xl mx-auto px-6 pt-12">
         <div class="flex items-baseline justify-between mb-6">
-          <h2 class="font-mono text-sm text-[--color-ink-dim] uppercase tracking-wider">
+          <h2 class="font-mono text-sm text-[var(--color-ink-dim)] uppercase tracking-wider">
             Recent writing
           </h2>
           <a href="https://probablyfine.dev/blog" rel="noopener" class="font-mono text-xs">
@@ -81,12 +81,12 @@ try {
                 rel="noopener"
                 class="group flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 no-underline hover:no-underline"
               >
-                <span class="text-[--color-ink] group-hover:text-[--color-accent] transition-colors">
+                <span class="text-[var(--color-ink)] group-hover:text-[var(--color-accent)] transition-colors">
                   {post.title}
                 </span>
                 <time
                   datetime={post.date.toISOString().slice(0, 10)}
-                  class="font-mono text-xs text-[--color-ink-dim] shrink-0"
+                  class="font-mono text-xs text-[var(--color-ink-dim)] shrink-0"
                 >
                   {post.date.toISOString().slice(0, 10)}
                 </time>
