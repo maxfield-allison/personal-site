@@ -9,7 +9,7 @@ stack:
   - GitOps
   - OpenTofu
   - Ansible
-  - NVIDIA MPS
+  - GPU time-slicing
 featured: true
 order: 2
 date: 2026-03-01
@@ -24,10 +24,11 @@ them.
 
 ## What's in it
 
-- **Control plane:** 5 nodes, so losing a couple of them doesn't take the cluster
+- **Control plane:** 3 dedicated nodes, so losing one doesn't take the cluster
   down.
-- **GPU workloads:** scheduled across GPU nodes with NVIDIA MPS, so several
-  workloads share a card instead of one hogging it.
+- **GPU workloads:** shared via time-slicing, so several workloads use a card
+  instead of one hogging it. I evaluated NVIDIA MPS and rejected it, because its
+  exclusive mode blocks the video encode engines the media stack needs.
 - **GitOps:** everything reconciles from git through ArgoCD. A push to the repo is
   the deploy. Rollback is a git revert.
 - **Below the cluster:** it all runs on a five-node Proxmox cluster with Ceph
