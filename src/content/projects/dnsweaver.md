@@ -1,11 +1,13 @@
 ---
 title: dnsweaver
-summary: An open-source Go tool that syncs DNS records from your infrastructure to your DNS provider, so records follow your services instead of drifting out of date.
+summary: An open-source Go tool that creates DNS records automatically for containers, VMs and clusters, reading from seven sources and writing to eleven DNS providers, so records follow your services instead of drifting out of date.
 role: Author and maintainer
 stack:
   - Go
   - Docker
   - Kubernetes
+  - Proxmox
+  - Incus
   - Cloudflare
   - CI/CD
 links:
@@ -25,15 +27,18 @@ to follow my infrastructure automatically, the way a platform team would run it.
 
 ## What it does
 
-dnsweaver watches your infrastructure (Docker, Kubernetes ingresses, Proxmox)
-and reconciles DNS records to match. Declare the intent with a label or an
+dnsweaver reads hostnames from seven sources (Traefik, Caddy and nginx-proxy
+labels, its own native labels, Kubernetes resources, Proxmox VE, and Incus) and
+reconciles DNS records to match. Declare the intent with a label or an
 annotation, and dnsweaver creates, updates, and cleans up the record for you.
 It tracks ownership so it only touches records it manages, and leaves anything
 you created by hand alone.
 
-It supports multiple providers (Cloudflare, Technitium, and more) and multiple
-record types, with per-provider zones so one instance can manage several
-domains at once. This site's own origin record is managed by dnsweaver.
+It writes to eleven providers, from self-hosted resolvers like Technitium and
+Pi-hole to Cloudflare, with per-provider zones so one instance can manage
+several domains at once. Internal and external records come from the same
+labels, which is the split-horizon case most tools make you run twice. This
+site's own origin record is managed by dnsweaver.
 
 ## How it's built
 
@@ -43,7 +48,9 @@ domains at once. This site's own origin record is managed by dnsweaver.
   always safe.
 - Full CI/CD: linting, tests, and multi-arch container plus binary releases on
   every tag. Semantic versioning throughout.
-- Runs as a single container in the cluster and reconciles on an interval.
+- Runs as a single container. It reacts to events where the platform emits them
+  (Docker, Incus, Kubernetes) and falls back to polling as a safety net, so a
+  missed event costs you a reconcile interval rather than a stale record.
 
 ## What I'd call out
 
