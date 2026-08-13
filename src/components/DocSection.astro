@@ -7,20 +7,25 @@
 interface Props {
   /** Rail label, e.g. "section 1". Rendered mono, uppercase, letterspaced. */
   label?: string;
+  /** Element for the label. Defaults to a div, because on most pages the rail
+      carries an ordinal ("section 1") rather than a heading. Pass 'h2' where
+      the label genuinely names the section — otherwise the page's h1 is
+      followed directly by the h3s inside, which skips a level. */
+  labelAs?: 'div' | 'h2';
   /** Vertical rhythm. Sections breathe; this site's posture is air. */
   spacing?: 'normal' | 'tight';
   class?: string;
 }
 
-const { label, spacing = 'normal', class: className } = Astro.props;
+const { label, labelAs: LabelTag = 'div', spacing = 'normal', class: className } = Astro.props;
 const pad = spacing === 'tight' ? 'py-12' : 'py-16 sm:py-24';
 ---
 
 <section class:list={['max-w-[var(--container-shell)] mx-auto px-6', className]}>
   <div class:list={['grid gap-4 md:gap-10 md:grid-cols-[var(--rail)_minmax(0,1fr)]', pad]}>
-    <div class="font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-ink-dim)] md:pt-1.5">
+    <LabelTag class="font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-ink-dim)] md:pt-1.5 m-0 font-normal">
       {label}
-    </div>
+    </LabelTag>
     <div class="min-w-0">
       <slot />
     </div>

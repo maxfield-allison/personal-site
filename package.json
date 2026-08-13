@@ -10,13 +10,14 @@
     "predev": "node scripts/copy-fonts.mjs",
     "dev": "astro dev",
     "prebuild": "node scripts/copy-fonts.mjs && node scripts/gen-page-og.mjs",
-    "build": "astro build",
+    "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "fonts": "node scripts/copy-fonts.mjs",
     "og": "node scripts/gen-og.mjs",
     "og:pages": "node scripts/gen-page-og.mjs",
-    "resume": "node scripts/gen-resume.mjs"
+    "resume": "node scripts/gen-resume.mjs",
+    "check": "astro check"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
@@ -24,12 +25,14 @@
     "@fontsource-variable/jetbrains-mono": "5.3.0",
     "@fontsource-variable/source-serif-4": "5.3.0",
     "@tailwindcss/vite": "^4.3.2",
-    "astro": "^7.0.7",
+    "astro": "^7.2.1",
     "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "playwright-core": "^1.61.1",
     "sharp": "^0.35.3",
-    "simple-icons": "^16.28.0"
+    "simple-icons": "^16.28.0",
+    "typescript": "^6.0.3"
   }
 }

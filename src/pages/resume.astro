@@ -123,9 +123,11 @@ const projects = [
     </section>
 
     {/* Print-only masthead: the cover above is screen-only, so the PDF still
-        needs a name and contact block at the top. */}
+        needs a name and contact block at the top. Deliberately NOT an <h1> —
+        the cover already supplies the page's single h1, and two would break
+        the document outline for screen readers. */}
     <div class="mb-6 hidden print:block">
-      <h1 class="text-3xl font-semibold tracking-tight">Maxfield Allison</h1>
+      <p class="text-3xl font-semibold tracking-tight m-0">Maxfield Allison</p>
       <p class="text-[var(--color-ink-dim)] mt-1">Infrastructure Engineer · Alabaster, Alabama</p>
       <p class="font-mono text-sm text-[var(--color-ink-dim)] mt-2">
         maxfieldallison.com · github.com/maxfield-allison · linkedin.com/in/maxfield-allison
