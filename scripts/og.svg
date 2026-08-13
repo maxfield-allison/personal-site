@@ -11,7 +11,7 @@
 
   <text x="80" y="150" font-family="monospace" font-size="26" fill="#9aa7b6">maxfieldallison.com</text>
 
-  <text x="78" y="270" font-family="Inter, system-ui, sans-serif" font-size="76" font-weight="600" fill="#e7ecf2">Maxfield Allison</text>
+  <text x="78" y="270" font-family="'DejaVu Serif', Georgia, serif" font-size="76" font-weight="600" fill="#e7ecf2">Maxfield Allison</text>
 
   <text x="80" y="345" font-family="Inter, system-ui, sans-serif" font-size="34" fill="#9aa7b6">Infrastructure engineer.</text>
   <text x="80" y="395" font-family="Inter, system-ui, sans-serif" font-size="34" fill="#9aa7b6">Enterprise Azure by day, a Kubernetes homelab by night.</text>

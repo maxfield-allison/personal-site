@@ -2,10 +2,21 @@
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import DocSection from '../components/DocSection.astro';
+import DocHeading from '../components/DocHeading.astro';
+import Figure from '../components/Figure.astro';
+import RecordFlow from '../components/RecordFlow.astro';
+import { fetchStars } from '../lib/github';
 
 const projects = (await getCollection('projects', ({ data }) => !data.draft && data.featured)).sort(
   (a, b) => a.data.order - b.data.order,
 );
+const [flagship, ...rest] = projects;
+
+// Live star count for the flagship, fetched at build. Same policy as the case
+// study page: a failed fetch yields no number rather than a broken build.
+const flagshipRepo = flagship?.data.links.find((l) => /github\.com/i.test(l.url))?.url;
+const stars = await fetchStars(flagshipRepo);
 
 // Recent writing, pulled from the probablyfine.dev RSS feed at build time.
 // Cross-origin, but fetched during the static build so it ships as HTML. A
@@ -29,59 +40,123 @@ try {
 } catch {
   recentPosts = [];
 }
+
+// The stat table. Every figure here is checked against the live system, and the
+// star count comes from the build-time fetch above rather than a hard-coded
+// number that would quietly go stale.
+const stats: { value: string; suffix?: string; label: string }[] = [
+  { value: '9-node', label: 'Talos Kubernetes cluster' },
+  { value: '~38', label: 'services under GitOps' },
+  ...(stars !== null
+    ? [{ value: stars.toLocaleString(), suffix: '★', label: 'dnsweaver on GitHub' }]
+    : [{ value: '11', label: 'DNS providers in dnsweaver' }]),
+  { value: '4', label: 'global regions, enterprise Azure' },
+];
 ---
 
 <Layout>
-  <section class="max-w-3xl mx-auto px-6 pt-20 pb-16">
-    <h1 class="text-4xl sm:text-5xl font-semibold tracking-tight mb-6 leading-tight">
-      I run enterprise infrastructure by day and build my own to understand it deeper.
-    </h1>
-    <p class="text-lg text-[var(--color-ink-dim)] leading-relaxed mb-4">
-      I'm Maxfield Allison, an infrastructure engineer. My day job is a
-      multi-region enterprise Azure platform. My off hours are a 9-node
-      Kubernetes homelab and the open-source tools that keep it honest.
-    </p>
-    <p class="text-base text-[var(--color-ink-dim)] leading-relaxed mb-8">
-      I work fast by directing AI agents while owning the engineering myself.
-      That's AI-assisted engineering, not vibe coding. The judgment is mine;
-      the typing is just faster.
-    </p>
-    <div class="flex flex-wrap gap-x-6 gap-y-3 font-mono text-sm">
-      <a href="/about">Read more →</a>
-      <a href="/projects">See the work →</a>
-      <a href="https://github.com/maxfield-allison" rel="me noopener" data-umami-event="outbound-github">GitHub →</a>
+  {/* Document header: kicker, display title, then the argument in two registers
+      — serif for the claim, sans for the qualification. */}
+  <section class="max-w-[var(--container-shell)] mx-auto px-6">
+    <div class="grid gap-4 md:gap-10 md:grid-cols-[var(--rail)_minmax(0,1fr)] pt-16 pb-12 sm:pt-24 sm:pb-16">
+      <div></div>
+      <div>
+        <p class="font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-ink-dim)] m-0">
+          infrastructure engineer
+        </p>
+        <h1 class="mt-5 mb-0 font-serif text-[2.5rem] sm:text-[3.375rem] font-semibold leading-[1.12] tracking-[-0.01em]">
+          I run enterprise infrastructure by day and build my own to understand it deeper.
+        </h1>
+        <p class="mt-7 mb-0 font-serif text-lg sm:text-xl leading-[1.65] text-[var(--color-ink-dim)] max-w-[58ch]">
+          I'm Maxfield Allison, an infrastructure engineer. My day job is a
+          multi-region enterprise Azure platform. My off hours are a 9-node
+          Kubernetes homelab and the open-source tools that keep it honest.
+        </p>
+        <p class="mt-4 mb-0 text-[1.0625rem] leading-[1.7] text-[var(--color-ink-dim)] measure">
+          I work fast by directing AI agents while owning the engineering myself.
+          That's AI-assisted engineering, not vibe coding. The judgment is mine;
+          the typing is just faster.
+        </p>
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mt-8 text-[0.9375rem] font-medium">
+          <a
+            href="/resume"
+            data-umami-event="cta-resume"
+            class="border border-[var(--color-accent)] rounded-sm px-5 py-2.5 no-underline hover:no-underline hover:bg-[var(--color-accent)]/[0.08] transition-colors"
+            >The resume →</a
+          >
+          <a href="/projects">The case studies →</a>
+          <a href="https://github.com/maxfield-allison" rel="me noopener" data-umami-event="outbound-github">GitHub →</a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="max-w-3xl mx-auto px-6">
-    <h2 class="font-mono text-sm text-[var(--color-ink-dim)] uppercase tracking-wider mb-6">
-      Selected work
-    </h2>
-    <div class="grid gap-4 sm:grid-cols-2">
-      {projects.map((project) => <ProjectCard project={project} />)}
+  {/* Table 1. Serif numerals against mono labels: the fastest "document, not
+      terminal" signal on the page, and the evidence behind the claim above. */}
+  <section class="max-w-[var(--container-shell)] mx-auto px-6">
+    <p class="font-mono text-xs text-[var(--color-ink-dim)] mb-2.5 m-0">table 1 · working infrastructure</p>
+    <div class="rule-double"></div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 border-b border-[var(--color-line)]">
+      {
+        stats.map((s, i) => (
+          <div
+            class:list={[
+              'py-5 pr-6',
+              i > 0 && 'sm:pl-6',
+              i < stats.length - 1 && 'sm:border-r border-[var(--color-line)]',
+              i % 2 === 1 && 'pl-6 sm:pl-6',
+              i < 2 && 'border-b sm:border-b-0 border-[var(--color-line)]',
+            ]}
+          >
+            <div class="font-serif text-[1.75rem] font-semibold text-[var(--color-ink)] leading-none">
+              {s.value}
+              {s.suffix && <span class="text-lg text-[var(--color-ink-dim)]"> {s.suffix}</span>}
+            </div>
+            <div class="font-mono text-xs text-[var(--color-ink-dim)] mt-1.5 leading-snug">{s.label}</div>
+          </div>
+        ))
+      }
     </div>
   </section>
+
+  <DocSection label="section 1">
+    <DocHeading>Selected work</DocHeading>
+    {
+      flagship && (
+        <div class="mt-7">
+          <ProjectCard project={flagship} variant="flagship" stars={stars}>
+            {flagship.id === 'dnsweaver' && (
+              <Figure
+                n={1}
+                caption="record flow: seven sources reconciled to eleven providers"
+                class="mt-6"
+              >
+                <RecordFlow />
+              </Figure>
+            )}
+          </ProjectCard>
+        </div>
+      )
+    }
+    <div class="mt-8">
+      {rest.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </DocSection>
 
   {
     recentPosts.length > 0 && (
-      <section class="max-w-3xl mx-auto px-6 pt-12">
-        <div class="flex items-baseline justify-between mb-6">
-          <h2 class="font-mono text-sm text-[var(--color-ink-dim)] uppercase tracking-wider">
-            Recent writing
-          </h2>
-          <a href="https://probablyfine.dev/blog" rel="noopener" class="font-mono text-xs">
-            probablyfine.dev →
-          </a>
-        </div>
-        <ul class="space-y-3">
+      <DocSection label="section 2" spacing="tight">
+        <DocHeading>Recent writing</DocHeading>
+        <ul class="list-none p-0 m-0 mt-7">
           {recentPosts.map((post) => (
-            <li>
+            <li class="border-t border-[var(--color-line)] first:border-t-0">
               <a
                 href={post.link}
                 rel="noopener"
-                class="group flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 no-underline hover:no-underline"
+                data-umami-event="outbound-probablyfine"
+                class="group flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 py-4 no-underline hover:no-underline text-[var(--color-ink)]"
               >
-                <span class="text-[var(--color-ink)] group-hover:text-[var(--color-accent)] transition-colors">
+                <span class="font-serif text-lg group-hover:text-[var(--color-accent)] transition-colors">
                   {post.title}
                 </span>
                 <time
@@ -94,8 +169,12 @@ try {
             </li>
           ))}
         </ul>
-      </section>
+        <p class="mt-5 mb-0 font-mono text-xs">
+          <a href="https://probablyfine.dev/blog?utm_source=maxfieldallison&utm_medium=site" rel="noopener" data-umami-event="outbound-probablyfine">
+            all writing at probablyfine.dev →
+          </a>
+        </p>
+      </DocSection>
     )
   }
 </Layout>
-

@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # Generated per-page OG cards (build artifact)
 public/og/
+
+# Self-hosted webfonts copied from node_modules (build artifact)
+public/fonts/

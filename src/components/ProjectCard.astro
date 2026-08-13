@@ -1,29 +1,70 @@
 ---
+// A project in the catalog, in one of two weights.
+//
+// `flagship` is a plate-bearing entry on a surface fill: it carries the folio
+// in its kicker and accepts a diagram through the default slot. Only one
+// project gets it, so hierarchy comes from figure and folio rather than from
+// louder chrome.
+//
+// `entry` is the ruled catalog row: a folio in the margin, then title, summary,
+// and stack. A document divides with rules, so these have a border-top and no
+// enclosure — deliberately unlike the boxed cards this replaced, where all
+// three projects read at identical weight and nothing signalled the flagship.
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   project: CollectionEntry<'projects'>;
+  variant?: 'flagship' | 'entry';
+  /** Live star count, fetched at build time. Omitted when unavailable. */
+  stars?: number | null;
 }
 
-const { project } = Astro.props;
-const { title, summary, stack } = project.data;
+const { project, variant = 'entry', stars = null } = Astro.props;
+const { title, summary, kind, stack, order } = project.data;
+const href = `/projects/${project.id}`;
+const folio = `No. ${order}`;
 ---
 
-<a
-  href={`/projects/${project.id}`}
-  class="group block border border-[var(--color-line)] rounded-lg p-6 no-underline hover:no-underline hover:border-[var(--color-accent)]/60 transition-colors"
->
-  <h3 class="text-lg font-semibold text-[var(--color-ink)] mb-2 group-hover:text-[var(--color-accent)] transition-colors">
-    {title}
-  </h3>
-  <p class="text-sm text-[var(--color-ink-dim)] leading-relaxed mb-4">{summary}</p>
-  <div class="flex flex-wrap gap-2">
-    {
-      stack.slice(0, 5).map((tag) => (
-        <span class="font-mono text-[11px] text-[var(--color-ink-dim)] border border-[var(--color-line)] rounded px-2 py-0.5">
-          {tag}
+{
+  variant === 'flagship' ? (
+    <a
+      href={href}
+      data-umami-event={`case-study-${project.id}`}
+      class="group block bg-[var(--color-surface)] border border-[var(--color-line)] p-6 sm:p-8 no-underline hover:no-underline hover:border-[var(--color-accent)]/60 transition-colors text-[var(--color-ink)]"
+    >
+      <div class="flex flex-wrap justify-between items-baseline gap-x-4 gap-y-1 font-mono text-xs text-[var(--color-ink-dim)]">
+        <span class="uppercase tracking-[0.1em]">
+          <span class="text-[var(--color-accent)]">case study {folio.toLowerCase()}</span>
+          {kind && <> · {kind}</>}
         </span>
-      ))
-    }
-  </div>
-</a>
+        {stars !== null && <span>★ {stars.toLocaleString()}</span>}
+      </div>
+      <h3 class="mt-4 mb-0 font-serif text-2xl sm:text-[1.75rem] font-semibold group-hover:text-[var(--color-accent)] transition-colors">
+        {title}
+      </h3>
+      <p class="mt-2.5 mb-0 text-[0.9375rem] leading-relaxed text-[var(--color-ink-dim)] measure">
+        {summary}
+      </p>
+      <slot />
+    </a>
+  ) : (
+    <a
+      href={href}
+      data-umami-event={`case-study-${project.id}`}
+      class="group grid grid-cols-[3.5rem_minmax(0,1fr)] gap-x-5 border-t border-[var(--color-line)] py-6 no-underline hover:no-underline text-[var(--color-ink)]"
+    >
+      <div class="font-serif text-lg text-[var(--color-ink-dim)]">{folio}</div>
+      <div>
+        <h3 class="m-0 font-serif text-xl sm:text-[1.3125rem] font-semibold group-hover:text-[var(--color-accent)] transition-colors">
+          {title}
+        </h3>
+        <p class="mt-2 mb-0 text-sm leading-relaxed text-[var(--color-ink-dim)] measure">{summary}</p>
+        <div class="flex flex-wrap gap-x-2.5 gap-y-1 mt-2.5 font-mono text-xs text-[var(--color-ink-dim)]">
+          {stack.slice(0, 6).map((tag) => (
+            <span>{tag}</span>
+          ))}
+        </div>
+      </div>
+    </a>
+  )
+}

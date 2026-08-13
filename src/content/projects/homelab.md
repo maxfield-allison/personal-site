@@ -1,6 +1,7 @@
 ---
 title: Kubernetes Homelab
 summary: A 9-node Talos Linux Kubernetes cluster running around 38 services under GitOps, migrated from Docker Swarm without losing service. My working lab for the patterns real infrastructure teams use.
+kind: infrastructure
 role: Designed, built, and operate it
 stack:
   - Kubernetes

@@ -1,15 +1,20 @@
 ---
+// Shape kept deliberately identical to probablyfine-site/src/components/Footer.astro:
+// the identity link row and the cross-site network strip are the verbatim layer
+// shared by both sites. Only the tagline, the trailing site-specific link
+// (Source here, RSS there), and which domain carries the accent differ.
+// Edit both together.
 import Icon from './Icon.astro';
 const year = new Date().getFullYear();
 ---
 
 <footer class="border-t border-[var(--color-line)] mt-24">
   <div
-    class="max-w-3xl mx-auto px-6 py-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 font-mono text-xs text-[var(--color-ink-dim)]"
+    class="max-w-[var(--container-shell)] mx-auto px-6 py-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 font-mono text-xs text-[var(--color-ink-dim)]"
   >
     <p>© {year} Maxfield Allison</p>
     <div class="flex flex-wrap gap-x-5 gap-y-2">
-      <a href="mailto:hello@maxfieldallison.com" data-umami-event="email-click" class="inline-flex items-center gap-1.5">
+      <a href="mailto:hello@maxfieldallison.com" rel="me" data-umami-event="email-click" class="inline-flex items-center gap-1.5">
         <Icon name="email" size={14} /> Email
       </a>
       <a href="https://github.com/maxfield-allison" rel="me noopener" data-umami-event="outbound-github" class="inline-flex items-center gap-1.5">
@@ -24,10 +29,12 @@ const year = new Date().getFullYear();
       <a href="https://www.facebook.com/maxfield.allison" rel="me noopener" data-umami-event="outbound-facebook" class="inline-flex items-center gap-1.5">
         <Icon name="facebook" size={14} /> Facebook
       </a>
-      <a href="https://github.com/maxfield-allison/personal-site" rel="noopener" data-umami-event="outbound-source">Source</a>
+      <a href="https://github.com/maxfield-allison/personal-site" rel="noopener" data-umami-event="outbound-source" class="inline-flex items-center gap-1.5">
+        <Icon name="github" size={14} /> Source
+      </a>
     </div>
   </div>
-  <div class="max-w-3xl mx-auto px-6 pb-10 space-y-2">
+  <div class="max-w-[var(--container-shell)] mx-auto px-6 pb-10 space-y-2">
     <p class="font-mono text-[11px] text-[var(--color-ink-dim)]/70">
       <span class="text-[var(--color-accent)]">maxfieldallison.com</span>
       <span class="text-[var(--color-ink-dim)]/50"> · </span>

@@ -1,0 +1,38 @@
+---
+// fig. 1 — what dnsweaver actually does, in one line of reading.
+//
+// Hand-authored markup rather than an image: it costs nothing to ship, stays
+// crisp at any zoom, re-flows on a phone, and the text inside it is real text
+// that search engines and screen readers can read. Same hairline vocabulary as
+// the sibling site's topology diagram, kept in the explanatory tense.
+//
+// The numbers are deliberately the ones on the case study and in PROFILE: seven
+// sources, eleven providers. If those change, they change in both places.
+const sources = 'traefik · caddy · k8s · proxmox · incus …';
+const providers = 'cloudflare · technitium · pi-hole …';
+---
+
+<div
+  class="grid gap-3 items-center grid-cols-1 sm:grid-cols-[minmax(0,1fr)_2rem_minmax(0,1fr)_2rem_minmax(0,1fr)]"
+  role="img"
+  aria-label="Record flow: seven sources are reconciled by dnsweaver and written to eleven DNS providers"
+>
+  <div class="border border-[var(--color-line)] px-3.5 py-3">
+    <div class="font-mono text-xs text-[var(--color-ink)]">7 sources</div>
+    <div class="font-mono text-[0.6875rem] text-[var(--color-ink-dim)] mt-1 leading-normal">{sources}</div>
+  </div>
+
+  <div class="h-px bg-[var(--color-line)] hidden sm:block" aria-hidden="true"></div>
+
+  <div class="border border-[var(--color-accent)] px-3.5 py-3">
+    <div class="font-mono text-xs text-[var(--color-accent)]">dnsweaver</div>
+    <div class="font-mono text-[0.6875rem] text-[var(--color-ink-dim)] mt-1 leading-normal">reconcile · own · clean up</div>
+  </div>
+
+  <div class="h-px bg-[var(--color-line)] hidden sm:block" aria-hidden="true"></div>
+
+  <div class="border border-[var(--color-line)] px-3.5 py-3">
+    <div class="font-mono text-xs text-[var(--color-ink)]">11 providers</div>
+    <div class="font-mono text-[0.6875rem] text-[var(--color-ink-dim)] mt-1 leading-normal">{providers}</div>
+  </div>
+</div>

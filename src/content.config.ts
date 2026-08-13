@@ -9,6 +9,9 @@ const projects = defineCollection({
     title: z.string(),
     summary: z.string(),
     role: z.string().optional(),
+    // Short lowercase classifier shown in the case-study kicker, e.g.
+    // "open source". Sits next to the folio: "case study no. 1 · open source".
+    kind: z.string().optional(),
     stack: z.array(z.string()).default([]),
     problem: z.string().optional(),
     outcome: z.string().optional(),

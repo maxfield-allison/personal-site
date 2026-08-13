@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import DocSection from '../components/DocSection.astro';
+import Dinkus from '../components/Dinkus.astro';
 import Icon from '../components/Icon.astro';
 
 const skills = [
@@ -30,8 +32,13 @@ const recognition = [
 ---
 
 <Layout title="About · Maxfield Allison" description="Infrastructure engineer. Enterprise Azure by day, a Kubernetes homelab by night. AI-assisted engineering, not vibe coding." ogImage="/og/about.png?v=1">
-  <article class="max-w-3xl mx-auto px-6 pt-16 pb-8">
-    <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight mb-8">About</h1>
+  <article class="max-w-[var(--container-shell)] mx-auto px-6 pt-16 pb-8">
+    <div class="grid gap-4 md:gap-10 md:grid-cols-[var(--rail)_minmax(0,1fr)]">
+      <div class="font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-ink-dim)] md:pt-3">
+        the person
+      </div>
+      <div>
+    <h1 class="font-serif text-[2.25rem] sm:text-[2.75rem] font-semibold leading-tight tracking-[-0.01em] mb-8">About</h1>
 
     <div class="space-y-5 text-[var(--color-ink-dim)] leading-relaxed">
       <p class="text-lg text-[var(--color-ink)]">
@@ -76,10 +83,12 @@ const recognition = [
         a manual chore, I wrote a Go tool for it and shipped it as open source.
       </p>
     </div>
+      </div>
+    </div>
   </article>
 
-  <section class="max-w-3xl mx-auto px-6 py-8 border-t border-[var(--color-line)]">
-    <h2 class="text-xl font-semibold mb-4">How I work</h2>
+  <DocSection label="section 1" spacing="tight">
+    <h2 class="font-serif text-2xl font-semibold mb-4 mt-0">How I work</h2>
     <div class="space-y-5 text-[var(--color-ink-dim)] leading-relaxed">
       <p>
         I direct AI agents to implement, and I own the engineering. Architecture,
@@ -100,10 +109,10 @@ const recognition = [
         pretend I'm certain about something I haven't.
       </p>
     </div>
-  </section>
+  </DocSection>
 
-  <section class="max-w-3xl mx-auto px-6 py-8 border-t border-[var(--color-line)]">
-    <h2 class="text-xl font-semibold mb-5">Skills</h2>
+  <DocSection label="section 2" spacing="tight">
+    <h2 class="font-serif text-2xl font-semibold mb-5 mt-0">Skills</h2>
     <div class="flex flex-wrap gap-2 mb-8">
       {
         skills.map((s) => (
@@ -115,14 +124,14 @@ const recognition = [
       }
     </div>
 
-    <h2 class="text-xl font-semibold mb-4">Recognition</h2>
+    <h2 class="font-serif text-2xl font-semibold mb-4">Recognition</h2>
     <ul class="space-y-2 text-[var(--color-ink-dim)] leading-relaxed">
       {recognition.map((r) => <li class="flex gap-3"><span class="text-[var(--color-accent)]">·</span>{r}</li>)}
     </ul>
-  </section>
+  </DocSection>
 
-  <section class="max-w-3xl mx-auto px-6 py-8 border-t border-[var(--color-line)]">
-    <h2 class="text-xl font-semibold mb-4">Get in touch</h2>
+  <DocSection label="section 3" spacing="tight">
+    <h2 class="font-serif text-2xl font-semibold mb-4 mt-0">Get in touch</h2>
     <p class="text-[var(--color-ink-dim)] leading-relaxed mb-4">
       If you're building infrastructure and you want someone who can learn a new
       stack fast and move quickly without shipping garbage, I'd like to hear
@@ -133,5 +142,7 @@ const recognition = [
       <a href="https://www.linkedin.com/in/maxfield-allison/" rel="me noopener" data-umami-event="outbound-linkedin" class="inline-flex items-center gap-1.5"><Icon name="linkedin" size={14} /> LinkedIn →</a>
       <a href="https://bsky.app/profile/maxfieldallison.com" rel="me noopener" data-umami-event="outbound-bluesky" class="inline-flex items-center gap-1.5"><Icon name="bluesky" size={14} /> Bluesky →</a>
     </div>
-  </section>
+  </DocSection>
+
+  <Dinkus />
 </Layout>

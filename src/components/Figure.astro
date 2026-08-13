@@ -1,0 +1,26 @@
+---
+// A numbered plate: hand-authored SVG or markup diagram on a surface fill, with
+// a mono caption beneath it. Plates are one of only two things on this site
+// allowed a background fill, because they are objects sitting ON the page
+// rather than layout chrome.
+//
+// The caption is numbered ("fig. 1 — ...") because this site explains. The
+// sibling's topology diagram uses the same hairline vocabulary in the present
+// tense: it reports what is running, this reports what was built.
+interface Props {
+  /** Figure number. Numbering is per-page, counted by the author, not global. */
+  n: number;
+  /** Caption text, sentence case, no trailing period. */
+  caption: string;
+  class?: string;
+}
+
+const { n, caption, class: className } = Astro.props;
+---
+
+<figure class:list={['m-0', className]}>
+  <div class="plate">
+    <slot />
+  </div>
+  <figcaption class="plate-caption">fig. {n} — {caption}</figcaption>
+</figure>

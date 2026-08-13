@@ -62,8 +62,8 @@ const groups = [
   description="The tools, platforms, and workflow I use to build and run infrastructure."
   ogImage="/og/uses.png?v=1"
 >
-  <section class="max-w-3xl mx-auto px-6 pt-16 pb-8">
-    <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight mb-3">Uses</h1>
+  <section class="max-w-[var(--container-shell)] mx-auto px-6 pt-16 pb-8">
+    <h1 class="font-serif text-[2.25rem] sm:text-[2.75rem] font-semibold leading-tight tracking-[-0.01em] mb-3">Uses</h1>
     <p class="text-[var(--color-ink-dim)] leading-relaxed">
       The stack I reach for to build and run things. Want the hardware
       behind it? That lives on the{' '}
@@ -73,7 +73,7 @@ const groups = [
 
   {
     groups.map((group) => (
-      <section class="max-w-3xl mx-auto px-6 py-6 border-t border-[var(--color-line)]">
+      <section class="max-w-[var(--container-shell)] mx-auto px-6 py-6 border-t border-[var(--color-line)]">
         <h2 class="font-mono text-sm text-[var(--color-ink-dim)] uppercase tracking-wider mb-5">
           {group.heading}
         </h2>

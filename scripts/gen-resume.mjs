@@ -16,5 +16,20 @@ await page.pdf({
   printBackground: false,
   margin: { top: '0.6in', bottom: '0.6in', left: '0.7in', right: '0.7in' },
 });
+
+// Also render the sheet itself: a small image of the real resume, used on
+// /resume and the home page as the "this is the deliverable" signal. It is a
+// screenshot of the same print view the PDF comes from, so the picture can
+// never drift from the document it advertises — regenerate both together.
+//
+// Committed alongside resume.pdf rather than built in Docker, because both
+// need a headless browser that the node:alpine build stage does not have.
+await page.emulateMedia({ media: 'print' });
+await page.setViewportSize({ width: 816, height: 1056 }); // US Letter at 96dpi
+await page.screenshot({
+  path: 'public/resume-cover.png',
+  clip: { x: 0, y: 0, width: 816, height: 1056 },
+});
 await browser.close();
 console.log('public/resume.pdf generated');
+console.log('public/resume-cover.png generated');

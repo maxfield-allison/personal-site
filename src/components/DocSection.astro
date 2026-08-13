@@ -1,0 +1,28 @@
+---
+// A numbered section of the document: a label in the margin rail, content in
+// the text column. The rail is a true margin column — section labels, folios,
+// and dates live there and prose never enters it. Below md the rail collapses
+// and the label sits above the content, which keeps the mobile reading column
+// full width instead of squeezing it against an empty gutter.
+interface Props {
+  /** Rail label, e.g. "section 1". Rendered mono, uppercase, letterspaced. */
+  label?: string;
+  /** Vertical rhythm. Sections breathe; this site's posture is air. */
+  spacing?: 'normal' | 'tight';
+  class?: string;
+}
+
+const { label, spacing = 'normal', class: className } = Astro.props;
+const pad = spacing === 'tight' ? 'py-12' : 'py-16 sm:py-24';
+---
+
+<section class:list={['max-w-[var(--container-shell)] mx-auto px-6', className]}>
+  <div class:list={['grid gap-4 md:gap-10 md:grid-cols-[var(--rail)_minmax(0,1fr)]', pad]}>
+    <div class="font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-ink-dim)] md:pt-1.5">
+      {label}
+    </div>
+    <div class="min-w-0">
+      <slot />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,24 @@
+---
+// A section heading in the document voice: serif, followed by the thick-thin
+// ledger rule that marks a major boundary. Internal divisions inside a section
+// use a plain hairline instead.
+interface Props {
+  /** Heading level. Sections are h2; use h1 only in a page's document header. */
+  as?: 'h1' | 'h2' | 'h3';
+  /** Type size step. The scale is deliberately short. */
+  size?: 'lg' | 'md' | 'sm';
+  class?: string;
+}
+
+const { as: Tag = 'h2', size = 'md', class: className } = Astro.props;
+const sizes = {
+  lg: 'text-[2rem] sm:text-[2.375rem]',
+  md: 'text-2xl sm:text-[1.875rem]',
+  sm: 'text-xl sm:text-[1.3125rem]',
+};
+---
+
+<Tag class:list={['font-serif font-semibold tracking-[-0.01em] leading-tight m-0', sizes[size], className]}>
+  <slot />
+</Tag>
+<div class="rule-double mt-5"></div>

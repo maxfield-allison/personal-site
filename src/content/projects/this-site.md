@@ -1,6 +1,7 @@
 ---
 title: This Site
 summary: The site you're reading. Astro, self-hosted on my Kubernetes cluster as the primary origin, with a Cloudflare Pages failover mirror and an edge Worker that switches between them automatically.
+kind: infrastructure
 role: Designed and built it (AI-assisted)
 stack:
   - Astro

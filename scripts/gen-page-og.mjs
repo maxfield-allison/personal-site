@@ -80,19 +80,24 @@ function svg(title, subtitle) {
   const subTspans = subLines
     .map((l, i) => `<text x="80" y="${360 + i * 48}" font-family="'DejaVu Sans', system-ui, sans-serif" font-size="34" fill="#9aa7b6">${escapeXml(l)}</text>`)
     .join('\n  ');
+  // A title page in the document system: mono kicker, serif title, and the
+  // thick-thin ledger rule that marks a major boundary everywhere else on the
+  // site. Serif is the whole point — it is what separates this card from
+  // probablyfine.dev's, exactly as it separates the two sites.
+  //
+  // Fonts here are the ones fontconfig can see inside the build container
+  // (ttf-dejavu), not the site's webfonts: librsvg resolves by family name
+  // against installed system fonts, and DejaVu Serif is the serif that ships.
+  // The card reads as a serif document even though it is not Source Serif 4.
   return `<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0b0f14"/>
-      <stop offset="1" stop-color="#131a22"/>
-    </linearGradient>
-  </defs>
-  <rect width="1200" height="630" fill="url(#bg)"/>
-  <rect x="0" y="0" width="1200" height="6" fill="#4f9cff"/>
-  <text x="80" y="130" font-family="'DejaVu Sans Mono', monospace" font-size="26" fill="#9aa7b6">maxfieldallison.com</text>
-  <text x="78" y="285" font-family="'DejaVu Sans', system-ui, sans-serif" font-size="76" font-weight="600" fill="#e7ecf2">${escapeXml(title)}</text>
+  <rect width="1200" height="630" fill="#0b0f14"/>
+  <text x="80" y="118" font-family="'DejaVu Sans Mono', monospace" font-size="24" letter-spacing="3" fill="#9aa7b6">MAXFIELDALLISON.COM</text>
+  <rect x="80" y="150" width="1040" height="3" fill="#24303c"/>
+  <rect x="80" y="157" width="1040" height="1" fill="#24303c"/>
+  <text x="78" y="290" font-family="'DejaVu Serif', Georgia, serif" font-size="76" font-weight="600" fill="#e7ecf2">${escapeXml(title)}</text>
   ${subTspans}
-  <text x="80" y="560" font-family="'DejaVu Sans Mono', monospace" font-size="22" fill="#4f9cff">Kubernetes / GitOps / Go / Azure</text>
+  <rect x="80" y="516" width="1040" height="1" fill="#24303c"/>
+  <text x="80" y="562" font-family="'DejaVu Sans Mono', monospace" font-size="22" fill="#4f9cff">Kubernetes / GitOps / Go / Azure</text>
 </svg>`;
 }
 

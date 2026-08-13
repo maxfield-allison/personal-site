@@ -1,6 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { fetchStars } from '../../lib/github';
+import Dinkus from '../../components/Dinkus.astro';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects', ({ data }) => !data.draft);
@@ -11,34 +13,16 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { title, summary, role, stack, links } = project.data;
+const { title, summary, role, kind, stack, links, order } = project.data;
 const { Content } = await render(project);
 
 const site = Astro.site ?? 'https://maxfieldallison.com';
 const pageUrl = new URL(`/projects/${project.id}`, site).href;
 const repoLink = links.find((l) => /github\.com/i.test(l.url));
 
-// Live social proof: fetch the repo's star count at build time. Resilient, like
-// the RSS pull on the home page. A failed/rate-limited fetch just yields no
-// badge, never a broken build. Unauthenticated GitHub API is fine at build.
-let stars: number | null = null;
-if (repoLink) {
-  const m = repoLink.url.match(/github\.com\/([^/]+)\/([^/#?]+)/i);
-  if (m) {
-    try {
-      const res = await fetch(`https://api.github.com/repos/${m[1]}/${m[2].replace(/\.git$/, '')}`, {
-        headers: { Accept: 'application/vnd.github+json', 'User-Agent': 'maxfieldallison.com-build' },
-        signal: AbortSignal.timeout(8000),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        if (typeof data.stargazers_count === 'number') stars = data.stargazers_count;
-      }
-    } catch {
-      stars = null;
-    }
-  }
-}
+// Live social proof: the star count is fetched at build time and baked in.
+// Shared with the home page's stat table so both quote the same fetch policy.
+const stars = await fetchStars(repoLink?.url);
 
 // Breadcrumb trail for richer search results.
 const breadcrumbLd = {
@@ -69,49 +53,67 @@ const softwareLd = repoLink
 <Layout title={`${title} · Maxfield Allison`} description={summary} ogImage={`/og/${project.id}.png?v=1`} ogType="article">
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
   {softwareLd && <script type="application/ld+json" set:html={JSON.stringify(softwareLd)} />}
-  <article class="max-w-3xl mx-auto px-6 pt-16">
+  <article class="max-w-[var(--container-shell)] mx-auto px-6 pt-12 sm:pt-16 pb-8">
     <a href="/projects" class="font-mono text-sm text-[var(--color-ink-dim)] no-underline hover:no-underline hover:text-[var(--color-ink)]">
       ← Work
     </a>
 
-    <header class="mt-6 mb-10">
-      <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight mb-3">{title}</h1>
-      <p class="text-lg text-[var(--color-ink-dim)] leading-relaxed mb-5">{summary}</p>
+    {/* Metadata lives in the margin rail as marginalia; the text column carries
+        the document header and the prose. Below md the rail stacks above. */}
+    <div class="grid gap-6 md:gap-10 md:grid-cols-[var(--rail)_minmax(0,1fr)] mt-8">
+      <aside class="font-mono text-xs text-[var(--color-ink-dim)] space-y-5">
+        <div class="font-serif text-2xl not-italic text-[var(--color-ink-dim)]">No. {order}</div>
 
-      {role && (
-        <p class="font-mono text-xs text-[var(--color-ink-dim)] mb-4">
-          Role: <span class="text-[var(--color-ink)]">{role}</span>
-        </p>
-      )}
-
-      <div class="flex flex-wrap gap-2 mb-5">
-        {
-          stack.map((tag) => (
-            <span class="font-mono text-[11px] text-[var(--color-ink-dim)] border border-[var(--color-line)] rounded px-2 py-0.5">
-              {tag}
-            </span>
-          ))
-        }
-      </div>
-
-      {
-        links.length > 0 && (
-          <div class="flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-sm">
-            {links.map((l) => (
-              <a href={l.url} rel="noopener" data-umami-event={`outbound-${project.id}-${l.label.toLowerCase()}`}>
-                {l.label} →
-              </a>
-            ))}
-            {stars !== null && (
-              <span class="text-[var(--color-ink-dim)]">★ {stars.toLocaleString()} on GitHub</span>
-            )}
+        {role && (
+          <div>
+            <div class="uppercase tracking-[0.12em] opacity-70">Role</div>
+            <div class="mt-1 text-[var(--color-ink)] leading-snug">{role}</div>
           </div>
-        )
-      }
-    </header>
+        )}
 
-    <div class="prose-content space-y-4 text-[var(--color-ink-dim)] leading-relaxed border-t border-[var(--color-line)] pt-8">
-      <Content />
+        <div>
+          <div class="uppercase tracking-[0.12em] opacity-70">Stack</div>
+          <ul class="mt-1 list-none p-0 m-0 space-y-0.5 leading-snug">
+            {stack.map((tag) => <li>{tag}</li>)}
+          </ul>
+        </div>
+
+        {links.length > 0 && (
+          <div>
+            <div class="uppercase tracking-[0.12em] opacity-70">Links</div>
+            <ul class="mt-1 list-none p-0 m-0 space-y-1">
+              {links.map((l) => (
+                <li>
+                  <a href={l.url} rel="noopener" data-umami-event={`outbound-${project.id}-${l.label.toLowerCase()}`}>
+                    {l.label} →
+                  </a>
+                </li>
+              ))}
+              {stars !== null && <li class="opacity-80">★ {stars.toLocaleString()} on GitHub</li>}
+            </ul>
+          </div>
+        )}
+      </aside>
+
+      <div class="min-w-0">
+        <header>
+          <p class="font-mono text-xs uppercase tracking-[0.1em] text-[var(--color-ink-dim)] m-0">
+            <span class="text-[var(--color-accent)]">case study no. {order}</span>{kind && <> · {kind}</>}
+          </p>
+          <h1 class="mt-4 mb-0 font-serif text-[2rem] sm:text-[2.375rem] font-semibold leading-tight tracking-[-0.01em]">
+            {title}
+          </h1>
+          <p class="mt-5 mb-0 font-serif text-lg leading-[1.65] text-[var(--color-ink-dim)] max-w-[58ch]">
+            {summary}
+          </p>
+          <div class="rule-double mt-7"></div>
+        </header>
+
+        <div class="prose-content space-y-4 text-[var(--color-ink-dim)] leading-relaxed pt-8">
+          <Content />
+        </div>
+        <Dinkus />
+      </div>
     </div>
   </article>
 
@@ -139,17 +141,26 @@ const softwareLd = repoLink
 <style is:global>
   .prose-content h2 {
     color: var(--color-ink);
-    font-size: 1.25rem;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
     font-weight: 600;
-    margin-top: 2rem;
+    margin-top: 2.25rem;
     margin-bottom: 0.75rem;
   }
   .prose-content h3 {
     color: var(--color-ink);
-    font-size: 1.05rem;
+    font-family: var(--font-serif);
+    font-size: 1.1875rem;
     font-weight: 600;
-    margin-top: 1.5rem;
+    margin-top: 1.75rem;
     margin-bottom: 0.5rem;
+  }
+  /* Prose stops at the measure even though the text column is wider, so the
+     document keeps a readable line length. */
+  .prose-content p,
+  .prose-content ul,
+  .prose-content ol {
+    max-width: 60ch;
   }
   .prose-content ul {
     list-style: disc;

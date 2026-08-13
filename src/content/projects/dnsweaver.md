@@ -1,6 +1,7 @@
 ---
 title: dnsweaver
 summary: An open-source Go tool that creates DNS records automatically for containers, VMs and clusters, reading from seven sources and writing to eleven DNS providers, so records follow your services instead of drifting out of date.
+kind: open source
 role: Author and maintainer
 stack:
   - Go

@@ -1,0 +1,18 @@
+---
+// The end-of-document mark: three accent squares, centered.
+//
+// A dinkus is the typographic device that closes a passage in a printed
+// document. It is the smallest recurring mark in this system, and the only
+// purely ornamental one, so it is used sparingly — at the end of a case study
+// or a substantial page, never between sections of the same argument.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div class:list={['flex justify-center items-center gap-2 py-10', className]} role="presentation">
+  <span class="block w-1.5 h-1.5 bg-[var(--color-accent)]"></span>
+  <span class="block w-1.5 h-1.5 bg-[var(--color-accent)]"></span>
+  <span class="block w-1.5 h-1.5 bg-[var(--color-accent)]"></span>
+</div>
