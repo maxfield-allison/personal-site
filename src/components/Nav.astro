@@ -8,6 +8,9 @@ interface NavLink {
   label: string;
   external?: boolean;
   umami?: string;
+  /** The one emphasised destination: rendered as a bordered pill, because the
+      resume is the highest-value thing on the site and the nav should say so. */
+  cta?: boolean;
 }
 
 const links: NavLink[] = [
@@ -15,16 +18,18 @@ const links: NavLink[] = [
   { href: '/about', label: 'About' },
   { href: '/projects', label: 'Work' },
   { href: '/uses', label: 'Uses' },
-  { href: '/resume', label: 'Resume' },
   { href: 'https://probablyfine.dev?utm_source=maxfieldallison&utm_medium=site', label: 'Blog', external: true, umami: 'outbound-probablyfine' },
   { href: 'https://github.com/maxfield-allison', label: 'GitHub', external: true, umami: 'outbound-github' },
+  { href: '/resume', label: 'Resume', cta: true, umami: 'nav-resume' },
 ];
 
 const linkClass = (l: NavLink) => [
   'no-underline hover:no-underline transition-colors',
-  !l.external && isActive(l.href)
-    ? 'text-[var(--color-ink)]'
-    : 'text-[var(--color-ink-dim)] hover:text-[var(--color-ink)]',
+  l.cta
+    ? 'text-[var(--color-accent)] border border-[var(--color-line)] rounded-full px-3.5 py-1.5 hover:border-[var(--color-accent)]'
+    : !l.external && isActive(l.href)
+      ? 'text-[var(--color-ink)]'
+      : 'text-[var(--color-ink-dim)] hover:text-[var(--color-ink)]',
 ];
 const relFor = (l: NavLink) => (l.label === 'GitHub' ? 'me noopener' : l.external ? 'noopener' : undefined);
 ---
@@ -32,7 +37,7 @@ const relFor = (l: NavLink) => (l.label === 'GitHub' ? 'me noopener' : l.externa
 <header class="border-b border-[var(--color-line)]">
   <nav aria-label="Primary" class="max-w-[var(--container-shell)] mx-auto px-6 h-16 flex items-center justify-between">
     <a href="/" class="font-mono text-sm text-[var(--color-ink)] no-underline hover:no-underline">
-      maxfield<span class="text-[var(--color-accent)]">.allison</span>
+      <span class="inline-block w-2 h-2 bg-[var(--color-accent)] mr-2.5 align-middle" aria-hidden="true"></span>maxfield <span class="text-[var(--color-accent)]">.allison</span>
     </a>
 
     {/* Desktop: inline row */}

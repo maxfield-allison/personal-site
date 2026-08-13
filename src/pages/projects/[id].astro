@@ -3,6 +3,8 @@ import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { fetchStars } from '../../lib/github';
 import Dinkus from '../../components/Dinkus.astro';
+import Figure from '../../components/Figure.astro';
+import RecordFlow from '../../components/RecordFlow.astro';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects', ({ data }) => !data.draft);
@@ -58,58 +60,71 @@ const softwareLd = repoLink
       ← Work
     </a>
 
-    {/* Metadata lives in the margin rail as marginalia; the text column carries
-        the document header and the prose. Below md the rail stacks above. */}
+    {/* The rail carries only the folio, ghosted in --color-line so it reads as
+        a printed page number rather than content. Metadata is a ruled table in
+        the text column: label left, value right, hairline between rows. */}
     <div class="grid gap-6 md:gap-10 md:grid-cols-[var(--rail)_minmax(0,1fr)] mt-8">
-      <aside class="font-mono text-xs text-[var(--color-ink-dim)] space-y-5">
-        <div class="font-serif text-2xl not-italic text-[var(--color-ink-dim)]">No. {order}</div>
-
-        {role && (
-          <div>
-            <div class="uppercase tracking-[0.12em] opacity-70">Role</div>
-            <div class="mt-1 text-[var(--color-ink)] leading-snug">{role}</div>
-          </div>
-        )}
-
-        <div>
-          <div class="uppercase tracking-[0.12em] opacity-70">Stack</div>
-          <ul class="mt-1 list-none p-0 m-0 space-y-0.5 leading-snug">
-            {stack.map((tag) => <li>{tag}</li>)}
-          </ul>
+      <aside>
+        <div class="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-ink-dim)]">
+          case study
         </div>
-
-        {links.length > 0 && (
-          <div>
-            <div class="uppercase tracking-[0.12em] opacity-70">Links</div>
-            <ul class="mt-1 list-none p-0 m-0 space-y-1">
-              {links.map((l) => (
-                <li>
-                  <a href={l.url} rel="noopener" data-umami-event={`outbound-${project.id}-${l.label.toLowerCase()}`}>
-                    {l.label} →
-                  </a>
-                </li>
-              ))}
-              {stars !== null && <li class="opacity-80">★ {stars.toLocaleString()} on GitHub</li>}
-            </ul>
-          </div>
-        )}
+        <div class="font-serif text-[2.75rem] font-semibold leading-none mt-2 text-[var(--color-line)]">
+          No. {order}
+        </div>
       </aside>
 
       <div class="min-w-0">
         <header>
           <p class="font-mono text-xs uppercase tracking-[0.1em] text-[var(--color-ink-dim)] m-0">
-            <span class="text-[var(--color-accent)]">case study no. {order}</span>{kind && <> · {kind}</>}
+            <span class="text-[var(--color-accent)]">case study no. {order}</span>{kind && <> · {kind}</>}{role && <> · {role}</>}
           </p>
-          <h1 class="mt-4 mb-0 font-serif text-[2rem] sm:text-[2.375rem] font-semibold leading-tight tracking-[-0.01em]">
+          <h1 class="mt-4 mb-0 font-serif text-[2.75rem] sm:text-[3.5rem] font-semibold leading-[1.05] tracking-[-0.01em]">
             {title}
           </h1>
-          <p class="mt-5 mb-0 font-serif text-lg leading-[1.65] text-[var(--color-ink-dim)] max-w-[58ch]">
+          <p class="mt-5 mb-0 font-serif text-lg sm:text-xl leading-[1.6] text-[var(--color-ink-dim)] max-w-[58ch]">
             {summary}
           </p>
-          <div class="rule-double mt-7"></div>
         </header>
 
-        <div class="prose-content space-y-4 text-[var(--color-ink-dim)] leading-relaxed pt-8">
+        {/* Specification table. The ledger head opens it, hairlines divide the
+            rows, and the labels stay mono while the values take the reading
+            voice — the document's way of stating facts about itself. */}
+        <div class="mt-9">
+          <div class="rule-double"></div>
+          <dl class="grid grid-cols-[5.5rem_minmax(0,1fr)] sm:grid-cols-[10rem_minmax(0,1fr)] m-0">
+            {role && (
+              <>
+                <dt class="py-3.5 font-mono text-xs text-[var(--color-ink-dim)] border-b border-[var(--color-line)]">role</dt>
+                <dd class="py-3.5 m-0 text-sm border-b border-[var(--color-line)]">{role}</dd>
+              </>
+            )}
+            <dt class="py-3.5 font-mono text-xs text-[var(--color-ink-dim)] border-b border-[var(--color-line)]">stack</dt>
+            <dd class="py-3.5 m-0 font-mono text-xs text-[var(--color-ink)] border-b border-[var(--color-line)] flex flex-wrap gap-x-3 gap-y-1">
+              {stack.map((tag) => <span>{tag}</span>)}
+            </dd>
+            {links.length > 0 && (
+              <>
+                <dt class="py-3.5 font-mono text-xs text-[var(--color-ink-dim)] border-b border-[var(--color-line)]">source</dt>
+                <dd class="py-3.5 m-0 font-mono text-[13px] border-b border-[var(--color-line)] flex flex-wrap gap-x-5 gap-y-1 items-baseline">
+                  {links.map((l) => (
+                    <a href={l.url} rel="noopener" data-umami-event={`outbound-${project.id}-${l.label.toLowerCase()}`}>
+                      {l.url.replace(/^https?:\/\//, '')} →
+                    </a>
+                  ))}
+                  {stars !== null && <span class="text-[var(--color-ink-dim)]">★ {stars.toLocaleString()}</span>}
+                </dd>
+              </>
+            )}
+          </dl>
+        </div>
+
+        {project.id === 'dnsweaver' && (
+          <Figure n={1} caption="record flow: seven sources reconciled to eleven providers" class="mt-9">
+            <RecordFlow />
+          </Figure>
+        )}
+
+        <div class="prose-content space-y-4 text-[var(--color-ink-dim)] leading-relaxed pt-4">
           <Content />
         </div>
         <Dinkus />
@@ -139,6 +154,17 @@ const softwareLd = repoLink
 </Layout>
 
 <style is:global>
+  .prose-content {
+    counter-reset: docsection;
+  }
+  /* Sections number themselves. The document numbers its own parts, and doing
+     it from a counter means the markdown stays plain and the numbers can never
+     fall out of order the way hand-typed ones do. */
+  .prose-content h2::before {
+    content: counter(docsection) '\00a0\00b7\00a0';
+    counter-increment: docsection;
+    color: var(--color-accent);
+  }
   .prose-content h2 {
     color: var(--color-ink);
     font-family: var(--font-serif);

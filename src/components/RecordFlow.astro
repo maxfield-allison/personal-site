@@ -8,31 +8,40 @@
 //
 // The numbers are deliberately the ones on the case study and in PROFILE: seven
 // sources, eleven providers. If those change, they change in both places.
-const sources = 'traefik · caddy · k8s · proxmox · incus …';
-const providers = 'cloudflare · technitium · pi-hole …';
+// Three lines each, as the design sets them: enough to show the breadth
+// without turning the plate into a feature list.
+const sources = ['traefik · caddy · nginx-proxy', 'native labels · kubernetes', 'proxmox ve · incus'];
+const middle = ['reconcile records', 'track ownership', 'create · update · clean up'];
+const providers = ['cloudflare · technitium', 'pi-hole · and eight more', 'per-provider zones'];
 ---
 
 <div
-  class="grid gap-3 items-center grid-cols-1 sm:grid-cols-[minmax(0,1fr)_2rem_minmax(0,1fr)_2rem_minmax(0,1fr)]"
+  class="grid gap-2 items-stretch grid-cols-1 sm:grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,1fr)_2.5rem_minmax(0,1fr)]"
   role="img"
   aria-label="Record flow: seven sources are reconciled by dnsweaver and written to eleven DNS providers"
 >
-  <div class="border border-[var(--color-line)] px-3.5 py-3">
-    <div class="font-mono text-xs text-[var(--color-ink)]">7 sources</div>
-    <div class="font-mono text-[0.6875rem] text-[var(--color-ink-dim)] mt-1 leading-normal">{sources}</div>
+  <div class="border border-[var(--color-line)] px-4.5 py-4">
+    <div class="font-mono text-[13px] text-[var(--color-ink)]">7 sources</div>
+    <div class="font-mono text-[0.6875rem] text-[var(--color-ink-dim)] mt-2 leading-[1.7]">
+      {sources.map((l) => <div>{l}</div>)}
+    </div>
   </div>
 
-  <div class="h-px bg-[var(--color-line)] hidden sm:block" aria-hidden="true"></div>
+  <div class="hidden sm:flex items-center" aria-hidden="true"><div class="w-full h-px bg-[var(--color-line)]"></div></div>
 
-  <div class="border border-[var(--color-accent)] px-3.5 py-3">
-    <div class="font-mono text-xs text-[var(--color-accent)]">dnsweaver</div>
-    <div class="font-mono text-[0.6875rem] text-[var(--color-ink-dim)] mt-1 leading-normal">reconcile · own · clean up</div>
+  <div class="border border-[var(--color-accent)] px-4.5 py-4">
+    <div class="font-mono text-[13px] text-[var(--color-accent)]">dnsweaver</div>
+    <div class="font-mono text-[0.6875rem] text-[var(--color-ink-dim)] mt-2 leading-[1.7]">
+      {middle.map((l) => <div>{l}</div>)}
+    </div>
   </div>
 
-  <div class="h-px bg-[var(--color-line)] hidden sm:block" aria-hidden="true"></div>
+  <div class="hidden sm:flex items-center" aria-hidden="true"><div class="w-full h-px bg-[var(--color-line)]"></div></div>
 
-  <div class="border border-[var(--color-line)] px-3.5 py-3">
-    <div class="font-mono text-xs text-[var(--color-ink)]">11 providers</div>
-    <div class="font-mono text-[0.6875rem] text-[var(--color-ink-dim)] mt-1 leading-normal">{providers}</div>
+  <div class="border border-[var(--color-line)] px-4.5 py-4">
+    <div class="font-mono text-[13px] text-[var(--color-ink)]">11 providers</div>
+    <div class="font-mono text-[0.6875rem] text-[var(--color-ink-dim)] mt-2 leading-[1.7]">
+      {providers.map((l) => <div>{l}</div>)}
+    </div>
   </div>
 </div>
