@@ -38,6 +38,11 @@ const PAGES = [
     title: 'Uses',
     subtitle: 'The tools and workflow I actually use to build and run infrastructure.',
   },
+  {
+    name: 'pets',
+    title: 'Appendix A',
+    subtitle: 'Back matter. The animals that run the house.',
+  },
 ];
 
 function frontmatter(md) {

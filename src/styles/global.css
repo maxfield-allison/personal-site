@@ -176,3 +176,40 @@
   line-height: 1.5;
   color: var(--color-ink-dim);
 }
+
+/* ---------------------------------------------------------------------------
+   Motion: one verb, "arrive"
+
+   A document has exactly one native motion — something being set down on the
+   desk. So this is the whole motion budget: objects that sit ON the page
+   (plates, the resume cover, the stat table) settle as they enter. Prose,
+   headings, rules and chrome never move; text that fades in is a website
+   performing rather than a document being handled.
+
+   Scroll-driven, so there is no JS and no IntersectionObserver: a browser
+   without view() timelines renders the page static, which is a correct
+   rendering of this site rather than a degraded one. The global
+   reduced-motion block above cannot switch a scroll-driven animation off by
+   shortening its duration (the range is the duration), so the preference is
+   honoured explicitly here.
+   --------------------------------------------------------------------------- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .arrive {
+      animation: arrive ease-out both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 25%;
+    }
+  }
+}
+
+@keyframes arrive {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

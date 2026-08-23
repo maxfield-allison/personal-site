@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Dinkus from '../components/Dinkus.astro';
+import { pets } from '../data/pets';
+
+// Appendix A.
+//
+// A document already has the right container for warm but off-topic material:
+// back matter. Framing the page as an appendix keeps the register (a recruiter
+// reads it as self-aware rather than as a pet blog) and explains its own
+// placement — appendices are not chapters, so this page is linked from the
+// footer and as marginalia on /about, never from the nav. The nav is the spine
+// of the resume.
+//
+// The route stays plain: the appendix framing belongs in the kicker, not the
+// URL.
+---
+
+<Layout
+  title="Appendix A · The pets · Maxfield Allison"
+  description="Back matter. The animals that run the house."
+  ogImage="/og/pets.png?v=1"
+>
+  <article class="max-w-[var(--container-shell)] mx-auto px-6 pt-16 pb-8">
+    <div class="grid gap-4 md:gap-10 md:grid-cols-[var(--rail)_minmax(0,1fr)]">
+      {/* The rail carries the folio, the way a printed appendix does. */}
+      <div class="max-md:hidden">
+        <div class="font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-ink-dim)]">
+          back matter
+        </div>
+        <div class="font-serif text-[2.75rem] font-semibold leading-none text-[var(--color-line)] mt-2" aria-hidden="true">
+          A
+        </div>
+      </div>
+
+      <div>
+        <p class="font-mono text-xs uppercase tracking-[0.1em] text-[var(--color-ink-dim)] m-0">
+          <span class="text-[var(--color-accent)]">appendix a</span> · the pets
+        </p>
+        <h1 class="mt-4 mb-0 font-serif text-[2rem] sm:text-[3rem] font-semibold leading-tight tracking-[-0.01em]">
+          Supporting documentation.
+        </h1>
+
+        {/* One line, yours. */}
+
+        <div class="rule-double mt-8"></div>
+
+        <div class="grid gap-6 sm:grid-cols-2 mt-9">
+          {
+            pets.map((pet, i) => (
+              <figure class="plate arrive m-0">
+                <img
+                  src={pet.src}
+                  alt={pet.alt}
+                  width="800"
+                  height="1000"
+                  loading={i < 2 ? 'eager' : 'lazy'}
+                  decoding="async"
+                  class="w-full aspect-[4/5] object-cover rounded"
+                />
+                <figcaption class="plate-caption">
+                  plate {i + 1} — <span class="text-[var(--color-ink)]">{pet.name}</span> · {pet.kind}, b. {pet.born}
+                  <br />
+                  {pet.line}
+                </figcaption>
+              </figure>
+            ))
+          }
+        </div>
+
+        <p class="font-mono text-xs text-[var(--color-ink-dim)] mt-7">
+          end of appendix a · <a href="/about">return to about →</a>
+        </p>
+      </div>
+    </div>
+  </article>
+
+  <Dinkus />
+</Layout>
