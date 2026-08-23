@@ -10,6 +10,11 @@ interface Props {
   bare?: boolean;
   ogImage?: string;
   ogType?: string;
+  /** Keep a page out of search results while it is still a shell. A route that
+      builds before its content exists is reachable and indexable the moment it
+      ships, and an empty page in a search result costs more than the page is
+      worth. Pair it with the sitemap filter in astro.config.mjs. */
+  noindex?: boolean;
 }
 
 const {
@@ -18,6 +23,7 @@ const {
   bare = false,
   ogImage: ogImageProp,
   ogType = 'website',
+  noindex = false,
 } = Astro.props;
 
 // Flat-file build makes Astro.url.pathname carry .html at build time, but nginx
@@ -95,6 +101,7 @@ const personLd = {
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonical.href} />
 
     <meta property="og:type" content={ogType} />

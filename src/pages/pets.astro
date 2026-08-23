@@ -20,6 +20,7 @@ import { pets } from '../data/pets';
   title="Appendix A · The pets · Maxfield Allison"
   description="Back matter. The animals that run the house."
   ogImage="/og/pets.png?v=1"
+  noindex={pets.length === 0}
 >
   <article class="max-w-[var(--container-shell)] mx-auto px-6 pt-16 pb-8">
     <div class="grid gap-4 md:gap-10 md:grid-cols-[var(--rail)_minmax(0,1fr)]">

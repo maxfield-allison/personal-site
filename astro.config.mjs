@@ -7,7 +7,12 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://maxfieldallison.com',
-  integrations: [sitemap()],
+  // /pets is built but has no plates yet, so it is kept out of the sitemap to
+  // match the noindex it carries while empty. Submitting a URL for indexing and
+  // telling the crawler not to index it are contradictory signals, so the two
+  // guards belong together — and they come off together, in the same commit
+  // that adds the photos. Tracked in personal-site#1.
+  integrations: [sitemap({ filter: (page) => !page.endsWith('/pets') })],
   // Prefetch internal links on hover/tap for near-instant navigation. Static
   // pages, so this is just a small HTML fetch primed into cache.
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
