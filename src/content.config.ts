@@ -37,4 +37,17 @@ const posts = defineCollection({
   }),
 });
 
-export const collections = { projects, posts };
+// Field notes. Short incident write-ups: what broke, what was diagnosed, what
+// changed afterwards. Shorter and tighter than a case study, and capped at three
+// on the site at a time (see the content pipeline in the brain vault).
+const notes = defineCollection({
+  loader: glob({ base: './src/content/notes', pattern: '**/*.{md,mdx}' }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    date: z.coerce.date(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { projects, notes };

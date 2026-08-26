@@ -1,0 +1,40 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ProseStyles from '../../components/ProseStyles.astro';
+import ReadTracker from '../../components/ReadTracker.astro';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes', ({ data }) => !data.draft);
+  return notes.map((note) => ({ params: { id: note.id }, props: { note } }));
+}
+
+const { note } = Astro.props;
+const { title, summary, date } = note.data;
+const { Content } = await render(note);
+const fmt = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Layout title={`${title} · Maxfield Allison`} description={summary} ogImage="/og/notes.png?v=1" ogType="article">
+  <article class="max-w-[var(--container-shell)] mx-auto px-6 pt-12 sm:pt-16 pb-8">
+    <div class="grid gap-4 md:gap-10 md:grid-cols-[var(--rail)_minmax(0,1fr)]">
+      <div></div>
+      <div>
+        <p class="font-mono text-xs text-[var(--color-ink-dim)] m-0">
+          <span class="text-[var(--color-accent)]">field note</span> · {fmt}
+        </p>
+        <h1 class="mt-4 mb-0 font-serif text-[2rem] sm:text-[2.5rem] font-semibold leading-[1.15] tracking-[-0.01em]">
+          {title}
+        </h1>
+        <p class="mt-5 mb-0 font-serif text-lg leading-[1.65] text-[var(--color-ink-dim)] max-w-[58ch]">{summary}</p>
+        <div class="rule-double mt-7"></div>
+        <div class="prose-content space-y-4 text-[var(--color-ink-dim)] leading-relaxed pt-4">
+          <Content />
+        </div>
+        <p class="mt-10 mb-0 text-[0.9375rem]"><a href="/notes">← All field notes</a></p>
+      </div>
+    </div>
+  </article>
+  <ReadTracker event="field-note-read" id={note.id} />
+  <ProseStyles />
+</Layout>

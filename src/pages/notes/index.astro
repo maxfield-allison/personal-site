@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import DocSection from '../../components/DocSection.astro';
+
+const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+const fmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+---
+
+<Layout title="Field notes · Maxfield Allison" description="Short incident write-ups: what broke, what was diagnosed, and what changed afterwards." ogImage="/og/notes.png?v=1">
+  <section class="max-w-[var(--container-shell)] mx-auto px-6">
+    <div class="grid gap-4 md:gap-10 md:grid-cols-[var(--rail)_minmax(0,1fr)] pt-16 pb-4 sm:pt-24">
+      <div></div>
+      <div>
+        <p class="font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-ink-dim)] m-0">the margins</p>
+        <h1 class="mt-5 mb-0 font-serif text-[2.25rem] sm:text-[2.75rem] font-semibold leading-tight tracking-[-0.01em]">
+          Field notes
+        </h1>
+        <p class="mt-5 mb-0 font-serif text-lg leading-[1.65] text-[var(--color-ink-dim)] max-w-[58ch]">
+          Things that broke, what they turned out to be, and what changed afterwards. The wrong turns stay in.
+        </p>
+        <div class="rule-double mt-7"></div>
+      </div>
+    </div>
+  </section>
+
+  <DocSection label="the notes" labelAs="h2" spacing="tight">
+    {notes.length === 0 && <p class="text-[var(--color-ink-dim)] leading-relaxed">Nothing filed yet.</p>}
+    <div class="border-t border-[var(--color-line)]">
+      {notes.map((note, i) => (
+        <article class="py-6 border-b border-[var(--color-line)]">
+          <p class="font-mono text-xs text-[var(--color-ink-dim)] m-0">
+            <span class="text-[var(--color-accent)]">note no. {notes.length - i}</span> · {fmt(note.data.date)}
+          </p>
+          <h3 class="mt-2 mb-0 font-serif text-[1.375rem] font-semibold leading-snug">
+            <a href={`/notes/${note.id}`} class="no-underline hover:underline">{note.data.title}</a>
+          </h3>
+          <p class="mt-2 mb-0 text-[var(--color-ink-dim)] leading-relaxed max-w-[60ch]">{note.data.summary}</p>
+        </article>
+      ))}
+    </div>
+  </DocSection>
+</Layout>
