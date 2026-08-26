@@ -13,7 +13,7 @@ links:
   - label: Source
     url: https://github.com/maxfield-allison/personal-site
 featured: true
-order: 3
+order: 6
 date: 2026-07-09
 ---
 

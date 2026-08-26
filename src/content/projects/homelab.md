@@ -12,7 +12,7 @@ stack:
   - Ansible
   - GPU time-slicing
 featured: true
-order: 2
+order: 5
 date: 2026-03-01
 ---
 

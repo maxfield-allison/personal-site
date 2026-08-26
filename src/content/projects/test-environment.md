@@ -9,7 +9,7 @@ stack:
   - Cost modeling
   - Change management
 featured: true
-order: 1
+order: 2
 date: 2025-03-01
 draft: true
 ---
