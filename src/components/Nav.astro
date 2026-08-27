@@ -34,7 +34,9 @@ const linkClass = (l: NavLink) => [
 const relFor = (l: NavLink) => (l.label === 'GitHub' ? 'me noopener' : l.external ? 'noopener' : undefined);
 ---
 
-<header class="border-b border-[var(--color-line)]">
+<header
+  class="sticky top-0 z-40 bg-[var(--color-base)] border-b border-[var(--color-line)] print:static"
+>
   <nav aria-label="Primary" class="max-w-[var(--container-shell)] mx-auto px-6 h-16 flex items-center justify-between">
     <a href="/" class="font-mono text-sm text-[var(--color-ink)] no-underline hover:no-underline">
       <span class="inline-block w-2 h-2 bg-[var(--color-accent)] mr-2.5 align-middle" aria-hidden="true"></span>maxfield <span class="text-[var(--color-accent)]">.allison</span>
