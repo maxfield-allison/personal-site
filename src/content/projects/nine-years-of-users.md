@@ -12,12 +12,12 @@ stack:
 featured: true
 order: 5
 date: 2026-01-30
-draft: false
+draft: true  # HELD - Max: too obviously piracy, needs a rework
 ---
 
-In 2017 I put a media server on a machine in my house so friends and family could watch things. It ran until January 2026 and went from about twenty active users to roughly a hundred.
+In 2017 I put a media server on a machine in my house so friends and family could watch things and so my wife and I could stop throwing money at 50 different streaming services for the one show they had that we wanted to binge. It ran until January 2026 and went from about twenty active users to roughly a hundred.
 
-It was an experiment I forced on myself, and by extension on my wife, because the only way I know to actually learn something is to be on the hook for it. Every part of it was mine. That includes the part where somebody messages you on a Saturday because it's broken and has no interest in why.
+It was an experiment I forced on myself, and by extension on my wife, because the only way I know to actually learn something is to be on the hook for it. Every part of the application stack and platform underneath it was mine. Not to mention the instances where somebody messages you on a Friday night because the Game of Thrones season premier is giving them a cryptic
 
 ## Capacity was a bandwidth problem
 

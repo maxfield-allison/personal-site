@@ -20,7 +20,11 @@ export default defineConfig({
   // telling the crawler not to index it are contradictory signals, so the two
   // guards belong together — and they come off together, in the same commit
   // that adds the photos. Tracked in personal-site#1.
-  integrations: [sitemap({ filter: (page) => !page.endsWith('/pets') })],
+  // /notes is the same case: the tier exists but both drafted notes are held,
+  // so the page carries noindex while empty and stays out of the sitemap with it.
+  integrations: [
+    sitemap({ filter: (page) => !page.endsWith('/pets') && !page.endsWith('/notes') }),
+  ],
   // Prefetch internal links on hover/tap for near-instant navigation. Static
   // pages, so this is just a small HTML fetch primed into cache.
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
