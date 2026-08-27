@@ -36,7 +36,7 @@ Then I got sidetracked for six weeks, which somebody eventually asked about in t
 
 I'd written PHP for OPNsense once before, adding a maximum packet length field to the traffic shaper, so the framework wasn't new territory. It's still layered and the layers are strict. A model file declares the field and what counts as a valid value. A form file says how it appears. A template renders it into the config the daemon reads. Miss one and you get a setting that saves and does nothing, or a config line with no way to set it.
 
-I read the fields either side of mine that already worked, followed the shape, and tested it on my secondary firewall.
+I read the fields either side of mine that already worked, copied how they were put together, and tested it on my secondary firewall.
 
 Two fields, EBGP and IBGP, both marked advanced. Bounded one to a hundred and twenty-eight. Empty leaves FRR on its own default instead of writing a 1.
 
