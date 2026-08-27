@@ -40,13 +40,11 @@ It only touches records it owns. Anything I made by hand it leaves alone.
 
 ## Then somebody I'd never met sent a patch
 
-A senior engineer messaged me on LinkedIn last July. Decade as a sysadmin, most of another doing penetration testing, and the sort of lab that people with that history end up with. He'd just moved his own DNS to Technitium and his proxying to Traefik, went looking for something to automate records between the two, and found mine.
+Someone went looking for a way to keep Technitium records in step with Traefik, which is the exact pair dnsweaver was born from, and found mine instead of writing their own. Through a search result, as far as either of us could work out afterwards.
 
-Technitium and Traefik is the exact pair dnsweaver was born from. He'd gone looking for the thing I'd needed and landed on the thing I'd built, apparently through a Reddit post and a Google search.
+They hadn't only installed it. They'd found a bug and sent a fix before we ever spoke. Their setup has a shape mine doesn't, and dnsweaver was confidently picking the wrong network interface because of it. That class of bug is invisible from inside your own lab, because your own lab is the shape you built it.
 
-He hadn't only used it. He'd already sent a pull request against the Proxmox source before we ever spoke, and while we were talking he sent another. His Docker hosts had about ten virtual ethernet adapters each, and dnsweaver was cheerfully picking one of those instead of the real interface and putting it in DNS. That is exactly the kind of thing you cannot find in your own lab, because your own lab is the shape you built it.
-
-I cut a release with his fix in it that morning.
+I cut a release with the fix in it that morning.
 
 Since then I've gone through the stargazers occasionally and found people from companies whose names I recognize immediately. I have no idea what any of them are doing with it. It's a strange feeling and I have not gotten used to it.
 
