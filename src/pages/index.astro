@@ -61,7 +61,7 @@ try {
 // number that would quietly go stale.
 const stats: { value: string; suffix?: string; label: string }[] = [
   { value: '9-node', label: 'Talos Kubernetes cluster' },
-  { value: '~38', label: 'services under GitOps' },
+  { value: '51', label: 'applications under GitOps' },
   ...(stars !== null
     ? [{ value: stars.toLocaleString(), suffix: '★', label: 'dnsweaver on GitHub' }]
     : [{ value: '11', label: 'DNS providers in dnsweaver' }]),

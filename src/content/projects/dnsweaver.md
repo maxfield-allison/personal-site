@@ -60,7 +60,7 @@ It went public months after I got it working for myself. It's my first public pr
 
 ## What the last tool taught me
 
-The predecessor was a Technitium management tool, single-purpose and hard-wired modeled after Cloudflare Companion. What it taught me was to abstract the interfaces and make both ends pluggable, so sources and providers drop in without touching the engine. That's the whole design of dnsweaver, and it's why the provider list went from two to eleven without the core moving much.
+The predecessor was a Technitium management tool, single-purpose and hard-wired modeled after Cloudflare Companion. It taught me to abstract the interfaces and make both ends pluggable, so sources and providers drop in without touching the engine. That's the whole design of dnsweaver, and it's why the provider list went from two to eleven without the core moving much.
 
 The webhook provider is where that pays off hardest: point it at an endpoint and dnsweaver drives a DNS system I have never seen and did not write a line of code for.
 

@@ -58,7 +58,12 @@ const projects = [
   {
     name: 'Kubernetes Homelab',
     detail:
-      '9-node Talos Linux cluster under ArgoCD GitOps running ~38 services; GPU sharing via time-slicing; OpenTofu and Ansible provisioning. Migrated from Docker Swarm without losing service.',
+      '9-node Talos Linux cluster under ArgoCD GitOps running 51 applications; GPU sharing via time-slicing; OpenTofu and Ansible provisioning. Migrated from Docker Swarm without losing service.',
+  },
+  {
+    name: 'OPNsense (upstream)',
+    detail:
+      'Two contributions merged into the OPNsense firewall platform six years apart: a maximum packet length option for traffic shaper rules (core, 2020), and BGP maximum-paths for ECMP multipath with its documentation (FRR plugin, 2026, shipped in plugin 1.52). PHP on Phalcon.',
   },
   {
     name: 'maxfieldallison.com',
@@ -68,7 +73,7 @@ const projects = [
 ];
 ---
 
-<Layout title="Resume · Maxfield Allison" description="Resume of Maxfield Allison, infrastructure engineer." ogImage="/og/resume.png?v=1">
+<Layout title="Resume · Maxfield Allison" description="Infrastructure engineer: enterprise Azure platform owner, a 9-node Kubernetes cluster under GitOps, and two features merged upstream in OPNsense." ogImage="/og/resume.png?v=1">
   <div class="resume max-w-[var(--container-shell)] mx-auto px-6 pt-12 pb-16">
     <div class="no-print mb-10 flex items-center justify-between">
       <a href="/" class="font-mono text-sm text-[var(--color-ink-dim)] no-underline">← Home</a>

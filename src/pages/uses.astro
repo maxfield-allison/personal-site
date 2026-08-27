@@ -14,13 +14,13 @@ const groups = [
       { name: 'ArgoCD', icon: 'argo', note: 'GitOps. A push to the repo is the deploy. Rollback is a git revert.' },
       { name: 'OpenTofu', icon: 'opentofu', note: 'Provisions the Proxmox VMs and LXCs below the cluster.' },
       { name: 'Ansible', icon: 'ansible', note: 'Configures the platform underneath the cluster.' },
-      { name: 'Docker', icon: 'docker', note: 'Local builds and the odd one-off container.' },
+      { name: 'Docker', icon: 'docker', note: 'Local builds and testing, on the workstation and the dev box both.' },
     ],
   },
   {
     heading: 'Networking and edge',
     items: [
-      { name: 'OPNsense', icon: 'opnsense', note: 'HA firewall pair with CARP failover. Routes the whole lab.' },
+      { name: 'OPNsense', icon: 'opnsense', note: 'HA firewall pair with CARP failover. Routes the whole lab, and the one platform I have code merged into. Twice, six years apart.' },
       { name: 'Cilium', icon: 'cilium', note: 'The cluster CNI, doing L2/BGP so services get real routable IPs.' },
       { name: 'Traefik', icon: 'traefik', note: 'Ingress and TLS for everything the cluster serves.' },
       { name: 'Technitium DNS', note: 'Internal resolvers. dnsweaver keeps their records honest.' },
@@ -40,7 +40,7 @@ const groups = [
     heading: 'Languages and tooling',
     items: [
       { name: 'Go', icon: 'go', note: 'My language for real tools. dnsweaver is Go end to end.' },
-      { name: 'Bash', icon: 'bash', note: 'The glue and the scripts that run the lab.' },
+      { name: 'Bash', icon: 'bash', note: 'The glue and the scripts that run the lab, and my preference anywhere it will run. PowerShell when I have no choice, with the reference docs open.' },
       { name: 'GitLab CI + GitHub Actions', icon: 'gitlab', note: 'CI that lints, tests, scans for secrets, and blocks anything that fails.' },
       { name: 'Renovate', icon: 'renovate', note: 'Keeps dependencies and container images current through reviewable pull requests.' },
       { name: 'Linux', icon: 'linux', note: 'Everywhere. WSL on the workstation, Talos on the cluster.' },
