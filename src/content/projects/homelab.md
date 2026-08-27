@@ -1,6 +1,6 @@
 ---
 title: Kubernetes Homelab
-summary: A 9-node Talos Linux Kubernetes cluster under GitOps, migrated off a 10-node Docker Swarm without losing service. The lab where I run the patterns instead of reading about them.
+summary: Nine Talos nodes, GitOps, Ceph underneath, migrated off a ten-node Docker Swarm without losing service. Enterprise patterns, one operator, and no team to hand it to at five o'clock.
 kind: infrastructure
 role: Designed, built, and operate it
 stack:
@@ -14,35 +14,31 @@ stack:
 featured: true
 order: 6
 date: 2026-03-01
+draft: true
 ---
 
-## The short version
+The whole thing is built to one constraint: get as close to how a real platform team does it as I can, using open source, while being honest that there is exactly one of me.
 
-It started as a media server on a machine in my house. It's now nine Talos Linux nodes running Kubernetes, reconciled from git by ArgoCD, with about fifty applications under management.
+That rules things out. Anything that needs a rota doesn't work here. Anything I can't rebuild from git after a bad night doesn't work here either. What's left is a lot of automation and a strong preference for boring, and that turns out to be most of what the patterns are for anyway.
 
-I run it because operating something is the only way I've found to learn what it actually does when it breaks.
+It's nine Talos Linux nodes now, three of them control plane, with about fifty applications reconciled out of git by ArgoCD. Underneath sits a five-node Proxmox cluster with Ceph. OpenTofu provisions the machines and Ansible configures them.
 
-## What's in it
+- **GPU sharing** by time-slicing, so several workloads use a card instead of one pinning it. I looked at NVIDIA's MPS first and turned it down: its exclusive mode blocks the video encode engines the media stack needs. Picking one meant losing something either way.
+- **A push is the deploy** and a revert is the rollback. That's the entire operational model and it's the single biggest reason one person can run this.
+- **CI that actually blocks.** Security scanning stops a commit that leaks a secret or ships a known-vulnerable image, rather than filing a warning I'd learn to scroll past.
+- **Talos** because there's no SSH and no package manager to drift. The node is an API and a config file. Less of it can rot while I'm not looking.
 
-- **Control plane:** three dedicated nodes, so losing one doesn't take the cluster with it.
-- **GPU workloads:** shared by time-slicing, so several workloads use a card instead of one pinning it. I evaluated NVIDIA's MPS first and rejected it, because its exclusive mode blocks the video encode engines the media stack depends on. That's a real trade-off with a real loser, and I'd rather say which one I picked than imply there wasn't a choice.
-- **GitOps:** everything reconciles from git. A push is the deploy and a revert is the rollback.
-- **Below the cluster:** five Proxmox nodes with Ceph underneath. OpenTofu provisions the machines, Ansible configures them.
-- **CI that blocks:** the security scanning stops a commit that leaks a secret or ships a known-vulnerable image, rather than filing a warning nobody reads.
+## The Swarm it replaced wasn't small
 
-## The migration
+Ten nodes, five managers and five workers, somewhere near fifty services across eleven stacks, on the same Proxmox and Ceph.
 
-The whole thing used to run on Docker Swarm, and that platform wasn't small. Ten nodes, five managers and five workers, somewhere around fifty services across eleven stacks, on the same Proxmox and Ceph underneath.
+I moved it without losing service: new cluster alongside the old, port a stack, cut traffic over, repeat, and only decommission the old managers once nothing pointed at them. The GPU nodes were repurposed Swarm workers.
 
-I moved it to Kubernetes without losing service. That meant standing the new cluster up alongside the old one, porting stack by stack, cutting traffic over a service at a time, and only decommissioning the old managers once nothing pointed at them. The GPU nodes were repurposed Swarm workers.
+The reason for moving wasn't that Swarm had failed me. It's that I'd started writing tooling to paper over its limits, and building that tooling is how I found out where the limits were.
 
-The reason for moving wasn't that Swarm had failed. It was that I'd started writing tooling to work around its limits, and building that tooling is how I worked out I'd reached them.
+## The test I hold it to
 
-## Why it matters
-
-Nobody vibe-codes a GitOps cluster into existence. Running this taught me the failure modes that slides don't: what a node dropping at 2am actually looks like, how storage behaves when it's unhappy, what one bad manifest does to a live service. That transfers directly to the enterprise work I do by day.
-
-The test I hold it to is whether I can fix it at 2am without wanting to throw the laptop. Most of the time now, yes.
+Can I fix it at two in the morning without wanting to throw the laptop across the room. Most of the time now, yes.
 
 ## Related reading
 
