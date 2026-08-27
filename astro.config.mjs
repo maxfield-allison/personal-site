@@ -6,6 +6,14 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
+  // Retired case studies keep their URL working. A dead /projects/<id> is a real
+  // cost on a site this small: it sits in the sitemap, in old links, and in
+  // anything anyone saved. Astro emits a meta-refresh page for these in a static
+  // build, which is enough for a handful of moved pages.
+  redirects: {
+    '/projects/this-site': '/projects',
+  },
+
   site: 'https://maxfieldallison.com',
   // /pets is built but has no plates yet, so it is kept out of the sitemap to
   // match the noindex it carries while empty. Submitting a URL for indexing and

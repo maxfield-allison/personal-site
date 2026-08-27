@@ -16,28 +16,28 @@ draft: true
 
 ## What we had
 
-The platform runs in three regional clusters. Users are supposed to land on the one closest to them, because the alternative is somebody in Asia waiting on a server in the United States for something that should be instant.
+The platform runs in three regional clusters. Users are supposed to land on the closest one, because the alternative is somebody in Singapore waiting on a server in Ohio for something that should feel instant.
 
-The way that worked was unglamorous. We shipped three different client configurations, one per region, and the device-management system decided which one a machine got based on where the machine was.
+The way that worked was unglamorous. Three client configurations, one per region, and the device-management system decided which one a machine got based on where the machine was.
 
 ## What broke it
 
-The customer moved device management from their old platform to a cloud-based one. That was a good change and it had nothing to do with us.
+The customer moved device management to a cloud platform. Good change, nothing to do with us.
 
-The new system didn't track the region or location of the machines it managed. It didn't need to for anything else the customer used it for. But our entire regional deployment strategy was built on a field that had quietly stopped existing.
+The new one didn't track the region or location of the machines it managed. It didn't need to for anything else they used it for. Our entire regional deployment strategy was resting on a field that had quietly stopped existing.
 
-Three client configurations were no longer deployable, because nothing could tell them apart. We could ship one configuration to everybody, which meant one region's users would have a fast experience and the other two wouldn't.
+So three configurations were no longer deployable, because nothing could tell the machines apart. We could ship one to everybody and let two regions out of three have a worse time.
 
 ## The fix
 
-If the client can't know where it is, the network can. I put a global load balancer in front of the three regional clusters and used an edge routing service to send each user to the nearest one.
+If the client can't know where it is, the network can. I put a global load balancer in front of the three clusters and used an edge routing service to send each user to the nearest.
 
-That collapsed three client configurations into one. The client stopped needing to know anything about geography, because the decision moved to a layer that already knew.
+Three client configurations collapsed into one. The client stopped needing to know anything about geography, because the decision moved to a layer that already knew.
 
-The part I didn't plan for is the part that turned out to matter most. Once traffic was flowing through a routing layer, that layer could also tell when a regional cluster was unhealthy and send users somewhere else. We'd set out to recover the routing we lost and ended up with regional failover we'd never had.
+The part I didn't plan for turned out to matter more. Once traffic ran through a routing layer, that layer could also notice a sick regional cluster and send people somewhere else. We set out to get back the routing we'd lost and came away with regional failover we'd never had.
 
 ## What I'd say about it
 
-The instinct when a dependency disappears is to go find it again, and I spent some time trying to. There were ways to put location back into the client, and all of them meant maintaining a thing the customer had deliberately stopped maintaining.
+My first instinct was to go find the missing dependency and put it back, and I spent a while on that. There were ways to get location into the client again. All of them meant maintaining something the customer had just deliberately stopped maintaining.
 
-Moving the decision somewhere else was the cheaper answer, and it aged better. The routing layer has since been extended to detect regional outages rather than just measure distance, which wasn't in the original design and didn't need to be.
+Moving the decision somewhere else was cheaper and it aged better. The routing layer has since been extended to watch for regional outages rather than just measure distance, which wasn't in the original design and didn't need to be.
