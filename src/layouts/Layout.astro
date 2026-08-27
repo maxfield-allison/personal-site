@@ -128,13 +128,17 @@ const personLd = {
       data-website-id="ff6e58e9-5a96-4b6b-a4a3-10060bc76440"
       data-performance="true"
     ></script>
+    {/* Navigation-intent signals. Static file, and a separate `data-track`
+        namespace, so internal links keep their view transition — see the
+        header comment in public/js/interactions.js. */}
+    <script is:inline defer src="/js/interactions.js"></script>
   </head>
   <body class="min-h-screen flex flex-col">
     {bare ? (
       <slot />
     ) : (
       <>
-        <a href="#main-content" class="skip-link">Skip to content</a>
+        <a href="#main-content" class="skip-link" data-track="skip-link">Skip to content</a>
         <Nav />
         <main id="main-content" tabindex="-1" class="flex-1">
           <slot />
