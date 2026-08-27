@@ -11,7 +11,7 @@ stack:
 featured: true
 order: 2
 date: 2025-03-01
-draft: true
+draft: false
 ---
 
 I own an output-management platform running in three regions for a large global organization. Thousands of devices depend on it. When it stops, people can't print, and in major parts of that business printing isn't optional.

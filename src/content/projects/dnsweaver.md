@@ -17,7 +17,7 @@ links:
 featured: true
 order: 1
 date: 2026-01-15
-draft: true
+draft: false
 ---
 
 ## It started because I wanted certificates

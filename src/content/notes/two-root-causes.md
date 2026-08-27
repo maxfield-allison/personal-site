@@ -2,7 +2,7 @@
 title: Two Root Causes, One Bad Stick of RAM
 summary: Nine months of a storage system quietly corrupting itself, two separate causes, and the one where I got lucky and said so.
 date: 2024-03-22
-draft: true
+draft: false
 ---
 
 Through the summer of 2023 the machine running my media service kept getting worse. Not a clean failure. Locked out of things that were configured correctly, services that wouldn't come up, a general sense that the floor was soft.

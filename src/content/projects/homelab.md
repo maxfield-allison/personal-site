@@ -14,7 +14,7 @@ stack:
 featured: true
 order: 6
 date: 2026-03-01
-draft: true
+draft: false
 ---
 
 The whole thing is built to one constraint: get as close to how a real platform team does it as I can, using open source, while being honest that there is exactly one of me.

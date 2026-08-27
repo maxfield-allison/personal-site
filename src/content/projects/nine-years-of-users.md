@@ -12,7 +12,7 @@ stack:
 featured: true
 order: 5
 date: 2026-01-30
-draft: true
+draft: false
 ---
 
 In 2017 I put a media server on a machine in my house so friends and family could watch things. It ran until January 2026 and went from about twenty active users to roughly a hundred.

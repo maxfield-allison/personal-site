@@ -15,7 +15,7 @@ links:
 featured: true
 order: 4
 date: 2026-03-27
-draft: true
+draft: false
 ---
 
 Somebody opened it in August 2025. They wanted `maximum-paths` for BGP exposed in the OPNsense GUI, which FRR has supported for years and the interface simply never surfaced.

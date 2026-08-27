@@ -11,7 +11,7 @@ stack:
 featured: true
 order: 3
 date: 2024-02-01
-draft: true
+draft: true  # HELD - overclaims his role, see 'Azure and Identity' in the vault
 ---
 
 Three regional clusters, and users are supposed to land on the closest one. Somebody in Singapore waiting on a server in Ohio is a bad experience for something that should feel instant.
