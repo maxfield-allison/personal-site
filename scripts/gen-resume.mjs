@@ -6,6 +6,7 @@ import { execSync } from 'node:child_process';
 
 const url = process.env.RESUME_URL || 'http://localhost:4327/resume';
 const shell = execSync('ls ~/.cache/ms-playwright/chromium_headless_shell-*/chrome-linux/headless_shell 2>/dev/null | head -1', { shell: '/bin/bash' }).toString().trim();
+const pageMargin = { top: '0.5in', bottom: '0.5in', left: '0.7in', right: '0.7in' };
 
 const browser = await chromium.launch({ executablePath: shell || undefined });
 const page = await browser.newPage();
@@ -16,18 +17,27 @@ await page.pdf({
   printBackground: false,
   // 0.5in verticals: the two-line Recognition block was spilling to a third
   // page at 0.6in, and a two-page resume is what recruiters and parsers expect.
-  margin: { top: '0.5in', bottom: '0.5in', left: '0.7in', right: '0.7in' },
+  margin: pageMargin,
 });
 
 // Also render the sheet itself: a small image of the real resume, used on
 // /resume and the home page as the "this is the deliverable" signal. It is a
-// screenshot of the same print view the PDF comes from, so the picture can
-// never drift from the document it advertises — regenerate both together.
+// screenshot of the same print view the PDF comes from. page.screenshot does
+// not paginate or apply page.pdf's margins, so reproduce the margins as body
+// padding and hide the content after the explicit page-two break. Otherwise
+// the cover advertises a wider document with a false first-page boundary.
 //
 // Committed alongside resume.pdf rather than built in Docker, because both
 // need a headless browser that the node:alpine build stage does not have.
 await page.emulateMedia({ media: 'print' });
 await page.setViewportSize({ width: 816, height: 1056 }); // US Letter at 96dpi
+await page.addStyleTag({
+  content: `@media print {
+    body { padding: 48px 67.2px !important; }
+    #experience .resume-page-two,
+    #experience ~ * { display: none !important; }
+  }`,
+});
 await page.screenshot({
   path: 'public/resume-cover.png',
   clip: { x: 0, y: 0, width: 816, height: 1056 },

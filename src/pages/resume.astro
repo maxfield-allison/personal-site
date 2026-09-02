@@ -14,6 +14,7 @@ const experience = [
     role: 'Senior Specialist, Technical Account Support',
     org: 'Ricoh USA, Inc. · Customer Engineering Services',
     dates: 'June 2024 - Present',
+    pageBreak: false,
     bullets: [
       'Global owner of an enterprise output-management platform on Azure, serving thousands of devices across four global regions; single global escalation point.',
       "Cut platform-related support ticket volume 38% year over year, measured in the customer's ServiceNow, by stabilizing the operating model and driving process and self-service adoption.",
@@ -31,6 +32,7 @@ const experience = [
     role: 'Specialist II, Technical Account Support',
     org: 'Ricoh USA, Inc.',
     dates: 'February 2020 - June 2024',
+    pageBreak: false,
     bullets: [
       'Implemented and managed advanced output-management solutions for education, healthcare, and multinational corporate clients.',
       'Led a security enhancement for a large healthcare institution, updating several thousand devices across multiple sites and applications to SNMP v3.',
@@ -42,6 +44,7 @@ const experience = [
     role: 'Site Leader',
     org: 'Ricoh USA, Inc.',
     dates: 'August 2016 - February 2020',
+    pageBreak: true,
     bullets: [
       'Ran a schedule of executive meetings to plan revenue, satisfaction, and cost strategy, building a team that consistently met or exceeded quarterly and annual goals.',
       'Directly supported and trained a user base of over 35,000 students, faculty, and staff.',
@@ -136,12 +139,19 @@ const projects = [
         needs a name and contact block at the top. Deliberately NOT an <h1> —
         the cover already supplies the page's single h1, and two would break
         the document outline for screen readers. */}
-    <div class="mb-6 hidden print:block">
+    <div class="mb-6 hidden print:block resume-masthead">
       <p class="text-3xl font-semibold tracking-tight m-0">Maxfield Allison</p>
       <p class="text-[var(--color-ink-dim)] mt-1">Infrastructure Engineer · Alabaster, Alabama</p>
-      <p class="font-mono text-sm text-[var(--color-ink-dim)] mt-2 contact-line">
-        <span>maxfield.allison@gmail.com</span> · <span>maxfieldallison.com</span> · <span>github.com/maxfield-allison</span> · <span>linkedin.com/in/maxfield-allison</span>
-      </p>
+      <div class="font-mono text-sm text-[var(--color-ink-dim)] mt-2 contact-line">
+        <div class="contact-row">
+          <span>maxfield.allison@gmail.com</span>
+          <span>maxfieldallison.com</span>
+        </div>
+        <div class="contact-row">
+          <span>github.com/maxfield-allison</span>
+          <span>linkedin.com/in/maxfield-allison</span>
+        </div>
+      </div>
     </div>
 
     <section class="mb-6">
@@ -159,18 +169,15 @@ const projects = [
       <h2 class="resume-h2">Experience</h2>
       {
         experience.map((job) => (
-          <div class="mb-4">
+          <div class:list={['mb-4', 'resume-job', { 'resume-page-two': job.pageBreak }]}>
             <div class="flex flex-wrap items-baseline justify-between gap-x-4">
               <h3 class="font-semibold text-[var(--color-ink)]">{job.role}</h3>
               <span class="font-mono text-xs text-[var(--color-ink-dim)]">{job.dates}</span>
             </div>
             <p class="text-sm text-[var(--color-ink-dim)] mb-2">{job.org}</p>
-            <ul class="space-y-1">
+            <ul class="space-y-1 resume-list">
               {job.bullets.map((b) => (
-                <li class="text-sm text-[var(--color-ink-dim)] leading-relaxed flex gap-2">
-                  <span class="text-[var(--color-accent)]">·&#160;</span>
-                  <span>{b}</span>
-                </li>
+                <li class="text-sm text-[var(--color-ink-dim)] leading-relaxed">{b}</li>
               ))}
             </ul>
           </div>
@@ -190,35 +197,39 @@ const projects = [
       }
     </section>
 
-    <section class="mb-6 keep-together">
-      <h2 class="resume-h2">Skills</h2>
-      <div class="space-y-1.5">
-        {
-          Object.entries(skills).map(([group, items]) => (
-            <p class="text-sm">
-              <span class="font-semibold text-[var(--color-ink)]">{group}:</span>
-              <span class="text-[var(--color-ink-dim)]"> {items.join(' · ')}</span>
-            </p>
-          ))
-        }
+    <div class="resume-tail">
+      <section class="mb-6 keep-together">
+        <h2 class="resume-h2">Skills</h2>
+        <div class="space-y-1.5">
+          {
+            Object.entries(skills).map(([group, items]) => (
+              <p class="text-sm">
+                <span class="font-semibold text-[var(--color-ink)]">{group}:</span>
+                <span class="text-[var(--color-ink-dim)]"> {items.join(', ')}</span>
+              </p>
+            ))
+          }
+        </div>
+      </section>
+
+      <div class="resume-tail-right">
+        <section class="mb-6 keep-together">
+          <h2 class="resume-h2">Education & Certifications</h2>
+          <ul class="space-y-1 text-sm text-[var(--color-ink-dim)] resume-list">
+            <li>Microsoft Certified: Azure Fundamentals</li>
+            <li>Seven enterprise product certifications — Kofax Equitrac, AutoStore, RightFax, ControlSuite</li>
+            <li>Two contributions merged upstream into the OPNsense firewall platform, six years apart</li>
+          </ul>
+        </section>
+
+        <section class="keep-together">
+          <h2 class="resume-h2">Recognition</h2>
+          <ul class="space-y-1 text-sm text-[var(--color-ink-dim)] resume-list">
+            <li>Specialist of the Quarter (x2), Specialist of the Year, Ricoh STAR Award</li>
+          </ul>
+        </section>
       </div>
-    </section>
-
-    <section class="mb-6 keep-together">
-      <h2 class="resume-h2">Education & Certifications</h2>
-      <ul class="space-y-1 text-sm text-[var(--color-ink-dim)]">
-        <li class="flex gap-2"><span class="text-[var(--color-accent)]">·&#160;</span>Microsoft Certified: Azure Fundamentals</li>
-        <li class="flex gap-2"><span class="text-[var(--color-accent)]">·&#160;</span>Seven enterprise product certifications — Kofax Equitrac, AutoStore, RightFax, ControlSuite</li>
-        <li class="flex gap-2"><span class="text-[var(--color-accent)]">·&#160;</span>Two contributions merged upstream into the OPNsense firewall platform, six years apart</li>
-      </ul>
-    </section>
-
-    <section class="keep-together">
-      <h2 class="resume-h2">Recognition</h2>
-      <ul class="space-y-1 text-sm text-[var(--color-ink-dim)]">
-        <li class="flex gap-2"><span class="text-[var(--color-accent)]">·&#160;</span>Specialist of the Quarter (x2), Specialist of the Year, Ricoh STAR Award</li>
-      </ul>
-    </section>
+    </div>
   </div>
 </Layout>
 
@@ -235,6 +246,30 @@ const projects = [
     border-bottom: 1px solid var(--color-line);
     padding-bottom: 0.35rem;
     margin-bottom: 0.75rem;
+  }
+
+  .resume-list {
+    list-style: disc;
+    padding-inline-start: 1.15rem;
+  }
+
+  .resume-list li {
+    padding-inline-start: 0.1rem;
+  }
+
+  .resume-list li::marker {
+    color: var(--color-accent);
+    font-size: 0.9em;
+  }
+
+  .contact-line {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .contact-row {
+    display: flex;
+    gap: 1.5rem;
   }
 
   @media print {
@@ -258,15 +293,32 @@ const projects = [
       break-after: avoid;
       page-break-after: avoid;
     }
-    .keep-together {
+    .keep-together,
+    .resume-job {
       break-inside: avoid;
       page-break-inside: avoid;
     }
-    /* Print density. The screen page can breathe; the PDF is a document that
-       recruiters and parsers both prefer at two pages, and the last section
-       block was stranding twelve lines on a third. Screen layout is untouched. */
+    .resume-page-two {
+      break-before: page;
+      page-break-before: always;
+    }
+    .resume-tail {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+      gap: 1.25rem;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    /* Keep a two-page document without making it read like it was squeezed
+       into one. Job-aware breaks balance the pages; these values preserve
+       normal reading rhythm inside each page. Screen layout is untouched. */
     .resume {
       font-size: 0.905rem;
+      padding-top: 0.5rem !important;
+      padding-bottom: 0 !important;
+    }
+    .resume-masthead {
+      margin-bottom: 0.5rem !important;
     }
     .resume section {
       margin-bottom: 0.45rem !important;
@@ -289,12 +341,15 @@ const projects = [
     .resume :global(.space-y-1 > * + *) {
       margin-top: 0.1rem !important;
     }
+    .resume-list li::marker {
+      color: #111;
+    }
   }
 
   /* URLs and the email are single tokens to a PDF text extractor only if the
      layout never breaks them. The LinkedIn URL used to wrap at its hyphen and
      parse as two dead fragments. */
-  .contact-line span {
+  .contact-row span {
     white-space: nowrap;
     hyphens: none;
   }
