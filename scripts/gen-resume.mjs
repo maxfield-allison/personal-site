@@ -14,7 +14,9 @@ await page.pdf({
   path: 'public/resume.pdf',
   format: 'Letter',
   printBackground: false,
-  margin: { top: '0.6in', bottom: '0.6in', left: '0.7in', right: '0.7in' },
+  // 0.5in verticals: the two-line Recognition block was spilling to a third
+  // page at 0.6in, and a two-page resume is what recruiters and parsers expect.
+  margin: { top: '0.5in', bottom: '0.5in', left: '0.7in', right: '0.7in' },
 });
 
 // Also render the sheet itself: a small image of the real resume, used on

@@ -22,7 +22,7 @@ const experience = [
       'Contributed to the architecture decisions for the on-premises to Azure migration and the geo-redundancy re-architecture.',
       'Verified a vendor and partner consolidation of a large Windows print-server estate onto Azure VMs, catching and correcting errors during the rollout.',
       'Identified the GPO scoping requirement in the TLS 1.0/1.1 and legacy LDAP remediation and owned the IIS and application-layer changes; automated internal certificate renewal.',
-      'Authored the platform\u2019s canonical backup and recovery runbook, now used company-wide for major-incident response.',
+      "Authored the platform's canonical backup and recovery runbook, now used company-wide for major-incident response.",
       'Top-tier customer survey scores with personal recognition; contributed to a five-year contract renewal.',
     ],
   },
@@ -126,7 +126,7 @@ const projects = [
           <a href="#experience" data-track="resume-read-online">Read it here →</a>
         </div>
         <p class="mt-6 mb-0 font-mono text-xs text-[var(--color-ink-dim)]">
-          resume.pdf · US Letter · maxfieldallison.com · github.com/maxfield-allison · linkedin.com/in/maxfield-allison
+          resume.pdf · US Letter · hello@maxfieldallison.com · maxfieldallison.com · github.com/maxfield-allison · linkedin.com/in/maxfield-allison
         </p>
       </div>
     </section>
@@ -138,8 +138,8 @@ const projects = [
     <div class="mb-6 hidden print:block">
       <p class="text-3xl font-semibold tracking-tight m-0">Maxfield Allison</p>
       <p class="text-[var(--color-ink-dim)] mt-1">Infrastructure Engineer · Alabaster, Alabama</p>
-      <p class="font-mono text-sm text-[var(--color-ink-dim)] mt-2">
-        maxfieldallison.com · github.com/maxfield-allison · linkedin.com/in/maxfield-allison
+      <p class="font-mono text-sm text-[var(--color-ink-dim)] mt-2 contact-line">
+        <span>hello@maxfieldallison.com</span> · <span>maxfieldallison.com</span> · <span>github.com/maxfield-allison</span> · <span>linkedin.com/in/maxfield-allison</span>
       </p>
     </div>
 
@@ -165,7 +165,7 @@ const projects = [
             <ul class="space-y-1">
               {job.bullets.map((b) => (
                 <li class="text-sm text-[var(--color-ink-dim)] leading-relaxed flex gap-2">
-                  <span class="text-[var(--color-accent)]">·</span>
+                  <span class="text-[var(--color-accent)]">·&#160;</span>
                   <span>{b}</span>
                 </li>
               ))}
@@ -187,7 +187,7 @@ const projects = [
       }
     </section>
 
-    <section class="mb-6">
+    <section class="mb-6 keep-together">
       <h2 class="resume-h2">Skills</h2>
       <div class="space-y-1.5">
         {
@@ -201,11 +201,19 @@ const projects = [
       </div>
     </section>
 
-    <section>
-      <h2 class="resume-h2">Recognition & Certifications</h2>
+    <section class="mb-6 keep-together">
+      <h2 class="resume-h2">Education & Certifications</h2>
       <ul class="space-y-1 text-sm text-[var(--color-ink-dim)]">
-        <li class="flex gap-2"><span class="text-[var(--color-accent)]">·</span>Specialist of the Quarter (x2), Specialist of the Year, Ricoh STAR Award</li>
-        <li class="flex gap-2"><span class="text-[var(--color-accent)]">·</span>Microsoft Azure Fundamentals, plus multiple enterprise product certifications</li>
+        <li class="flex gap-2"><span class="text-[var(--color-accent)]">·&#160;</span>Microsoft Certified: Azure Fundamentals</li>
+        <li class="flex gap-2"><span class="text-[var(--color-accent)]">·&#160;</span>Multiple enterprise product certifications (output management, device security)</li>
+        <li class="flex gap-2"><span class="text-[var(--color-accent)]">·&#160;</span>Two contributions merged upstream into the OPNsense firewall platform, six years apart</li>
+      </ul>
+    </section>
+
+    <section class="keep-together">
+      <h2 class="resume-h2">Recognition</h2>
+      <ul class="space-y-1 text-sm text-[var(--color-ink-dim)]">
+        <li class="flex gap-2"><span class="text-[var(--color-accent)]">·&#160;</span>Specialist of the Quarter (x2), Specialist of the Year, Ricoh STAR Award</li>
       </ul>
     </section>
   </div>
@@ -244,6 +252,47 @@ const projects = [
     .resume-h2 {
       color: #000 !important;
       border-color: #ccc !important;
+      break-after: avoid;
+      page-break-after: avoid;
     }
+    .keep-together {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    /* Print density. The screen page can breathe; the PDF is a document that
+       recruiters and parsers both prefer at two pages, and the last section
+       block was stranding twelve lines on a third. Screen layout is untouched. */
+    .resume {
+      font-size: 0.9375rem;
+    }
+    .resume section {
+      margin-bottom: 0.6rem !important;
+    }
+    .resume-h2 {
+      font-size: 1.1rem;
+      padding-bottom: 0.2rem;
+      margin-bottom: 0.4rem;
+    }
+    .resume li,
+    .resume section p {
+      line-height: 1.28;
+    }
+    .resume :global(.mb-4) {
+      margin-bottom: 0.5rem !important;
+    }
+    .resume :global(.mb-3) {
+      margin-bottom: 0.35rem !important;
+    }
+    .resume :global(.space-y-1 > * + *) {
+      margin-top: 0.1rem !important;
+    }
+  }
+
+  /* URLs and the email are single tokens to a PDF text extractor only if the
+     layout never breaks them. The LinkedIn URL used to wrap at its hyphen and
+     parse as two dead fragments. */
+  .contact-line span {
+    white-space: nowrap;
+    hyphens: none;
   }
 </style>
