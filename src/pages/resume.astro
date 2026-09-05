@@ -4,8 +4,8 @@ import Layout from '../layouts/Layout.astro';
 const skills = {
   Cloud: ['Microsoft Azure', 'Azure Front Door', 'Application Gateway', 'Load Balancing', 'Cloud Migration'],
   Platform: ['Kubernetes', 'Talos Linux', 'ArgoCD', 'GitOps', 'Docker', 'Infrastructure as Code', 'Observability (Prometheus, Grafana, Alertmanager)'],
-  'Automation & Code': ['Terraform / OpenTofu', 'Ansible', 'CI/CD', 'Linux', 'Python (scripting)', 'REST APIs & Webhooks'],
-  'Architecture & Delivery': ['Solution Architecture', 'AI Agent Orchestration & Governance', 'ServiceNow (CHG / RITM / SCTASK)', 'Requirements & Sizing', 'Stakeholder Management', 'Customer-Facing Consulting'],
+  'Automation & Integration': ['Terraform / OpenTofu', 'Ansible', 'CI/CD', 'PowerShell', 'REST APIs & Webhooks'],
+  'Architecture & Delivery': ['Solution Architecture', 'AI Agent Orchestration & Governance', 'ServiceNow (CHG / RITM / SCTASK)', 'Knowledge Management', 'Requirements & Sizing', 'Stakeholder Management', 'Customer-Facing Consulting'],
   Other: ['Network Security', 'Firewalls', 'Leadership', 'SQL Server'],
 };
 
@@ -18,11 +18,11 @@ const experience = [
     bullets: [
       'Global owner of an enterprise output-management platform on Azure, serving thousands of devices across four global regions; single global escalation point.',
       "Cut platform-related support ticket volume 38% year over year, measured in the customer's ServiceNow, by stabilizing the operating model and driving process and self-service adoption.",
-      'Architected a production-mirrored non-production environment and am building it out: made the business case to leadership, won the funding, and defined the design, sizing and resource specification across three organizations, delegating provisioning to the platform teams through ServiceNow change and request workflows (CHG / RITM / SCTASK).',
+      'Made the business case for a production-mirrored non-production environment, won the funding, and defined its design, sizing and resource requirements across three organizations, delegating provisioning to the platform teams.',
       'Identified and drove correction of configuration faults in cloud firewall and microsegmentation layers owned by other teams and vendors, including one degrading DNS for the platform globally.',
       'Named application owner with approval authority over production changes on the platform.',
       'Contributed to the architecture decisions for the on-premises to Azure migration and the geo-redundancy re-architecture.',
-      'Verified a vendor and partner consolidation of a large Windows print-server estate onto Azure VMs, catching and correcting errors during the rollout.',
+      'Set the operating standard for a global support team and coached multiple specialists into primary platform roles.',
       'Identified the GPO scoping requirement in the TLS 1.0/1.1 and legacy LDAP remediation and owned the IIS and application-layer changes; automated internal certificate renewal.',
       "Authored the platform's canonical backup and recovery runbook, now used company-wide for major-incident response.",
       'Top-tier customer survey scores with personal recognition; contributed to a five-year contract renewal.',
@@ -36,7 +36,7 @@ const experience = [
     bullets: [
       'Implemented and managed advanced output-management solutions for education, healthcare, and multinational corporate clients.',
       'Led a security enhancement for a large healthcare institution, updating several thousand devices across multiple sites and applications to SNMP v3.',
-      'Led migration of an on-premises output environment to an Azure-backed platform for a large enterprise client, consolidating dozens of Windows print servers into a fraction of the footprint on Azure VMs.',
+      'Worked alongside vendor and partner engineers on the migration of an on-premises output environment to Azure, verifying the consolidation and correcting errors during rollout.',
       'Authored extensive documentation (knowledge-base articles, guides, runbooks) and served as a trusted technical consultant to client stakeholders.',
     ],
   },
@@ -62,12 +62,12 @@ const projects = [
   {
     name: 'Kubernetes Homelab',
     detail:
-      '9-node Talos Linux cluster under ArgoCD GitOps running roughly fifty applications, synced from a self-hosted GitLab with secret scanning gating the merge. OpenTofu and Ansible provisioning; GPU sharing via time-slicing; Prometheus and Alertmanager paging; runbooks and post-incident records per service. Migrated from Docker Swarm without losing service.',
+      '9-node Talos Linux cluster under ArgoCD GitOps running roughly fifty applications, synced from a self-hosted GitLab with secret scanning gating the merge. OpenTofu and Ansible provisioning; GPU sharing via time-slicing; Prometheus and Alertmanager paging; service runbooks and post-incident records. Migrated from Docker Swarm without losing service.',
   },
   {
     name: 'Multi-agent operations harness (private)',
     detail:
-      'Governance for dozens of concurrent AI agent sessions on one estate: a scoped GitLab identity per harness, an MCP gateway with a read-only lane and a separate write token approved per call, scheduled jobs that start in shadow until promoted, and every session recording its work in GitLab issues. Direction, rules and review are mine; agents implement.',
+      'Designed the operating model for concurrent AI agent sessions: scoped identities and audit trails in GitLab, read-only and approval-gated write paths through MCP, and scheduled automation that starts in shadow mode. I set direction, acceptance criteria and promotion decisions; agents implement.',
   },
   {
     name: 'OPNsense (upstream)',
@@ -82,7 +82,7 @@ const projects = [
 ];
 ---
 
-<Layout title="Resume · Maxfield Allison" description="Infrastructure engineer: enterprise Azure platform owner, a 9-node Kubernetes cluster under GitOps, and two features merged upstream in OPNsense." ogImage="/og/resume.png?v=1">
+<Layout title="Resume · Maxfield Allison" description="Systems engineer and enterprise Azure platform owner, with a 9-node Kubernetes cluster under GitOps and two features merged upstream in OPNsense." ogImage="/og/resume.png?v=1">
   <div class="resume max-w-[var(--container-shell)] mx-auto px-6 pt-12 pb-16">
     <div class="no-print mb-10 flex items-center justify-between">
       <a href="/" class="font-mono text-sm text-[var(--color-ink-dim)] no-underline">← Home</a>
@@ -118,7 +118,7 @@ const projects = [
           Maxfield Allison
         </h1>
         <p class="mt-3 mb-0 font-serif text-lg text-[var(--color-ink-dim)]">
-          Infrastructure Engineer · Alabaster, Alabama
+          Systems Engineer · Platform Owner · Alabaster, Alabama
         </p>
         <p class="mt-5 mb-0 text-[0.9375rem] leading-relaxed text-[var(--color-ink-dim)] measure">
           The full resume, set as a document and kept current. Download it, print
@@ -146,7 +146,7 @@ const projects = [
         the document outline for screen readers. */}
     <div class="mb-6 hidden print:block resume-masthead">
       <p class="text-3xl font-semibold tracking-tight m-0">Maxfield Allison</p>
-      <p class="text-[var(--color-ink-dim)] mt-1">Infrastructure Engineer · Alabaster, Alabama</p>
+      <p class="text-[var(--color-ink-dim)] mt-1">Systems Engineer · Platform Owner · Alabaster, Alabama</p>
       <div class="font-mono text-sm text-[var(--color-ink-dim)] mt-2 contact-line">
         <div class="contact-row">
           <span>maxfield.allison@gmail.com</span>
@@ -161,7 +161,7 @@ const projects = [
 
     <section class="mb-6">
       <p class="text-[var(--color-ink-dim)] leading-relaxed">
-        Infrastructure engineer who owns a multi-region enterprise Azure platform
+        Systems engineer who owns a multi-region enterprise Azure platform
         by day and operates a production-grade Kubernetes homelab by night. Ten
         years customer-facing across enterprise accounts, now as the single global
         escalation point and named application owner. I work fast by directing AI
