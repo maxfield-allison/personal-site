@@ -3,9 +3,9 @@ import Layout from '../layouts/Layout.astro';
 
 const skills = {
   Cloud: ['Microsoft Azure', 'Azure Front Door', 'Application Gateway', 'Load Balancing', 'Cloud Migration'],
-  Platform: ['Kubernetes', 'Talos Linux', 'ArgoCD', 'GitOps', 'Docker', 'Infrastructure as Code'],
-  'Automation & Code': ['Terraform / OpenTofu', 'Ansible', 'CI/CD', 'Linux'],
-  'Architecture & Delivery': ['Solution Architecture', 'ServiceNow (CHG / RITM / SCTASK)', 'Requirements & Sizing', 'Stakeholder Management', 'Customer-Facing Consulting'],
+  Platform: ['Kubernetes', 'Talos Linux', 'ArgoCD', 'GitOps', 'Docker', 'Infrastructure as Code', 'Observability (Prometheus, Grafana, Alertmanager)'],
+  'Automation & Code': ['Terraform / OpenTofu', 'Ansible', 'CI/CD', 'Linux', 'Python (scripting)', 'REST APIs & Webhooks'],
+  'Architecture & Delivery': ['Solution Architecture', 'AI Agent Orchestration & Governance', 'ServiceNow (CHG / RITM / SCTASK)', 'Requirements & Sizing', 'Stakeholder Management', 'Customer-Facing Consulting'],
   Other: ['Network Security', 'Firewalls', 'Leadership', 'SQL Server'],
 };
 
@@ -62,7 +62,12 @@ const projects = [
   {
     name: 'Kubernetes Homelab',
     detail:
-      '9-node Talos Linux cluster under ArgoCD GitOps running 51 applications; GPU sharing via time-slicing; OpenTofu and Ansible provisioning. Migrated from Docker Swarm without losing service.',
+      '9-node Talos Linux cluster under ArgoCD GitOps running roughly fifty applications, synced from a self-hosted GitLab with secret scanning gating the merge. OpenTofu and Ansible provisioning; GPU sharing via time-slicing; Prometheus and Alertmanager paging; runbooks and post-incident records per service. Migrated from Docker Swarm without losing service.',
+  },
+  {
+    name: 'Multi-agent operations harness (private)',
+    detail:
+      'Governance for dozens of concurrent AI agent sessions on one estate: a scoped GitLab identity per harness, an MCP gateway with a read-only lane and a separate write token approved per call, scheduled jobs that start in shadow until promoted, and every session recording its work in GitLab issues. Direction, rules and review are mine; agents implement.',
   },
   {
     name: 'OPNsense (upstream)',
