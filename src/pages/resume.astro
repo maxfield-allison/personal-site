@@ -3,9 +3,10 @@ import Layout from '../layouts/Layout.astro';
 
 const skills = {
   Cloud: ['Microsoft Azure', 'Azure Front Door', 'Application Gateway', 'Load Balancing', 'Cloud Migration'],
-  Platform: ['Kubernetes', 'Talos Linux', 'ArgoCD', 'GitLab', 'GitOps', 'Proxmox VE', 'Ceph', 'Observability (Prometheus, Grafana, Alertmanager)'],
+  Platform: ['Kubernetes', 'Talos Linux', 'ArgoCD', 'GitLab', 'GitOps', 'Proxmox VE', 'Ceph', 'Docker'],
   'Automation & Integration': ['Terraform / OpenTofu', 'Ansible', 'GitLab CI/CD', 'PowerShell', 'REST APIs & Webhooks'],
   'Architecture & Delivery': ['Solution Architecture', 'AI Agent Orchestration & Governance', 'ServiceNow (CHG / RITM / SCTASK)', 'Knowledge Management', 'Requirements & Sizing', 'Stakeholder Management', 'Customer-Facing Consulting'],
+  'Operations & Data': ['Linux', 'Prometheus / Grafana / Alertmanager', 'Network Security', 'Firewalls', 'SQL Server', 'Technical Leadership'],
 };
 
 const experience = [
@@ -56,17 +57,17 @@ const projects = [
   {
     name: 'dnsweaver',
     detail:
-      'Open-source Go tool that synchronizes DNS records across Technitium, Pi-hole, AdGuard, and Cloudflare. A nine-stage GitLab pipeline covers tests, security, documentation, images, and releases. I own design, releases, and acceptance criteria; agents implement under review.',
+      'Open-source DNS automation tool that synchronizes records across Technitium, Pi-hole, AdGuard, and Cloudflare. A nine-stage GitLab pipeline covers tests, security, documentation, images, and releases. I own design, releases, and acceptance criteria; agents implement.',
   },
   {
     name: 'GitLab, GitOps & Kubernetes Homelab',
     detail:
-      'Single-operator home data center on five-node Proxmox/Ceph, including nine Talos Kubernetes nodes and roughly fifty ArgoCD-managed applications. A dedicated GitLab VM is the GitOps source, registry, and operating record; Linux/x86-64, ARM64, macOS, and Windows runners handle cross-platform CI, and secret scanning gates merges. GitLab and databases stay outside Kubernetes where that boundary earns its cost. Prometheus and Alertmanager page me, backed by runbooks and post-incident records.',
+      'Single-operator home data center on five-node Proxmox/Ceph, including nine Talos Kubernetes nodes and roughly fifty ArgoCD-managed applications. A dedicated GitLab VM is the GitOps source, registry, and operating record. Runner capacity spans Linux on x86-64 and ARM64, macOS, and Windows; the macOS and Windows runners stay powered down until a job needs them. GitLab and the databases stay outside Kubernetes so a cluster failure cannot take down its own source or stateful services. Secret scanning gates merges, and Prometheus and Alertmanager page me.',
   },
   {
     name: 'Multi-agent operations harness (private)',
     detail:
-      'Designed concurrent AI agent operations with scoped identities, attributable GitLab records, separate read and approval-gated write paths through MCP, and graduated autonomy with least-privilege permissions. Jobs begin report-only and gain authority after verified output; I set direction, acceptance criteria, and promotion decisions.',
+      'Designed a concurrent-agent operating model with scoped identities, attributable GitLab records, separate MCP read and write tokens, and client approval on every write call. Jobs begin report-only; I decide when verified output has earned narrowly scoped authority.',
   },
   {
     name: 'OPNsense (upstream)',
@@ -81,7 +82,7 @@ const projects = [
 ];
 ---
 
-<Layout title="Resume · Maxfield Allison" description="Systems engineer and enterprise Azure platform owner, with a 9-node Kubernetes cluster under GitOps and two features merged upstream in OPNsense." ogImage="/og/resume.png?v=1">
+<Layout title="Resume · Maxfield Allison" description="Solutions and infrastructure architect, enterprise Azure platform owner, and operator of a 9-node Kubernetes cluster under GitOps." ogImage="/og/resume.png?v=1">
   <div class="resume max-w-[var(--container-shell)] mx-auto px-6 pt-12 pb-16">
     <div class="no-print mb-10 flex items-center justify-between">
       <a href="/" class="font-mono text-sm text-[var(--color-ink-dim)] no-underline">← Home</a>
@@ -117,7 +118,7 @@ const projects = [
           Maxfield Allison
         </h1>
         <p class="mt-3 mb-0 font-serif text-lg text-[var(--color-ink-dim)]">
-          Systems Engineer · Platform Owner · Alabaster, Alabama
+          Solutions &amp; Infrastructure Architect · Platform Owner · Alabaster, Alabama
         </p>
         <p class="mt-5 mb-0 text-[0.9375rem] leading-relaxed text-[var(--color-ink-dim)] measure">
           The full resume, set as a document and kept current. Download it, print
@@ -145,7 +146,7 @@ const projects = [
         the document outline for screen readers. */}
     <div class="mb-6 hidden print:block resume-masthead">
       <p class="text-3xl font-semibold tracking-tight m-0">Maxfield Allison</p>
-      <p class="text-[var(--color-ink-dim)] mt-1">Systems Engineer · Platform Owner · Alabaster, Alabama</p>
+      <p class="text-[var(--color-ink-dim)] mt-1">Solutions &amp; Infrastructure Architect · Platform Owner · Alabaster, Alabama</p>
       <div class="font-mono text-sm text-[var(--color-ink-dim)] mt-2 contact-line">
         <div class="contact-row">
           <span>maxfield.allison@gmail.com</span>
@@ -160,7 +161,7 @@ const projects = [
 
     <section class="mb-6">
       <p class="text-[var(--color-ink-dim)] leading-relaxed">
-        Systems engineer who owns a multi-region enterprise Azure platform
+        Solutions and infrastructure architect who owns a multi-region enterprise Azure platform
         by day and operates a nine-node Talos Kubernetes cluster on Proxmox and Ceph by night. Ten
         years customer-facing across enterprise accounts, now as the single global
         escalation point and named application owner. I work fast by directing AI

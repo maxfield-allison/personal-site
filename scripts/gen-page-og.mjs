@@ -31,7 +31,7 @@ const PAGES = [
   {
     name: 'resume',
     title: 'Resume',
-    subtitle: 'Infrastructure engineer. Alabaster, Alabama.',
+    subtitle: 'Solutions and infrastructure architect. Alabaster, Alabama.',
   },
   {
     name: 'uses',

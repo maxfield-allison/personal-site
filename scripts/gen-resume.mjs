@@ -38,9 +38,12 @@ await page.addStyleTag({
     #experience ~ * { display: none !important; }
   }`,
 });
+// PDF generation can leave Chromium scrolled into the document when the first
+// page grows close to its printable height. The cover is the current viewport,
+// so put it back at the document origin before capturing it.
+await page.evaluate(() => window.scrollTo(0, 0));
 await page.screenshot({
   path: 'public/resume-cover.png',
-  clip: { x: 0, y: 0, width: 816, height: 1056 },
 });
 await browser.close();
 console.log('public/resume.pdf generated');

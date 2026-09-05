@@ -8,6 +8,7 @@ const groups = [
   {
     heading: 'Platform and infrastructure',
     items: [
+      { name: 'GitLab', icon: 'gitlab', note: 'Self-hosted on its own VM. It is the GitOps source, container registry, CI control plane, and durable operating record. Runner capacity spans Linux on x86-64 and ARM64, macOS, and Windows. The macOS and Windows runners stay powered down until a job needs them.' },
       { name: 'Proxmox VE', icon: 'proxmox', note: 'Five-node cluster with Ceph underneath. The metal the whole lab runs on.' },
       { name: 'Ceph', icon: 'ceph', note: 'Storage for the cluster, on the order of 230 TiB raw. It taught me the most, mostly the hard way.' },
       { name: 'Kubernetes on Talos Linux', icon: 'kubernetes', note: 'The workload layer. Immutable nodes, API-driven, no SSH.' },
@@ -39,9 +40,8 @@ const groups = [
   {
     heading: 'Languages and tooling',
     items: [
-      { name: 'Go', icon: 'go', note: 'My language for real tools. dnsweaver is Go end to end.' },
       { name: 'Bash', icon: 'bash', note: 'The glue and the scripts that run the lab, and my preference anywhere it will run. PowerShell when I have no choice, with the reference docs open.' },
-      { name: 'GitLab CI + GitHub Actions', icon: 'gitlab', note: 'CI that lints, tests, scans for secrets, and blocks anything that fails.' },
+      { name: 'GitHub Actions', note: 'Public-repository CI for linting, tests, CodeQL, documentation, and container health.' },
       { name: 'Renovate', icon: 'renovate', note: 'Keeps dependencies and container images current through reviewable pull requests.' },
       { name: 'Linux', icon: 'linux', note: 'Everywhere. WSL on the workstation, Talos on the cluster.' },
     ],
@@ -49,7 +49,7 @@ const groups = [
   {
     heading: 'How I work',
     items: [
-      { name: 'AI-assisted engineering', note: 'I direct AI agents to implement and own the engineering myself. Nothing ships without review.' },
+      { name: 'AI-assisted engineering', note: 'I set the architecture, standards, and acceptance criteria, then direct agents to implement. Scheduled work starts report-only; I promote it only after its output has been verified.' },
       { name: 'Trunk-based GitOps', note: 'Small changes, reviewed, reconciled from git.' },
       { name: 'Runbooks and ADRs', note: "If it's important, it's written down. Decisions get recorded." },
     ],

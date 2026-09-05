@@ -11,9 +11,9 @@ const skills = [
   { label: 'Load Balancing' },
   { label: 'Cloud Migration' },
   { label: 'Kubernetes', icon: 'kubernetes' },
-  { label: 'Go', icon: 'go' },
   { label: 'Docker', icon: 'docker' },
   { label: 'GitOps', icon: 'argo' },
+  { label: 'GitLab', icon: 'gitlab' },
   { label: 'ArgoCD', icon: 'argo' },
   { label: 'Terraform / OpenTofu', icon: 'opentofu' },
   { label: 'Ansible', icon: 'ansible' },
@@ -31,7 +31,7 @@ const recognition = [
 ];
 ---
 
-<Layout title="About · Maxfield Allison" description="Infrastructure engineer. I own a multi-region enterprise Azure platform by day and run a 9-node Kubernetes cluster at home." ogImage="/og/about.png?v=1">
+<Layout title="About · Maxfield Allison" description="Solutions and infrastructure architect. I own a multi-region enterprise Azure platform by day and run a 9-node Kubernetes cluster at home." ogImage="/og/about.png?v=1">
   <article class="max-w-[var(--container-shell)] mx-auto px-6 pt-16 pb-8">
     <div class="grid gap-4 md:gap-10 md:grid-cols-[var(--rail)_minmax(0,1fr)]">
       <div class="font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-ink-dim)] md:pt-3">
@@ -42,8 +42,7 @@ const recognition = [
 
     <div class="space-y-5 text-[var(--color-ink-dim)] leading-relaxed">
       <p class="text-lg text-[var(--color-ink)]">
-        I keep enterprise infrastructure running, and I build my own to
-        understand it deeper.
+        I design enterprise infrastructure, argue for it, and then run it.
       </p>
 
       <p>
@@ -62,28 +61,34 @@ const recognition = [
         in one of them that was breaking DNS for the whole platform, and drove
         the correction with the vendor and the customer's security group. I'm
         also the named application owner, so production changes don't ship
-        without my approval. And I made the business case to leadership for a
-        non-production environment that mirrors production across regions, won
-        the funding, and I'm leading its design and sizing now.
+        without my approval. I made the business case for a non-production
+        environment that mirrors production across regions, won the funding,
+        and defined its design, sizing, and resource requirements across three
+        organizations. The platform teams own the provisioning.
       </p>
 
       <p>
         The results I care about are the ones someone else can confirm. I
-        brought platform-related support ticket volume down year over year by
-        stabilizing the operating model. The account's annual customer survey
-        came back top-tier with my name on it, and I contributed to a five-year
-        renewal. I've grown from field technical support to global platform
-        owner over six years.
+        brought platform-related support ticket volume down 38% year over year,
+        measured in the customer's ServiceNow, by stabilizing the operating
+        model and pushing documentation and self-service. I'm now redesigning
+        the account's operational data and documentation around agentic systems
+        and Microsoft Power Automate flows. The account's annual customer
+        survey came back top-tier with my name on it, and I contributed to a
+        five-year renewal.
       </p>
 
       <p>
         Off the clock, I run the patterns myself. My homelab started as a way to
         watch movies and turned into a 9-node Kubernetes cluster on Talos Linux,
-        managed with ArgoCD, running 51 applications under GitOps. It all sits
-        on a five-node Proxmox cluster with Ceph storage underneath. Control
-        plane, GPU scheduling, networking, CI/CD, the security scanning that
-        yells at me when I commit something dumb. When I wanted DNS to stop being
-        a manual chore, I wrote a Go tool for it and shipped it as open source.
+        managed with ArgoCD, running about fifty applications under GitOps. It
+        all sits on a five-node Proxmox cluster with Ceph underneath. GitLab has
+        its own VM and serves as the GitOps source, registry, CI control plane,
+        and operating record. Runner capacity spans Linux on x86-64 and ARM64,
+        macOS, and Windows. The macOS and Windows runners stay powered down
+        until a job needs them. When DNS became a manual chore, I built
+        dnsweaver as an open-source DNS project. I own its design, releases,
+        and acceptance criteria; agents implement.
       </p>
     </div>
       </div>
@@ -105,6 +110,12 @@ const recognition = [
         to projects like OPNsense in a language I didn't know when I started,
         which is the part most people skip: you still have to understand the
         system to direct the work well.
+      </p>
+      <p>
+        Each harness gets a scoped identity, so GitLab keeps the work
+        attributable. MCP read and write access use separate tokens, and write
+        calls require client approval. Scheduled jobs begin report-only. I
+        decide whether verified output has earned narrowly scoped authority.
       </p>
       <p class="text-[var(--color-ink)]">
         I care more about whether something works at 2am than whether it looks

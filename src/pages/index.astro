@@ -61,7 +61,7 @@ try {
 // number that would quietly go stale.
 const stats: { value: string; suffix?: string; label: string }[] = [
   { value: '9-node', label: 'Talos Kubernetes cluster' },
-  { value: '51', label: 'applications under GitOps' },
+  { value: '5-node', label: 'Proxmox cluster with Ceph' },
   ...(stars !== null
     ? [{ value: stars.toLocaleString(), suffix: '★', label: 'dnsweaver on GitHub' }]
     : [{ value: '11', label: 'DNS providers in dnsweaver' }]),
@@ -77,13 +77,13 @@ const stats: { value: string; suffix?: string; label: string }[] = [
       <div></div>
       <div>
         <p class="font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-ink-dim)] m-0">
-          infrastructure engineer
+          solutions and infrastructure architect
         </p>
         <h1 class="mt-5 mb-0 font-serif text-[2.5rem] sm:text-[3.375rem] font-semibold leading-[1.12] tracking-[-0.01em]">
           I run enterprise infrastructure by day and build my own to understand it deeper.
         </h1>
         <p class="mt-7 mb-0 font-serif text-lg sm:text-xl leading-[1.65] text-[var(--color-ink-dim)] max-w-[58ch]">
-          I'm Maxfield Allison, an infrastructure engineer. My day job is a
+          I'm Maxfield Allison, a solutions and infrastructure architect. My day job is a
           multi-region enterprise Azure platform. My off hours are a 9-node
           Kubernetes homelab and the open-source tools that keep it honest.
         </p>
