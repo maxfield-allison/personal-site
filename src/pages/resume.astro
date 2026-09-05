@@ -3,10 +3,9 @@ import Layout from '../layouts/Layout.astro';
 
 const skills = {
   Cloud: ['Microsoft Azure', 'Azure Front Door', 'Application Gateway', 'Load Balancing', 'Cloud Migration'],
-  Platform: ['Kubernetes', 'Talos Linux', 'ArgoCD', 'GitOps', 'Docker', 'Infrastructure as Code', 'Observability (Prometheus, Grafana, Alertmanager)'],
-  'Automation & Integration': ['Terraform / OpenTofu', 'Ansible', 'CI/CD', 'PowerShell', 'REST APIs & Webhooks'],
+  Platform: ['Kubernetes', 'Talos Linux', 'ArgoCD', 'GitLab', 'GitOps', 'Proxmox VE', 'Ceph', 'Observability (Prometheus, Grafana, Alertmanager)'],
+  'Automation & Integration': ['Terraform / OpenTofu', 'Ansible', 'GitLab CI/CD', 'PowerShell', 'REST APIs & Webhooks'],
   'Architecture & Delivery': ['Solution Architecture', 'AI Agent Orchestration & Governance', 'ServiceNow (CHG / RITM / SCTASK)', 'Knowledge Management', 'Requirements & Sizing', 'Stakeholder Management', 'Customer-Facing Consulting'],
-  Other: ['Network Security', 'Firewalls', 'Leadership', 'SQL Server'],
 };
 
 const experience = [
@@ -16,11 +15,11 @@ const experience = [
     dates: 'June 2024 - Present',
     pageBreak: false,
     bullets: [
-      'Global owner of an enterprise output-management platform on Azure, serving thousands of devices across four global regions; single global escalation point.',
+      'Named application owner and single global escalation point for an enterprise output-management platform on Azure, serving thousands of devices across four global regions.',
       "Cut platform-related support ticket volume 38% year over year, measured in the customer's ServiceNow, by stabilizing the operating model and driving process and self-service adoption.",
+      "Redesigning the enterprise account's operational data and documentation to support agentic systems and Microsoft Power Automate flows.",
       'Made the business case for a production-mirrored non-production environment, won the funding, and defined its design, sizing and resource requirements across three organizations, delegating provisioning to the platform teams.',
       'Identified and drove correction of configuration faults in cloud firewall and microsegmentation layers owned by other teams and vendors, including one degrading DNS for the platform globally.',
-      'Named application owner with approval authority over production changes on the platform.',
       'Contributed to the architecture decisions for the on-premises to Azure migration and the geo-redundancy re-architecture.',
       'Set the operating standard for a global support team and coached multiple specialists into primary platform roles.',
       'Identified the GPO scoping requirement in the TLS 1.0/1.1 and legacy LDAP remediation and owned the IIS and application-layer changes; automated internal certificate renewal.',
@@ -57,27 +56,27 @@ const projects = [
   {
     name: 'dnsweaver',
     detail:
-      'Open-source Go tool that keeps DNS records in sync with your infrastructure across Technitium, Pi-hole, AdGuard, and Cloudflare. Multi-provider, split-horizon, self-hosted. Full CI/CD and semantic versioning. Owner and maintainer: design, provider selection, releases and CI.',
+      'Open-source Go tool that synchronizes DNS records across Technitium, Pi-hole, AdGuard, and Cloudflare. A nine-stage GitLab pipeline covers tests, security, documentation, images, and releases. I own design, releases, and acceptance criteria; agents implement under review.',
   },
   {
-    name: 'Kubernetes Homelab',
+    name: 'GitLab, GitOps & Kubernetes Homelab',
     detail:
-      '9-node Talos Linux cluster under ArgoCD GitOps running roughly fifty applications, synced from a self-hosted GitLab with secret scanning gating the merge. OpenTofu and Ansible provisioning; GPU sharing via time-slicing; Prometheus and Alertmanager paging; service runbooks and post-incident records. Migrated from Docker Swarm without losing service.',
+      'Single-operator home data center on five-node Proxmox/Ceph, including nine Talos Kubernetes nodes and roughly fifty ArgoCD-managed applications. A dedicated GitLab VM is the GitOps source, registry, and operating record; Linux/x86-64, ARM64, macOS, and Windows runners handle cross-platform CI, and secret scanning gates merges. GitLab and databases stay outside Kubernetes where that boundary earns its cost. Prometheus and Alertmanager page me, backed by runbooks and post-incident records.',
   },
   {
     name: 'Multi-agent operations harness (private)',
     detail:
-      'Designed the operating model for concurrent AI agent sessions: scoped identities and audit trails in GitLab, read-only and approval-gated write paths through MCP, and scheduled automation that starts in shadow mode. I set direction, acceptance criteria and promotion decisions; agents implement.',
+      'Designed concurrent AI agent operations with scoped identities, attributable GitLab records, separate read and approval-gated write paths through MCP, and graduated autonomy with least-privilege permissions. Jobs begin report-only and gain authority after verified output; I set direction, acceptance criteria, and promotion decisions.',
   },
   {
     name: 'OPNsense (upstream)',
     detail:
-      'Two contributions merged into the OPNsense firewall platform six years apart: a maximum packet length option for traffic shaper rules (core, 2020), and BGP maximum-paths for ECMP multipath with its documentation (FRR plugin, 2026, shipped in plugin 1.52). PHP on Phalcon.',
+      'Two contributions merged upstream: traffic-shaper packet length (core, 2020) and BGP ECMP maximum-paths with documentation (FRR plugin, 2026, shipped in 1.52).',
   },
   {
     name: 'maxfieldallison.com',
     detail:
-      'This site: self-hosted on the Kubernetes cluster as the primary origin with a Cloudflare Pages failover mirror and an edge Worker that switches between them automatically.',
+      'Portfolio and resume site with a Kubernetes-hosted primary, Cloudflare Pages failover, and edge-origin switching.',
   },
 ];
 ---
@@ -162,11 +161,11 @@ const projects = [
     <section class="mb-6">
       <p class="text-[var(--color-ink-dim)] leading-relaxed">
         Systems engineer who owns a multi-region enterprise Azure platform
-        by day and operates a production-grade Kubernetes homelab by night. Ten
+        by day and operates a nine-node Talos Kubernetes cluster on Proxmox and Ceph by night. Ten
         years customer-facing across enterprise accounts, now as the single global
         escalation point and named application owner. I work fast by directing AI
-        agents while owning the architecture, standards, and integration myself.
-        Everything ships through linting, tests, and review.
+        agents while owning architecture, standards, and acceptance criteria.
+        Agent-assisted implementation is gated by linting, tests, and review.
       </p>
     </section>
 
@@ -219,11 +218,10 @@ const projects = [
 
       <div class="resume-tail-right">
         <section class="mb-6 keep-together">
-          <h2 class="resume-h2">Education & Certifications</h2>
+          <h2 class="resume-h2">Certifications</h2>
           <ul class="space-y-1 text-sm text-[var(--color-ink-dim)] resume-list">
             <li>Microsoft Certified: Azure Fundamentals</li>
-            <li>Seven enterprise product certifications — Kofax Equitrac, AutoStore, RightFax, ControlSuite</li>
-            <li>Two contributions merged upstream into the OPNsense firewall platform, six years apart</li>
+            <li>Seven enterprise product certifications: Kofax Equitrac, AutoStore, RightFax, ControlSuite</li>
           </ul>
         </section>
 
