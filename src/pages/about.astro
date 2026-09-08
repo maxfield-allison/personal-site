@@ -1,28 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import DocSection from '../components/DocSection.astro';
-import Dinkus from '../components/Dinkus.astro';
 import Icon from '../components/Icon.astro';
-
-const skills = [
-  { label: 'Microsoft Azure', icon: 'azure' },
-  { label: 'Azure Front Door', icon: 'azure' },
-  { label: 'Application Gateway', icon: 'azure' },
-  { label: 'Load Balancing' },
-  { label: 'Cloud Migration' },
-  { label: 'Kubernetes', icon: 'kubernetes' },
-  { label: 'Docker', icon: 'docker' },
-  { label: 'GitOps', icon: 'argo' },
-  { label: 'GitLab', icon: 'gitlab' },
-  { label: 'ArgoCD', icon: 'argo' },
-  { label: 'Terraform / OpenTofu', icon: 'opentofu' },
-  { label: 'Ansible', icon: 'ansible' },
-  { label: 'CI/CD', icon: 'gitlab' },
-  { label: 'Talos Linux', icon: 'linux' },
-  { label: 'Infrastructure as Code', icon: 'terraform' },
-  { label: 'Network Security', icon: 'cloudflare' },
-  { label: 'Linux', icon: 'linux' },
-];
 
 const recognition = [
   'Specialist of the Quarter (x2) and Specialist of the Year',
@@ -31,132 +10,55 @@ const recognition = [
 ];
 ---
 
-<Layout title="About · Maxfield Allison" description="Solutions and infrastructure architect. I own a multi-region enterprise Azure platform by day and run a 9-node Kubernetes cluster at home." ogImage="/og/about.png?v=1">
-  <article class="max-w-[var(--container-shell)] mx-auto px-6 pt-16 pb-8">
+<Layout title="About · Maxfield Allison" description="Ten years working with enterprise customers. Platform design, the business case behind it, and responsibility for what happens next." ogImage="/og/about.png?v=2">
+  <article class="page-shell pt-16 pb-8">
     <div class="grid gap-4 md:gap-10 md:grid-cols-[var(--rail)_minmax(0,1fr)]">
-      <div class="font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-ink-dim)] md:pt-3">
-        the person
-      </div>
-      <div>
-    <h1 class="font-serif text-[2.25rem] sm:text-[2.75rem] font-semibold leading-tight tracking-[-0.01em] mb-8">About</h1>
-
-    <div class="space-y-5 text-[var(--color-ink-dim)] leading-relaxed">
-      <p class="text-lg text-[var(--color-ink)]">
-        I design enterprise infrastructure, argue for it, and then run it.
-      </p>
-
-      <p>
-        By day I own a multi-region, multi-redundant enterprise output platform
-        on Azure for a large global organization. It serves thousands of devices
-        and users across four global regions, with geo-routing that sends each
-        user to the closest region and redundancy at every layer so a regional
-        problem doesn't take the business down. I'm the single global escalation
-        point for the platform.
-      </p>
-
-      <p>
-        I sat in the architecture decisions for the move from on-premises into
-        Azure. The network and firewall layers belong to other teams, and a lot
-        of my job is holding that work to account: I found a configuration fault
-        in one of them that was breaking DNS for the whole platform, and drove
-        the correction with the vendor and the customer's security group. I'm
-        also the named application owner, so production changes don't ship
-        without my approval. I made the business case for a non-production
-        environment that mirrors production across regions, won the funding,
-        and defined its design, sizing, and resource requirements across three
-        organizations. The platform teams own the provisioning.
-      </p>
-
-      <p>
-        The results I care about are the ones someone else can confirm. I
-        brought platform-related support ticket volume down 38% year over year,
-        measured in the customer's ServiceNow, by stabilizing the operating
-        model and pushing documentation and self-service. I'm now redesigning
-        the account's operational data and documentation around agentic systems
-        and Microsoft Power Automate flows. The account's annual customer
-        survey came back top-tier with my name on it, and I contributed to a
-        five-year renewal.
-      </p>
-
-      <p>
-        Off the clock, I run the patterns myself. My homelab started as a way to
-        watch movies and turned into a 9-node Kubernetes cluster on Talos Linux,
-        managed with ArgoCD, running about fifty applications under GitOps. It
-        all sits on a five-node Proxmox cluster with Ceph underneath. GitLab has
-        its own VM and serves as the GitOps source, registry, CI control plane,
-        and operating record. Runner capacity spans Linux on x86-64 and ARM64,
-        macOS, and Windows. The macOS and Windows runners stay powered down
-        until a job needs them. When DNS became a manual chore, I built
-        dnsweaver as an open-source DNS project. I own its design, releases,
-        and acceptance criteria; agents implement.
-      </p>
+    <p class="eyebrow md:pt-5">About me</p>
+    <div>
+    <h1 class="font-serif text-[2.75rem] leading-tight mt-4 mb-8">Maxfield Allison</h1>
+    <div class="measure space-y-5 text-[var(--color-ink-dim)] leading-relaxed">
+      <p class="text-xl font-serif text-[var(--color-ink)]">I design enterprise infrastructure, argue for it, and then run it.</p>
+      <p>I've spent ten years working with enterprise customers. Today I'm the named application owner and single global escalation point for an output-management platform on Azure. Thousands of devices depend on it across four regions. When it stops, people can't print, and in parts of that business printing isn't optional.</p>
+      <p>A lot of the work happens between teams. I contributed to the architecture decisions for the move from on-premises into Azure. The network and firewall layers belong to other teams, but when a configuration fault in one of them broke DNS across the platform, I worked with the vendor and the customer's security group to get it corrected.</p>
+      <p>I also made the business case for a non-production environment that mirrors production. I won the funding and defined the design, sizing, and resource requirements across three organizations. The platform teams own the provisioning. <a href="/projects/test-environment">The case study</a> gets into why getting it approved took longer than designing it.</p>
+      <p>Platform-related support tickets fell 38% year over year, measured in the customer's ServiceNow, as I stabilized the operating model and pushed documentation and self-service. I'm now redesigning the account's operational data and documentation around agentic systems and Microsoft Power Automate flows.</p>
     </div>
-      </div>
+    </div>
     </div>
   </article>
 
-  <DocSection label="section 1" spacing="tight">
-    <h2 class="font-serif text-2xl font-semibold mb-4 mt-0">How I work</h2>
-    <div class="space-y-5 text-[var(--color-ink-dim)] leading-relaxed">
-      <p>
-        I direct AI agents to implement, and I own the engineering. Architecture,
-        standards, integration, the decision to throw out a solution and start
-        over, that's me. The model types faster than I do; it doesn't decide
-        anything. I reject a lot of what gets generated, and everything ships
-        through linting, tests, and review before it's real.
-      </p>
-      <p>
-        If the AI went away I'd be slower, not stuck. I've contributed features
-        to projects like OPNsense in a language I didn't know when I started,
-        which is the part most people skip: you still have to understand the
-        system to direct the work well.
-      </p>
-      <p>
-        Each harness gets a scoped identity, so GitLab keeps the work
-        attributable. MCP read and write access use separate tokens, and write
-        calls require client approval. Scheduled jobs begin report-only. I
-        decide whether verified output has earned narrowly scoped authority.
-      </p>
-      <p class="text-[var(--color-ink)]">
-        I care more about whether something works at 2am than whether it looks
-        clever in a slide. I'd rather tell you what I've actually validated than
-        pretend I'm certain about something I haven't.
-      </p>
+  <DocSection label="The tools" spacing="tight">
+    <h2 class="font-serif text-2xl font-semibold mb-4 mt-0">How I work with AI</h2>
+    <div class="measure space-y-5 text-[var(--color-ink-dim)] leading-relaxed">
+      <p>I direct AI agents and own the engineering. I set the architecture and acceptance criteria, review what comes back, and send it back when it doesn't hold up. With dnsweaver, that means I own the design and releases while agents implement the code. I'm responsible for what I put out under my name.</p>
+      <p>The useful part is how much more I can investigate and review. I can follow an alternative far enough to understand why it won't work, or have a proposed change challenged before I accept it. That still requires me to understand the system and decide what evidence is enough. I've written more about <a href="https://probablyfine.dev/blog/how-i-use-ai?utm_source=maxfieldallison&utm_medium=site&utm_campaign=about" data-umami-event="outbound-probablyfine">how I use AI</a>, including the limits of my own process.</p>
     </div>
   </DocSection>
 
-  <DocSection label="section 2" spacing="tight">
-    <h2 class="font-serif text-2xl font-semibold mb-5 mt-0">Skills</h2>
-    <div class="flex flex-wrap gap-2 mb-8">
-      {
-        skills.map((s) => (
-          <span class="inline-flex items-center gap-1.5 font-mono text-xs text-[var(--color-ink-dim)] border border-[var(--color-line)] rounded px-2.5 py-1">
-            {s.icon && <Icon name={s.icon} size={13} class="opacity-70" />}
-            {s.label}
-          </span>
-        ))
-      }
+  <DocSection label="At home" spacing="tight">
+    <h2 class="font-serif text-2xl font-semibold mb-4 mt-0">I like having a project to work on</h2>
+    <div class="measure space-y-5 text-[var(--color-ink-dim)] leading-relaxed">
+      <p>The homelab started as a way to watch movies. Now there's Kubernetes, a Proxmox cluster with Ceph underneath, and a collection of services and tools that keeps giving me something else to figure out. Some of what I learn there turns out to be useful at work. I'd be doing it anyway.</p>
+      <p>Games got me into computers long before any of that. I've been writing about that history too, from playing DOS games beside my mom to hosting servers for friends. <a href="https://probablyfine.dev/blog/i-just-wanted-to-play-games?utm_source=maxfieldallison&utm_medium=site&utm_campaign=about" data-umami-event="outbound-probablyfine">I just wanted to play games</a> is the longer version.</p>
     </div>
+  </DocSection>
 
-    <h2 class="font-serif text-2xl font-semibold mb-4">Recognition</h2>
-    <ul class="space-y-2 text-[var(--color-ink-dim)] leading-relaxed">
-      {recognition.map((r) => <li class="flex gap-3"><span class="text-[var(--color-accent)]">·</span>{r}</li>)}
+  <DocSection label="Experience" spacing="tight">
+    <h2 class="font-serif text-2xl font-semibold mb-4 mt-0">Background and tools</h2>
+    <p class="measure text-[var(--color-ink-dim)] leading-relaxed">My work spans Azure platform architecture, networking, Linux, and virtualization, along with the customer-facing work of making the case for a design and getting it approved. <a href="/resume">My resume</a> has the roles and technical detail.</p>
+    <h3 class="font-serif text-xl font-semibold mt-6 mb-3">Recognition</h3>
+    <ul class="list-disc pl-5 space-y-2 text-[var(--color-ink-dim)] leading-relaxed">
+      {recognition.map((r) => <li>{r}</li>)}
     </ul>
   </DocSection>
 
-  <DocSection label="section 3" spacing="tight">
+  <DocSection label="Say hello" spacing="tight">
     <h2 class="font-serif text-2xl font-semibold mb-4 mt-0">Get in touch</h2>
-    <p class="text-[var(--color-ink-dim)] leading-relaxed mb-4">
-      If you're building infrastructure and you want someone who can learn a new
-      stack fast and move quickly without shipping garbage, I'd like to hear
-      about it.
-    </p>
-    <div class="flex flex-wrap gap-x-6 gap-y-3 font-mono text-sm">
-      <a href="mailto:maxfield.allison@gmail.com" data-umami-event="email-click" class="inline-flex items-center gap-1.5"><Icon name="email" size={14} /> Email →</a>
-      <a href="https://www.linkedin.com/in/maxfield-allison/" rel="me noopener" data-umami-event="outbound-linkedin" class="inline-flex items-center gap-1.5"><Icon name="linkedin" size={14} /> LinkedIn →</a>
-      <a href="https://bsky.app/profile/maxfieldallison.com" rel="me noopener" data-umami-event="outbound-bluesky" class="inline-flex items-center gap-1.5"><Icon name="bluesky" size={14} /> Bluesky →</a>
+    <p class="measure text-[var(--color-ink-dim)] leading-relaxed mb-4">If there's a project or a role you think I'd be a good fit for, I'd like to hear about it.</p>
+    <div class="flex flex-wrap gap-x-6 gap-y-3 text-sm">
+      <a href="mailto:maxfield.allison@gmail.com" data-umami-event="email-click" class="inline-flex items-center min-h-11 gap-1.5"><Icon name="email" size={14} /> Email</a>
+      <a href="https://www.linkedin.com/in/maxfield-allison/" rel="me noopener" data-umami-event="outbound-linkedin" class="inline-flex items-center min-h-11 gap-1.5"><Icon name="linkedin" size={14} /> LinkedIn</a>
+      <a href="https://bsky.app/profile/maxfieldallison.com" rel="me noopener" data-umami-event="outbound-bluesky" class="inline-flex items-center min-h-11 gap-1.5"><Icon name="bluesky" size={14} /> Bluesky</a>
     </div>
   </DocSection>
-
-  <Dinkus />
 </Layout>

@@ -1,201 +1,86 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import DocSection from '../components/DocSection.astro';
-import DocHeading from '../components/DocHeading.astro';
-import Figure from '../components/Figure.astro';
-import RecordFlow from '../components/RecordFlow.astro';
-import { fetchStars } from '../lib/github';
-import savedWriting from '../data/recent-writing.json';
 
-const projects = (await getCollection('projects', ({ data }) => !data.draft && data.featured)).sort(
-  (a, b) => a.data.order - b.data.order,
-);
-const [flagship, ...rest] = projects;
-
-// Live star count for the flagship, fetched at build. Same policy as the case
-// study page: a failed fetch yields no number rather than a broken build.
-const flagshipRepo = flagship?.data.links.find((l) => /github\.com/i.test(l.url))?.url;
-const stars = await fetchStars(flagshipRepo);
-
-// Recent writing, pulled from the probablyfine.dev RSS feed at build time.
-// Cross-origin, but fetched during the static build so it ships as HTML.
-// A failed fetch keeps the last verified entries rather than hiding the section.
-// Refresh the saved snapshot when publishing a new article on the sibling site.
-type Post = { title: string; link: string; date: Date };
-let recentPosts: Post[] = savedWriting.map(p => ({ ...p, date: new Date(p.date) }));
-try {
-  const res = await fetch('https://probablyfine.dev/rss.xml', {
-    signal: AbortSignal.timeout(8000),
-  });
-  if (res.ok) {
-    const xml = await res.text();
-    const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].slice(0, 3);
-    const fetchedPosts = items
-      .map((m) => {
-        const block = m[1];
-        const pick = (tag: string) =>
-          block.match(new RegExp(`<${tag}>(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?</${tag}>`))?.[1]?.trim() ?? '';
-        return { title: pick('title'), link: pick('link'), date: new Date(pick('pubDate')) };
-      })
-      // Only ever emit an href we know is an https URL on the sibling site.
-      // The feed is mine, so this is not defence against a hostile source so
-      // much as against this page becoming an open redirect if that site is
-      // ever compromised: a `javascript:` or attacker-controlled absolute URL
-      // in the feed would otherwise land straight in an anchor here.
-      .filter((p) => {
-        if (!p.title || !p.link) return false;
-        try {
-          const u = new URL(p.link);
-          return u.protocol === 'https:' && u.hostname === 'probablyfine.dev' && !Number.isNaN(p.date.getTime());
-        } catch {
-          return false;
-        }
-      });
-    if (fetchedPosts.length) recentPosts = fetchedPosts;
-    else console.warn('Recent writing: RSS contained no usable entries; using saved snapshot.');
-  } else {
-    console.warn(`Recent writing: RSS returned HTTP ${res.status}; using saved snapshot.`);
-  }
-} catch {
-  console.warn('Recent writing: RSS request failed; using saved snapshot.');
-}
-
-// The stat table. Every figure here is checked against the live system, and the
-// star count comes from the build-time fetch above rather than a hard-coded
-// number that would quietly go stale.
-const stats: { value: string; suffix?: string; label: string }[] = [
-  { value: '9-node', label: 'Talos Kubernetes cluster' },
-  { value: '5-node', label: 'Proxmox cluster with Ceph' },
-  ...(stars !== null
-    ? [{ value: stars.toLocaleString(), suffix: '★', label: 'dnsweaver on GitHub' }]
-    : [{ value: '11', label: 'DNS providers in dnsweaver' }]),
-  { value: '4', label: 'global regions, enterprise Azure' },
+// Deliberately selected, published writing. These links ship in the HTML even
+// when the sibling site is unavailable during a build. Use its clean URLs.
+const writing = [
+  {
+    title: 'How I use AI',
+    href: 'https://probablyfine.dev/blog/how-i-use-ai',
+    description: "What I ask the tools to do, what I review, and what I'm responsible for when it ships.",
+  },
+  {
+    title: 'I built dnsweaver because I was tired of managing DNS by hand',
+    href: 'https://probablyfine.dev/blog/why-i-built-dnsweaver',
+    description: 'The problem in my own lab that became an open-source project.',
+  },
+  {
+    title: 'I just wanted to play games',
+    href: 'https://probablyfine.dev/blog/i-just-wanted-to-play-games',
+    description: 'Playing DOS games beside my mom, learning to fix my own computers, and finding my way into this work.',
+  },
 ];
 ---
 
 <Layout>
-  {/* Document header: kicker, display title, then the argument in two registers
-      — serif for the claim, sans for the qualification. */}
-  <section class="max-w-[var(--container-shell)] mx-auto px-6">
-    <div class="grid gap-4 md:gap-10 md:grid-cols-[var(--rail)_minmax(0,1fr)] pt-16 pb-12 sm:pt-24 sm:pb-16">
-      <div></div>
-      <div>
-        <p class="font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-ink-dim)] m-0">
-          solutions and infrastructure architect
-        </p>
-        <h1 class="mt-5 mb-0 font-serif text-[2.5rem] sm:text-[3.375rem] font-semibold leading-[1.12] tracking-[-0.01em]">
-          I run enterprise infrastructure by day and build my own to understand it deeper.
-        </h1>
-        <p class="mt-7 mb-0 font-serif text-lg sm:text-xl leading-[1.65] text-[var(--color-ink-dim)] max-w-[58ch]">
-          I'm Maxfield Allison, a solutions and infrastructure architect. My day job is a
-          multi-region enterprise Azure platform. My off hours are a 9-node
-          Kubernetes homelab and the open-source tools that keep it honest.
-        </p>
-        <p class="mt-4 mb-0 text-[1.0625rem] leading-[1.7] text-[var(--color-ink-dim)] measure">
-          I work fast by directing AI agents while owning the engineering myself.
-          That's AI-assisted engineering, not vibe coding. The judgment is mine;
-          the typing is just faster.
-        </p>
-        <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mt-8 text-[0.9375rem] font-medium">
-          <a
-            href="/resume"
-            data-track="cta-resume"
-            class="border border-[var(--color-accent)] rounded-sm px-5 py-2.5 no-underline hover:no-underline hover:bg-[var(--color-accent)]/[0.08] transition-colors"
-            >The resume →</a
-          >
-          <a href="/projects">The case studies →</a>
-          <a href="https://github.com/maxfield-allison" rel="me noopener" data-umami-event="outbound-github">GitHub →</a>
-        </div>
+  <section class="portfolio-intro page-shell" aria-labelledby="intro-title">
+    <div>
+      <p class="eyebrow">Solutions &amp; infrastructure architect</p>
+      <h1 id="intro-title">I design enterprise infrastructure, argue for it, and then run it.</h1>
+      <p class="intro-copy">I'm Maxfield Allison. I've spent ten years working with enterprise customers, and I'm now the application owner and global escalation point for an Azure platform serving thousands of devices across four regions.</p>
+      <div class="intro-links">
+        <a href="/resume" data-track="cta-resume" class="primary-link">Read my resume <span aria-hidden="true">↗</span></a>
+        <a href="/about">More about me <span aria-hidden="true">→</span></a>
       </div>
     </div>
+    <aside class="intro-aside" aria-label="Outside work">
+      <p class="eyebrow">Outside work</p>
+      <p>I still spend a lot of my free time on computers. The homelab, the open-source projects, and the writing at probablyfine.dev all come out of that. I'd be doing this even if it never helped my career.</p>
+      <a href="https://probablyfine.dev/blog?utm_source=maxfieldallison&utm_medium=site&utm_campaign=portfolio" data-umami-event="outbound-probablyfine">Visit probablyfine.dev <span aria-hidden="true">↗</span></a>
+    </aside>
   </section>
 
-  {/* Table 1. Serif numerals against mono labels: the fastest "document, not
-      terminal" signal on the page, and the evidence behind the claim above. */}
-  <section class="max-w-[var(--container-shell)] mx-auto px-6">
-    <p class="font-mono text-xs text-[var(--color-ink-dim)] mb-2.5 m-0">table 1 · working infrastructure</p>
-    <div class="rule-double"></div>
-    <div class="arrive grid grid-cols-2 sm:grid-cols-4 border-b border-[var(--color-line)]">
-      {
-        stats.map((s, i) => (
-          <div
-            class:list={[
-              'py-5 pr-6',
-              i > 0 && 'sm:pl-6',
-              i < stats.length - 1 && 'sm:border-r border-[var(--color-line)]',
-              i % 2 === 1 && 'pl-6 sm:pl-6',
-              i < 2 && 'border-b sm:border-b-0 border-[var(--color-line)]',
-            ]}
-          >
-            <div class="font-serif text-[1.75rem] font-semibold text-[var(--color-ink)] leading-none">
-              {s.value}
-              {s.suffix && <span class="text-lg text-[var(--color-ink-dim)]"> {s.suffix}</span>}
-            </div>
-            <div class="font-mono text-xs text-[var(--color-ink-dim)] mt-1.5 leading-snug">{s.label}</div>
-          </div>
-        ))
-      }
+  <section class="portfolio-section page-shell" aria-labelledby="work-title">
+    <div class="section-intro">
+      <h2 id="work-title">Some of the work</h2>
+      <p>The decisions behind a few projects, including the work it took to get a design approved.</p>
     </div>
+    <article class="work-example">
+      <p class="eyebrow">Enterprise architecture</p>
+      <div>
+        <h3><a href="/projects/test-environment" data-track="case-study-test-environment">Making the case for a test environment</a></h3>
+        <p>A global platform needed somewhere to test changes. I made the business case, won the funding, and defined the design and sizing across three organizations. The platform teams own the provisioning.</p>
+      </div>
+    </article>
+    <article class="work-example">
+      <p class="eyebrow">Open source</p>
+      <div>
+        <h3><a href="/projects/dnsweaver" data-track="case-study-dnsweaver">Keeping DNS in step with the infrastructure</a></h3>
+        <p>dnsweaver started with the records I was tired of maintaining by hand. I own its design, releases, and acceptance criteria. AI agents implement the code.</p>
+      </div>
+    </article>
+    <article class="work-example">
+      <p class="eyebrow">Upstream contribution</p>
+      <div>
+        <h3><a href="/projects/opnsense-frr" data-track="case-study-opnsense-frr">Picking up an OPNsense issue a bot had closed</a></h3>
+        <p>The BGP setting I needed wasn't exposed in the interface. The case study follows the issue through to a contribution merged upstream.</p>
+      </div>
+    </article>
+    <p class="section-more"><a href="/projects">All case studies <span aria-hidden="true">→</span></a></p>
   </section>
 
-  <DocSection label="section 1">
-    <DocHeading>Selected work</DocHeading>
-    {
-      flagship && (
-        <div class="mt-7">
-          <ProjectCard project={flagship} variant="flagship" stars={stars}>
-            {flagship.id === 'dnsweaver' && (
-              <Figure
-                n={1}
-                caption="record flow: seven sources reconciled to eleven providers"
-                class="mt-6"
-              >
-                <RecordFlow />
-              </Figure>
-            )}
-          </ProjectCard>
-        </div>
-      )
-    }
-    <div class="mt-8">
-      {rest.map((project) => <ProjectCard project={project} />)}
+  <section class="portfolio-section page-shell" aria-labelledby="writing-title">
+    <div class="section-intro">
+      <h2 id="writing-title">Writing at probablyfine.dev</h2>
+      <p>I write about the projects and the things that got me interested in them. These are a few places to start.</p>
     </div>
-  </DocSection>
-
-  {
-    recentPosts.length > 0 && (
-      <DocSection label="section 2" spacing="tight">
-        <DocHeading>Recent writing</DocHeading>
-        <ul class="list-none p-0 m-0 mt-7">
-          {recentPosts.map((post) => (
-            <li class="border-t border-[var(--color-line)] first:border-t-0">
-              <a
-                href={post.link}
-                rel="noopener"
-                data-umami-event="outbound-probablyfine"
-                class="group flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 py-4 no-underline hover:no-underline text-[var(--color-ink)]"
-              >
-                <span class="font-serif text-lg group-hover:text-[var(--color-accent)] transition-colors">
-                  {post.title}
-                </span>
-                <time
-                  datetime={post.date.toISOString().slice(0, 10)}
-                  class="font-mono text-xs text-[var(--color-ink-dim)] shrink-0"
-                >
-                  {post.date.toISOString().slice(0, 10)}
-                </time>
-              </a>
-            </li>
-          ))}
-        </ul>
-        <p class="mt-5 mb-0 font-mono text-xs">
-          <a href="https://probablyfine.dev/blog?utm_source=maxfieldallison&utm_medium=site" rel="noopener" data-umami-event="outbound-probablyfine">
-            all writing at probablyfine.dev →
-          </a>
-        </p>
-      </DocSection>
-    )
-  }
+    <ul class="writing-list">
+      {writing.map((post) => (
+        <li>
+          <h3><a href={`${post.href}?utm_source=maxfieldallison&utm_medium=site&utm_campaign=selected-writing`} data-umami-event="outbound-probablyfine">{post.title} <span aria-hidden="true">↗</span></a></h3>
+          <p>{post.description}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
 </Layout>

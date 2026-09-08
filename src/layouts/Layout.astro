@@ -19,7 +19,7 @@ interface Props {
 
 const {
   title = 'Maxfield Allison',
-  description = 'Solutions and infrastructure architect. Multi-region enterprise Azure by day, a Kubernetes homelab by night.',
+  description = 'Solutions and infrastructure architect. Ten years working with enterprise customers, from platform design and funding to running the result.',
   bare = false,
   ogImage: ogImageProp,
   ogType = 'website',
@@ -33,7 +33,7 @@ let cleanPath = Astro.url.pathname.replace(/\.html$/, '');
 if (cleanPath.endsWith('/index')) cleanPath = cleanPath.slice(0, -'index'.length);
 const canonical = new URL(cleanPath || '/', Astro.site ?? 'https://maxfieldallison.com');
 // Versioned so social scrapers fetch a fresh cache key. Bump on image change.
-const ogImage = new URL(ogImageProp ?? '/og.png?v=1', Astro.site ?? 'https://maxfieldallison.com');
+const ogImage = new URL(ogImageProp ?? '/og.png?v=2', Astro.site ?? 'https://maxfieldallison.com');
 
 // Structured data: helps search engines and recruiter tools resolve me as a
 // single entity across surfaces. Deduped by the stable @id / identity fields.
@@ -45,7 +45,7 @@ const personLd = {
   email: 'mailto:maxfield.allison@gmail.com',
   jobTitle: 'Senior Specialist, Technical Account Support',
   description:
-    'Solutions and infrastructure architect. Multi-region enterprise Azure by day, a nine-node Kubernetes homelab by night.',
+    'Solutions and infrastructure architect. Enterprise Azure platform ownership, open-source infrastructure projects, and AI-assisted engineering.',
   sameAs: [
     'https://github.com/maxfield-allison',
     'https://www.linkedin.com/in/maxfield-allison/',
@@ -85,8 +85,9 @@ const personLd = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#0b0f14" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f4f0e8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#151b18" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />

@@ -3,7 +3,7 @@
 //   src/content/projects/<slug>.md   -> public/og/<slug>.png (1200x630)
 // Runs automatically as a prebuild step; also `pnpm og:pages`.
 //
-// Reuses the site brand (blue accent) and the same template family as
+// Reuses the site brand (green accent) and the same template family as
 // scripts/og.svg. Output is a build artifact (public/og/ is gitignored), so new
 // pages/case studies get a card automatically on the next build with no
 // committed binaries. Fonts: names 'DejaVu Sans'/'DejaVu Sans Mono' explicitly
@@ -21,12 +21,12 @@ const PAGES = [
   {
     name: 'about',
     title: 'About',
-    subtitle: 'Enterprise Azure by day, a Kubernetes homelab by night.',
+    subtitle: 'Enterprise platforms, from design to delivery.',
   },
   {
     name: 'projects',
     title: 'Work',
-    subtitle: 'Things I have built and run. Real, in use, mine to maintain.',
+    subtitle: 'Projects, the decisions behind them, and how far each one has come.',
   },
   {
     name: 'resume',
@@ -83,7 +83,7 @@ function escapeXml(s) {
 function svg(title, subtitle) {
   const subLines = wrap(subtitle);
   const subTspans = subLines
-    .map((l, i) => `<text x="80" y="${360 + i * 48}" font-family="'DejaVu Sans', system-ui, sans-serif" font-size="34" fill="#9aa7b6">${escapeXml(l)}</text>`)
+    .map((l, i) => `<text x="80" y="${360 + i * 48}" font-family="'DejaVu Sans', system-ui, sans-serif" font-size="34" fill="#555c56">${escapeXml(l)}</text>`)
     .join('\n  ');
   // A title page in the document system: mono kicker, serif title, and the
   // thick-thin ledger rule that marks a major boundary everywhere else on the
@@ -95,14 +95,14 @@ function svg(title, subtitle) {
   // against installed system fonts, and DejaVu Serif is the serif that ships.
   // The card reads as a serif document even though it is not Source Serif 4.
   return `<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1200" height="630" fill="#0b0f14"/>
-  <text x="80" y="118" font-family="'DejaVu Sans Mono', monospace" font-size="24" letter-spacing="3" fill="#9aa7b6">MAXFIELDALLISON.COM</text>
-  <rect x="80" y="150" width="1040" height="3" fill="#24303c"/>
-  <rect x="80" y="157" width="1040" height="1" fill="#24303c"/>
-  <text x="78" y="290" font-family="'DejaVu Serif', Georgia, serif" font-size="76" font-weight="600" fill="#e7ecf2">${escapeXml(title)}</text>
+  <rect width="1200" height="630" fill="#f4f0e8"/>
+  <text x="80" y="118" font-family="'DejaVu Sans Mono', monospace" font-size="24" letter-spacing="3" fill="#555c56">MAXFIELDALLISON.COM</text>
+  <rect x="80" y="150" width="1040" height="3" fill="#b5beb3"/>
+  <rect x="80" y="157" width="1040" height="1" fill="#b5beb3"/>
+  <text x="78" y="290" font-family="'DejaVu Serif', Georgia, serif" font-size="76" font-weight="600" fill="#262d29">${escapeXml(title)}</text>
   ${subTspans}
-  <rect x="80" y="516" width="1040" height="1" fill="#24303c"/>
-  <text x="80" y="562" font-family="'DejaVu Sans Mono', monospace" font-size="22" fill="#4f9cff">Kubernetes / GitOps / Go / Azure</text>
+  <rect x="80" y="516" width="1040" height="1" fill="#b5beb3"/>
+  <text x="80" y="562" font-family="'DejaVu Sans Mono', monospace" font-size="22" fill="#275846">Architecture / Platforms / Open source</text>
 </svg>`;
 }
 
