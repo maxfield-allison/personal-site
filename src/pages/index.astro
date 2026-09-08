@@ -7,6 +7,7 @@ import DocHeading from '../components/DocHeading.astro';
 import Figure from '../components/Figure.astro';
 import RecordFlow from '../components/RecordFlow.astro';
 import { fetchStars } from '../lib/github';
+import savedWriting from '../data/recent-writing.json';
 
 const projects = (await getCollection('projects', ({ data }) => !data.draft && data.featured)).sort(
   (a, b) => a.data.order - b.data.order,
@@ -19,10 +20,11 @@ const flagshipRepo = flagship?.data.links.find((l) => /github\.com/i.test(l.url)
 const stars = await fetchStars(flagshipRepo);
 
 // Recent writing, pulled from the probablyfine.dev RSS feed at build time.
-// Cross-origin, but fetched during the static build so it ships as HTML. A
-// failed fetch (blog down at build time) just yields no section, never a broken build.
+// Cross-origin, but fetched during the static build so it ships as HTML.
+// A failed fetch keeps the last verified entries rather than hiding the section.
+// Refresh the saved snapshot when publishing a new article on the sibling site.
 type Post = { title: string; link: string; date: Date };
-let recentPosts: Post[] = [];
+let recentPosts: Post[] = savedWriting.map(p => ({ ...p, date: new Date(p.date) }));
 try {
   const res = await fetch('https://probablyfine.dev/rss.xml', {
     signal: AbortSignal.timeout(8000),
@@ -30,7 +32,7 @@ try {
   if (res.ok) {
     const xml = await res.text();
     const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].slice(0, 3);
-    recentPosts = items
+    const fetchedPosts = items
       .map((m) => {
         const block = m[1];
         const pick = (tag: string) =>
@@ -46,14 +48,18 @@ try {
         if (!p.title || !p.link) return false;
         try {
           const u = new URL(p.link);
-          return u.protocol === 'https:' && u.hostname === 'probablyfine.dev';
+          return u.protocol === 'https:' && u.hostname === 'probablyfine.dev' && !Number.isNaN(p.date.getTime());
         } catch {
           return false;
         }
       });
+    if (fetchedPosts.length) recentPosts = fetchedPosts;
+    else console.warn('Recent writing: RSS contained no usable entries; using saved snapshot.');
+  } else {
+    console.warn(`Recent writing: RSS returned HTTP ${res.status}; using saved snapshot.`);
   }
 } catch {
-  recentPosts = [];
+  console.warn('Recent writing: RSS request failed; using saved snapshot.');
 }
 
 // The stat table. Every figure here is checked against the live system, and the
