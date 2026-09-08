@@ -249,11 +249,14 @@
 .portfolio-intro { display: grid; gap: 3rem; padding-block: 4rem; }
 .portfolio-intro h1 { font-family: var(--font-serif); font-weight: 500; font-size: clamp(2.5rem, 4.8vw, 4.25rem); line-height: 1.09; letter-spacing: -.025em; margin: 1.25rem 0 1.75rem; max-width: 19ch; text-wrap: balance; }
 .intro-copy { font-size: 1.125rem; line-height: 1.75; max-width: 58ch; color: var(--color-ink-dim); }
+.intro-proof { max-width: 58ch; margin-top: 1.25rem; font-size: .9375rem; line-height: 1.75; color: var(--color-ink-dim); }
+.intro-proof strong { color: var(--color-ink); font-weight: 600; }
 .intro-links { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.75rem; margin-top: 2rem; }
 .intro-links a { min-height: 44px; display: inline-flex; align-items: center; gap: .75rem; }
 .primary-link { background: var(--color-accent); color: var(--color-base); padding: .75rem 1.15rem; border: 2px solid var(--color-accent); text-decoration: none; font-weight: 600; }
 .primary-link:hover { text-decoration: underline; }
 .intro-aside { align-self: end; border-top: 2px solid var(--color-accent); padding-top: 1.25rem; }
+.intro-aside h2 { font-family: var(--font-serif); font-size: 1.5rem; line-height: 1.3; font-weight: 600; margin-top: .75rem; }
 .intro-aside > p:not(.eyebrow) { font-size: 1rem; line-height: 1.8; margin-block: 1rem; color: var(--color-ink-dim); }
 .intro-aside a { font-size: .9375rem; line-height: 1.7; }
 .portfolio-section { padding-block: 2.5rem; }

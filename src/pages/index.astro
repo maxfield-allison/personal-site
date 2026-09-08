@@ -25,45 +25,46 @@ const writing = [
 <Layout>
   <section class="portfolio-intro page-shell" aria-labelledby="intro-title">
     <div>
-      <p class="eyebrow">Solutions &amp; infrastructure architect</p>
-      <h1 id="intro-title">I design enterprise infrastructure, argue for it, and then run it.</h1>
-      <p class="intro-copy">I'm Maxfield Allison. I've spent ten years working with enterprise customers, and I'm now the application owner and global escalation point for an Azure platform serving thousands of devices across four regions.</p>
+      <p class="eyebrow">Solutions &amp; Infrastructure Architect</p>
+      <h1 id="intro-title">How Far Can We Take This?</h1>
+      <p class="intro-copy">I design enterprise infrastructure and make the case for building it. Today I'm the application owner and global escalation point for an Azure platform serving thousands of devices across four global regions.</p>
+      <p class="intro-proof"><strong>38% fewer platform support tickets</strong> year over year, measured in the customer's ServiceNow.</p>
       <div class="intro-links">
         <a href="/resume" data-track="cta-resume" class="primary-link">Read my resume <span aria-hidden="true">↗</span></a>
         <a href="/about">More about me <span aria-hidden="true">→</span></a>
       </div>
     </div>
-    <aside class="intro-aside" aria-label="Outside work">
-      <p class="eyebrow">Outside work</p>
-      <p>I still spend a lot of my free time on computers. The homelab, the open-source projects, and the writing at probablyfine.dev all come out of that. I'd be doing this even if it never helped my career.</p>
+    <aside class="intro-aside" aria-labelledby="outside-title">
+      <p class="eyebrow">Outside Work</p>
+      <h2 id="outside-title">Server Legos</h2>
+      <p>The homelab started as a way to watch movies. Now it runs Kubernetes, shared storage, and services that keep giving me something else to figure out. Some of that makes its way into my work. I'd be doing it anyway.</p>
       <a href="https://probablyfine.dev/blog?utm_source=maxfieldallison&utm_medium=site&utm_campaign=portfolio" data-umami-event="outbound-probablyfine">Visit probablyfine.dev <span aria-hidden="true">↗</span></a>
     </aside>
   </section>
 
   <section class="portfolio-section page-shell" aria-labelledby="work-title">
     <div class="section-intro">
-      <h2 id="work-title">Some of the work</h2>
-      <p>The decisions behind a few projects, including the work it took to get a design approved.</p>
+      <h2 id="work-title">Selected Work</h2>
     </div>
     <article class="work-example">
-      <p class="eyebrow">Enterprise architecture</p>
+      <p class="eyebrow">Enterprise Architecture</p>
       <div>
-        <h3><a href="/projects/test-environment" data-track="case-study-test-environment">Making the case for a test environment</a></h3>
-        <p>A global platform needed somewhere to test changes. I made the business case, won the funding, and defined the design and sizing across three organizations. The platform teams own the provisioning.</p>
+        <h3><a href="/projects/test-environment" data-track="case-study-test-environment">Before It Hits Production</a></h3>
+        <p>A global platform had nowhere to test changes. The design was the easy part. I made the business case, won the funding, and defined the design and sizing across three organizations. The platform teams own the provisioning.</p>
       </div>
     </article>
     <article class="work-example">
-      <p class="eyebrow">Open source</p>
+      <p class="eyebrow">Open Source</p>
       <div>
-        <h3><a href="/projects/dnsweaver" data-track="case-study-dnsweaver">Keeping DNS in step with the infrastructure</a></h3>
-        <p>dnsweaver started with the records I was tired of maintaining by hand. I own its design, releases, and acceptance criteria. AI agents implement the code.</p>
+        <h3><a href="/projects/dnsweaver" data-track="case-study-dnsweaver">DNS That Keeps Up</a></h3>
+        <p>New services meant new DNS records, and old records had a habit of outliving the services. I started dnsweaver to keep them in step. I own its design and releases. AI agents implement the code.</p>
       </div>
     </article>
     <article class="work-example">
-      <p class="eyebrow">Upstream contribution</p>
+      <p class="eyebrow">Upstream Contribution</p>
       <div>
-        <h3><a href="/projects/opnsense-frr" data-track="case-study-opnsense-frr">Picking up an OPNsense issue a bot had closed</a></h3>
-        <p>The BGP setting I needed wasn't exposed in the interface. The case study follows the issue through to a contribution merged upstream.</p>
+        <h3><a href="/projects/opnsense-frr" data-track="case-study-opnsense-frr">The Issue a Bot Closed</a></h3>
+        <p>The BGP setting I needed wasn't exposed in the interface. An issue asking for it sat unresolved until a bot closed it. I picked it up, and the change shipped upstream.</p>
       </div>
     </article>
     <p class="section-more"><a href="/projects">All case studies <span aria-hidden="true">→</span></a></p>
@@ -71,8 +72,8 @@ const writing = [
 
   <section class="portfolio-section page-shell" aria-labelledby="writing-title">
     <div class="section-intro">
-      <h2 id="writing-title">Writing at probablyfine.dev</h2>
-      <p>I write about the projects and the things that got me interested in them. These are a few places to start.</p>
+      <h2 id="writing-title">Beyond the Case Studies</h2>
+      <p>At probablyfine.dev, I write about what I'm working on and how I got here. Sometimes that means DNS. Sometimes it means DOS games and my mom.</p>
     </div>
     <ul class="writing-list">
       {writing.map((post) => (
