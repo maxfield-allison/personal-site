@@ -1,8 +1,8 @@
 ---
 title: Kubernetes Homelab
-summary: Nine Talos nodes, GitOps, Ceph underneath, migrated off a ten-node Docker Swarm without losing service. Enterprise patterns, one operator, and no team to hand it to at five o'clock.
+summary: What started as a way to watch movies now runs Kubernetes on Proxmox and Ceph. I keep finding things I want to try on it.
 kind: infrastructure
-role: Designed, built, and operate it
+role: Design and operation, with AI-assisted implementation
 stack:
   - GitLab
   - Kubernetes
@@ -20,33 +20,33 @@ date: 2026-03-01
 draft: false
 ---
 
-The whole thing is built to one constraint: get as close to how a real platform team does it as I can, using open source, while being pragmatic about the fact that there is exactly one of me (though AI is now impacting that fact to a measurable degree...)
+I like finding out how things work by running them myself. The lab gives me somewhere to do that, whether it's a new AI service or a self-hosted replacement for something I've been paying for. A fair amount of it looks like what a platform team might run, except there's one person responsible for it and it's in my house.
 
-That guideline helps to rule things out. Anything that needs more than one person on call doesn't work here. Anything I can't rebuild from git after a bad night doesn't work here either. What's left is a lot of automation and a strong preference for boring that I certainly didn't have when I was younger.
+That does put some limits on what I want to take on. I use AI agents to help with implementation, and automation takes care of a lot of routine work, but I still need to understand what I'm running. I also want the configuration in git so I can work out how to rebuild something without relying on my memory. The data needs its own backups.
 
-It's nine Talos Linux nodes now, three of them control plane, with about fifty applications reconciled out of git by ArgoCD. Underneath sits a five-node Proxmox cluster with Ceph. OpenTofu provisions the VMs and Ansible configures them.
+The workload cluster has nine Talos Linux nodes, three of them control plane. ArgoCD applies the application configuration from git. Underneath sits a five-node Proxmox cluster with Ceph; OpenTofu provisions the VMs and Ansible configures them. GitLab runs on a dedicated VM. That's where the repositories and container images live, where CI jobs run, and where I record the work. Linux runners cover x86-64 and ARM64, with macOS and Windows runners powered down until they're needed. I keep GitLab and the databases outside Kubernetes so I don't need a working Kubernetes cluster to reach the tools and data I'd use to recover it. They still share the infrastructure underneath.
 
-GitLab sits at the center of it on a dedicated VM. It is the GitOps source, container registry, CI control plane, and durable record for operational work. Linux runners cover x86-64 and ARM64. The macOS and Windows runners stay powered down until a job needs them. GitLab and the databases stay outside Kubernetes so a broken workload cluster cannot take down its own source of truth or stateful services with it. It is still a single-operator data center under the stairs.
+## Some Choices Behind It
 
-- **GPU sharing** by time-slicing, so several workloads can use a card instead of one pinning to it. I looked at NVIDIA's MPS first and turned it down: its exclusive mode blocks the video encode engines the media stack needs. Picking one meant losing something either way.
-- **A push is the deploy** and a revert is the rollback. The most wonderful operational model and the biggest reason one person can run this.
-- **CI that actually blocks.** GitLab CI blocks a merge when secret scanning or a known-vulnerable dnsweaver image fails.
-- **Talos** because there's no SSH and no package manager to drift. The node is an API and a config file. Less of it can rot while I'm not paying attention to it.
-- **Monitoring with consequences.** Prometheus and Alertmanager page me. Runbooks and incident records mean I don't have to solve the same failure twice.
+GPU sharing uses time-slicing so several workloads can use a card. NVIDIA's MPS was another option I considered, but its exclusive mode got in the way of the video encoding the media services needed. That ruled it out for this setup.
 
-## The Swarm it replaced wasn't small
+I like working through git because I can see what changed and go back to an earlier configuration. ArgoCD picks up the changes, and I check what happened after it applies them. CI also checks for secrets and vulnerable images before changes get that far.
+
+Talos removes a lot of the host maintenance. There's no SSH or package manager on the nodes; I manage them through the API and their configuration. Prometheus and Alertmanager tell me when something needs attention. When a failure takes some figuring out, I keep the incident record and a runbook so I have somewhere to start next time.
+
+## Moving from Swarm
 
 Ten nodes, five managers and five workers, somewhere near fifty services across eleven stacks, on the same Proxmox and Ceph.
 
-I moved it without losing service: new cluster alongside the old, port a stack, cut traffic over, repeat, and only decommission the old managers once nothing pointed at them. The GPU nodes were repurposed Swarm workers.
+For the migration, I ran the new cluster alongside the old one and moved services over a stack at a time. Traffic moved after each stack was ready, and the old managers stayed up until nothing pointed at them. That let me move without losing service. The GPU nodes were repurposed Swarm workers.
 
-The reason for moving wasn't that Swarm had failed me. It's that I'd started writing tooling to paper over its limits. Docker Swarm is an excellent tool, I still have backups of the old cluster.
+Swarm had served me well. I'd started building tooling around its limits, though, and Kubernetes gave me more of what I wanted to try next. I still have backups of the old cluster.
 
-## The test I hold it to
+## Leaving It Until Tomorrow
 
-Can I step away from my desk in the middle of an issue or a rollout and get to bed at a reasonable hour, leaving anything outstanding to the rested and caffeinated me the next morning? Now, 100% of the time.
+I want to be able to leave unfinished work in a state I understand and come back to it rested. The lab is fun, but I don't want every project to turn into a late night. Knowing what changed and what still needs doing helps me put it down.
 
-## Related reading
+## A Closer Look
 
 - [A tour of the rack](https://probablyfine.dev/blog/a-tour-of-the-rack): the hardware, up close.
 - [The lab, in full](https://probablyfine.dev/labs): the living inventory.

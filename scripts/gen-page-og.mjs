@@ -21,12 +21,12 @@ const PAGES = [
   {
     name: 'about',
     title: 'About',
-    subtitle: 'Enterprise platforms, from design to delivery.',
+    subtitle: 'Enterprise platforms, a homelab, and what I am figuring out.',
   },
   {
     name: 'projects',
     title: 'Work',
-    subtitle: 'Projects, the decisions behind them, and how far each one has come.',
+    subtitle: 'The projects and the decisions behind them.',
   },
   {
     name: 'resume',
@@ -36,7 +36,12 @@ const PAGES = [
   {
     name: 'uses',
     title: 'Uses',
-    subtitle: 'The tools and workflow I actually use to build and run infrastructure.',
+    subtitle: 'What I use in the lab, and what each tool does for me.',
+  },
+  {
+    name: 'notes',
+    title: 'Field Notes',
+    subtitle: 'Notes from troubleshooting and running the lab.',
   },
   {
     name: 'pets',

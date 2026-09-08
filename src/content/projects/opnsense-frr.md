@@ -1,6 +1,6 @@
 ---
 title: The Issue a Bot Closed
-summary: A BGP option nobody had gotten around to exposing, an issue that timed out after six months, and the eight days between it closing and me picking it up.
+summary: I needed a BGP setting that wasn't in the OPNsense interface. Other people had already asked for it, but the issue was closed.
 kind: open source
 role: Wrote it, upstreamed it
 stack:
@@ -24,7 +24,7 @@ A bot marked it low priority within twenty minutes for not using an issue templa
 
 Nobody wrote one. In February 2026 the bot closed the issue automatically after a hundred and eighty days of inactivity.
 
-## Eight days later
+## Eight Days Later
 
 I needed the same thing. My DNS tier advertises an anycast address over BGP and without `maximum-paths` the traffic commits to one path instead of spreading across the ones available.
 
@@ -32,7 +32,7 @@ So I said I'd do it, and asked whether anyone else was already on it so we would
 
 I tested some changes and did the manual implementation for my own network and then got sidetracked for six weeks, which somebody eventually asked about in the thread. My bad.
 
-## Thirty-five lines, five files
+## Thirty-Five Lines, Five Files
 
 I'd written and learned some PHP for OPNsense once before, adding a maximum packet length field to the traffic shaper, so the framework wasn't brand new territory. That said, it's still strictly layered. A model file declares the field and what counts as a valid value. A form file says how it appears. A template renders it into the config the daemon reads. Miss any of these and you end up with a setting that saves and does nothing, or a config line with no way to set it.
 
@@ -40,7 +40,7 @@ I read the fields on either side of mine that already worked, copied how they we
 
 Two fields, EBGP and IBGP, both marked advanced. Bounded one to 128. Empty leaves FRR on its own default instead of writing a 1.
 
-## What the thread did next
+## Back in the Thread
 
 I got told off for deleting the pull request template, which was fair. Somebody hit merge conflicts on my branch and let me know, mentioning they were hand-editing their config files in the meantime and hated it. A maintainer posted an `opnsense-patch` command so people could run my unmerged commit on their own firewalls, which I hadn't thought to offer.
 

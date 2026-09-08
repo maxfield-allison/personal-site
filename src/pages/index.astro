@@ -7,17 +7,17 @@ const writing = [
   {
     title: 'How I use AI',
     href: 'https://probablyfine.dev/blog/how-i-use-ai',
-    description: "What I ask the tools to do, what I review, and what I'm responsible for when it ships.",
+    description: "I use these tools a lot. This is where I've landed on what that should mean for the work I put out.",
   },
   {
     title: 'I built dnsweaver because I was tired of managing DNS by hand',
     href: 'https://probablyfine.dev/blog/why-i-built-dnsweaver',
-    description: 'The problem in my own lab that became an open-source project.',
+    description: 'Every new service needed a DNS record. I wanted to stop doing that by hand.',
   },
   {
     title: 'I just wanted to play games',
     href: 'https://probablyfine.dev/blog/i-just-wanted-to-play-games',
-    description: 'Playing DOS games beside my mom, learning to fix my own computers, and finding my way into this work.',
+    description: 'My mom got me into DOS games. Wanting to play more of them eventually got me into working on computers.',
   },
 ];
 ---
@@ -27,7 +27,7 @@ const writing = [
     <div>
       <p class="eyebrow">Solutions &amp; Infrastructure Architect</p>
       <h1 id="intro-title">How Far Can We Take This?</h1>
-      <p class="intro-copy">I design enterprise infrastructure and make the case for building it. Today I'm the application owner and global escalation point for an Azure platform serving thousands of devices across four global regions.</p>
+      <p class="intro-copy">I design enterprise infrastructure and make the case for building it. I also look after what happens once it's running. Today that means owning an Azure platform that thousands of devices depend on across four global regions.</p>
       <p class="intro-proof"><strong>38% fewer platform support tickets</strong> year over year, measured in the customer's ServiceNow.</p>
       <div class="intro-links">
         <a href="/resume" data-track="cta-resume" class="primary-link">Read my resume <span aria-hidden="true">↗</span></a>
@@ -37,7 +37,7 @@ const writing = [
     <aside class="intro-aside" aria-labelledby="outside-title">
       <p class="eyebrow">Outside Work</p>
       <h2 id="outside-title">Server Legos</h2>
-      <p>The homelab started as a way to watch movies. Now it runs Kubernetes, shared storage, and services that keep giving me something else to figure out. Some of that makes its way into my work. I'd be doing it anyway.</p>
+      <p>I wanted a way to watch movies. Somehow that turned into a Kubernetes cluster and a house full of things I host myself. I'll still turn down a night of gaming if there's a project in the lab I'm excited about.</p>
       <a href="https://probablyfine.dev/blog?utm_source=maxfieldallison&utm_medium=site&utm_campaign=portfolio" data-umami-event="outbound-probablyfine">Visit probablyfine.dev <span aria-hidden="true">↗</span></a>
     </aside>
   </section>
@@ -50,14 +50,14 @@ const writing = [
       <p class="eyebrow">Enterprise Architecture</p>
       <div>
         <h3><a href="/projects/test-environment" data-track="case-study-test-environment">Before It Hits Production</a></h3>
-        <p>A global platform had nowhere to test changes. The design was the easy part. I made the business case, won the funding, and defined the design and sizing across three organizations. The platform teams own the provisioning.</p>
+        <p>Every change went straight to production. Getting a test environment approved took five months, from finding the right team to making the case for the money. I designed the environment, and the platform teams own the provisioning.</p>
       </div>
     </article>
     <article class="work-example">
       <p class="eyebrow">Open Source</p>
       <div>
         <h3><a href="/projects/dnsweaver" data-track="case-study-dnsweaver">DNS That Keeps Up</a></h3>
-        <p>New services meant new DNS records, and old records had a habit of outliving the services. I started dnsweaver to keep them in step. I own its design and releases. AI agents implement the code.</p>
+        <p>I'd remove a service and forget its DNS record. After enough of that, I wanted a tool that would clean up after it. That's dnsweaver. I own the design and releases, with AI agents writing the code.</p>
       </div>
     </article>
     <article class="work-example">
@@ -73,7 +73,7 @@ const writing = [
   <section class="portfolio-section page-shell" aria-labelledby="writing-title">
     <div class="section-intro">
       <h2 id="writing-title">Beyond the Case Studies</h2>
-      <p>At probablyfine.dev, I write about what I'm working on and how I got here. Sometimes that means DNS. Sometimes it means DOS games and my mom.</p>
+      <p>I've been writing more at probablyfine.dev, about the things I'm working on and how I got into all of this in the first place.</p>
     </div>
     <ul class="writing-list">
       {writing.map((post) => (

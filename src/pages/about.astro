@@ -10,7 +10,7 @@ const recognition = [
 ];
 ---
 
-<Layout title="About · Maxfield Allison" description="Ten years working with enterprise customers. Platform design, the business case behind it, and responsibility for what happens next." ogImage="/og/about.png?v=2">
+<Layout title="About · Maxfield Allison" description="I'm Maxfield. I work with enterprise customers on Azure platforms, run a homelab, and write about what I'm figuring out." ogImage="/og/about.png?v=3">
   <article class="page-shell pt-16 pb-8">
     <div class="grid gap-4 md:gap-10 md:grid-cols-[var(--rail)_minmax(0,1fr)]">
     <p class="eyebrow md:pt-5">About Me</p>
@@ -18,10 +18,10 @@ const recognition = [
     <h1 class="font-serif text-[2.75rem] leading-tight mt-4 mb-8">Maxfield Allison</h1>
     <div class="measure space-y-5 text-[var(--color-ink-dim)] leading-relaxed">
       <p class="text-xl font-serif text-[var(--color-ink)]">I design enterprise infrastructure, argue for it, and then run it.</p>
-      <p>I've spent ten years working with enterprise customers. Today I'm the named application owner and single global escalation point for an output-management platform on Azure. Thousands of devices depend on it across four regions. When it stops, people can't print, and in parts of that business printing isn't optional.</p>
-      <p>A lot of the work happens between teams. I contributed to the architecture decisions for the move from on-premises into Azure. The network and firewall layers belong to other teams, but when a configuration fault in one of them broke DNS across the platform, I worked with the vendor and the customer's security group to get it corrected.</p>
-      <p>I also made the business case for a non-production environment that mirrors production. I won the funding and defined the design, sizing, and resource requirements across three organizations. The platform teams own the provisioning. <a href="/projects/test-environment">The case study</a> gets into why getting it approved took longer than designing it.</p>
-      <p>Platform-related support tickets fell 38% year over year, measured in the customer's ServiceNow, as I stabilized the operating model and pushed documentation and self-service. I'm now redesigning the account's operational data and documentation around agentic systems and Microsoft Power Automate flows.</p>
+      <p>I've spent ten years working with enterprise customers, starting in field support and becoming the global owner of an output-management platform on Azure. It serves thousands of devices across four regions. When it stops, people can't print, and in parts of that business printing isn't optional.</p>
+      <p>I'm the person an issue comes to when the regional teams need help, and I approve production changes to the platform. That often means following a problem into a system another team owns. In one case, stopping our application services made DNS work again. Starting them brought the failures back. I worked through it with the firewall vendor and the customer's security team until we found the configuration faults and got them corrected.</p>
+      <p>I've also been involved in the architecture decisions, from the move into Azure to regional redundancy. When we needed a test environment, I worked out the design and resource requirements across three organizations and made the business case that got it funded. The platform teams own the provisioning. <a href="/projects/test-environment">Getting it approved</a> took a lot more work than the design.</p>
+      <p>Better documentation and self-service have been a big part of the job too. Platform support tickets fell 38% year over year, measured in the customer's ServiceNow. I'm now reworking the account's operational information so AI agents and Microsoft Power Automate flows have something useful to work from.</p>
     </div>
     </div>
     </div>
@@ -30,22 +30,22 @@ const recognition = [
   <DocSection label="The Tools" spacing="tight">
     <h2 class="font-serif text-2xl font-semibold mb-4 mt-0">How I Use AI</h2>
     <div class="measure space-y-5 text-[var(--color-ink-dim)] leading-relaxed">
-      <p>I direct AI agents and own the engineering. I set the architecture and acceptance criteria, review what comes back, and send it back when it doesn't hold up. With dnsweaver, that means I own the design and releases while agents implement the code. I'm responsible for what I put out under my name.</p>
-      <p>I can spend more time exploring an alternative or challenging a proposed change when agents can do the implementation. I still have to understand the system well enough to decide whether the answer holds up. I've written more about <a href="https://probablyfine.dev/blog/how-i-use-ai?utm_source=maxfieldallison&utm_medium=site&utm_campaign=about" data-umami-event="outbound-probablyfine">how I use AI</a>, including the limits of my own process.</p>
+      <p>I use AI a lot, and I spend a lot of that time asking questions. What already exists? Why this approach? What would make it fail? Agents can investigate those questions and implement changes while I work through the choices with them. With dnsweaver, they write the code. I decide what the tool should do and whether it's ready for a release.</p>
+      <p>That gives me room to explore things I might otherwise leave alone, or to have a proposed design challenged before committing to it. I still need to understand the system well enough to make the call. I've written more about <a href="https://probablyfine.dev/blog/how-i-use-ai?utm_source=maxfieldallison&utm_medium=site&utm_campaign=about" data-umami-event="outbound-probablyfine">how I use AI</a> and the parts of this process I'm still figuring out.</p>
     </div>
   </DocSection>
 
   <DocSection label="At Home" spacing="tight">
     <h2 class="font-serif text-2xl font-semibold mb-4 mt-0">Still Playing with Computers</h2>
     <div class="measure space-y-5 text-[var(--color-ink-dim)] leading-relaxed">
-      <p>The homelab started as a way to watch movies. Now there's Kubernetes, a Proxmox cluster with Ceph underneath, and a collection of services and tools that keeps giving me something else to figure out. Some of what I learn there turns out to be useful at work. I'd be doing it anyway.</p>
-      <p>Games got me into computers long before any of that. I've been writing about that history too, from playing DOS games beside my mom to hosting servers for friends. <a href="https://probablyfine.dev/blog/i-just-wanted-to-play-games?utm_source=maxfieldallison&utm_medium=site&utm_campaign=about" data-umami-event="outbound-probablyfine">I just wanted to play games</a> is the longer version.</p>
+      <p>Games got me into computers long before I had a job working with them. I played DOS games beside my mom, learned to fix my own machines, and eventually hosted servers for friends. <a href="https://probablyfine.dev/blog/i-just-wanted-to-play-games?utm_source=maxfieldallison&utm_medium=site&utm_campaign=about" data-umami-event="outbound-probablyfine">I just wanted to play games</a> is the start of that story.</p>
+      <p>The homelab came later, initially so I could watch movies. Now I'm hosting AI services and working on self-hosted replacements for the things I'd otherwise use Google for. There's Kubernetes and a Proxmox cluster with Ceph underneath, which is quite a lot of infrastructure for a hobby. I enjoy it. Some of what I learn turns out to be useful at work, but I'd be doing this regardless.</p>
     </div>
   </DocSection>
 
   <DocSection label="Experience" spacing="tight">
     <h2 class="font-serif text-2xl font-semibold mb-4 mt-0">Experience</h2>
-    <p class="measure text-[var(--color-ink-dim)] leading-relaxed">My work spans Azure platform architecture, networking, Linux, and virtualization, along with the customer-facing work of making the case for a design and getting it approved. <a href="/resume">My resume</a> has the roles and technical detail.</p>
+    <p class="measure text-[var(--color-ink-dim)] leading-relaxed">My resume has <a href="/resume">the roles, projects, and technical detail</a>, including the path from field support to the work I do now.</p>
     <h3 class="font-serif text-xl font-semibold mt-6 mb-3">Recognition</h3>
     <ul class="list-disc pl-5 space-y-2 text-[var(--color-ink-dim)] leading-relaxed">
       {recognition.map((r) => <li>{r}</li>)}
