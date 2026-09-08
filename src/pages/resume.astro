@@ -17,15 +17,15 @@ const experience = [
     pageBreak: false,
     bullets: [
       'Named application owner and single global escalation point for an enterprise output-management platform on Azure, serving thousands of devices across four global regions.',
-      "Cut platform-related support ticket volume 38% year over year, measured in the customer's ServiceNow, by stabilizing the operating model and driving process and self-service adoption.",
-      "Redesigning the enterprise account's operational data and documentation to support agentic systems and Microsoft Power Automate flows.",
-      'Made the business case for a production-mirrored non-production environment, won the funding, and defined its design, sizing and resource requirements across three organizations, delegating provisioning to the platform teams.',
-      'Identified and drove correction of configuration faults in cloud firewall and microsegmentation layers owned by other teams and vendors, including one degrading DNS for the platform globally.',
+      "Cut platform support tickets 38% year over year, measured in the customer's ServiceNow, through improvements to operations, documentation and self-service.",
+      "Reworking the account's operational data and documentation for use by AI agents and Microsoft Power Automate flows.",
+      'Won funding for a test environment that mirrors production and defined the design, sizing and resource requirements across three organizations. Platform teams own provisioning.',
+      'Found configuration faults in cloud firewalls and microsegmentation, including one breaking DNS globally, and worked with the responsible teams and vendors to get them corrected.',
       'Contributed to the architecture decisions for the on-premises to Azure migration and the geo-redundancy re-architecture.',
-      'Set the operating standard for a global support team and coached multiple specialists into primary platform roles.',
-      'Identified the GPO scoping requirement in the TLS 1.0/1.1 and legacy LDAP remediation and owned the IIS and application-layer changes; automated internal certificate renewal.',
-      "Authored the platform's canonical backup and recovery runbook, now used company-wide for major-incident response.",
-      'Top-tier customer survey scores with personal recognition; contributed to a five-year contract renewal.',
+      'Established procedures for a global support team and coached specialists into primary platform roles.',
+      'Identified which platform servers needed group-policy changes during legacy-protocol remediation. Owned the IIS and application changes and automated internal certificate renewal.',
+      'Wrote the backup and recovery runbook now used company-wide during major platform incidents.',
+      'Earned top-tier customer survey scores and personal recognition from the client; contributed to a five-year contract renewal.',
     ],
   },
   {
@@ -34,10 +34,10 @@ const experience = [
     dates: 'February 2020 - June 2024',
     pageBreak: false,
     bullets: [
-      'Implemented and managed advanced output-management solutions for education, healthcare, and multinational corporate clients.',
-      'Led a security enhancement for a large healthcare institution, updating several thousand devices across multiple sites and applications to SNMP v3.',
+      'Implemented and managed output-management systems for education, healthcare, and multinational corporate clients.',
+      'Led an SNMP v3 security upgrade across several thousand devices at a large healthcare institution.',
       'Worked alongside vendor and partner engineers on the migration of an on-premises output environment to Azure, verifying the consolidation and correcting errors during rollout.',
-      'Authored extensive documentation (knowledge-base articles, guides, runbooks) and served as a trusted technical consultant to client stakeholders.',
+      'Wrote knowledge-base articles and runbooks, and helped client teams work through technical problems and proposed changes.',
     ],
   },
   {
@@ -46,9 +46,9 @@ const experience = [
     dates: 'August 2016 - February 2020',
     pageBreak: true,
     bullets: [
-      'Ran a schedule of executive meetings to plan revenue, satisfaction, and cost strategy, building a team that consistently met or exceeded quarterly and annual goals.',
-      'Directly supported and trained a user base of over 35,000 students, faculty, and staff.',
-      'Consistently met and exceeded the one-hour service-call response SLA.',
+      'Met with client leadership to plan service improvements and manage costs. Led a team that met or exceeded quarterly and annual goals.',
+      'Provided support and training for a campus of over 35,000 students, faculty, and staff.',
+      'Met or beat the one-hour service-call response SLA.',
     ],
   },
 ];
@@ -57,17 +57,17 @@ const projects = [
   {
     name: 'dnsweaver',
     detail:
-      'Open-source DNS automation tool that synchronizes records across Technitium, Pi-hole, AdGuard, and Cloudflare. A nine-stage GitLab pipeline covers tests, security, documentation, images, and releases. I own design, releases, and acceptance criteria; agents implement.',
+      'Open-source tool that keeps DNS records in step with containers and VMs, including support for Technitium, Pi-hole, AdGuard, and Cloudflare. I own the design and releases; AI agents write the code. CI checks tests and security before release.',
   },
   {
     name: 'GitLab, GitOps & Kubernetes Homelab',
     detail:
-      'Single-operator home data center on five-node Proxmox/Ceph, including nine Talos Kubernetes nodes and roughly fifty ArgoCD-managed applications. A dedicated GitLab VM is the GitOps source, registry, and operating record. Runner capacity spans Linux on x86-64 and ARM64, macOS, and Windows; the macOS and Windows runners stay powered down until a job needs them. GitLab and the databases stay outside Kubernetes so a cluster failure cannot take down its own source or stateful services. Secret scanning gates merges, and Prometheus and Alertmanager page me.',
+      'Nine Talos Kubernetes nodes on a five-node Proxmox/Ceph cluster, with ArgoCD managing application configuration. GitLab runs on a separate VM, with Linux, macOS, and Windows runners. GitLab and the databases stay outside Kubernetes to avoid depending on that cluster during recovery. I run the lab with AI-assisted implementation, secret scanning in CI, and monitoring through Prometheus and Alertmanager.',
   },
   {
-    name: 'Multi-agent operations harness (private)',
+    name: 'AI Agent Coordination (private)',
     detail:
-      'Designed a concurrent-agent operating model with scoped identities, attributable GitLab records, separate MCP read and write tokens, and client approval on every write call. Jobs begin report-only; I decide when verified output has earned narrowly scoped authority.',
+      'Designing a system for multiple AI agents to work on shared projects. Each has a scoped identity, work is recorded in GitLab, and separate read and write access keeps permissions explicit. Scheduled jobs start by reporting findings; I check the results before allowing specific changes.',
   },
   {
     name: 'OPNsense (upstream)',
@@ -77,12 +77,12 @@ const projects = [
   {
     name: 'maxfieldallison.com',
     detail:
-      'Portfolio and resume site with a Kubernetes-hosted primary, Cloudflare Pages failover, and edge-origin switching.',
+      'This site runs on my Kubernetes cluster, with a Cloudflare Pages copy available for failover.',
   },
 ];
 ---
 
-<Layout title="Resume · Maxfield Allison" description="Solutions and infrastructure architect, enterprise Azure platform owner, and operator of a 9-node Kubernetes cluster under GitOps." ogImage="/og/resume.png?v=1">
+<Layout title="Resume · Maxfield Allison" description="Ten years working with enterprise customers, now as an Azure platform owner. Experience, projects, and a downloadable resume." ogImage="/og/resume.png?v=2">
   <div class="resume max-w-[var(--container-shell)] mx-auto px-6 pt-12 pb-16">
     <div class="no-print mb-10 flex items-center justify-between">
       <a href="/" class="font-mono text-sm text-[var(--color-ink-dim)] no-underline">← Home</a>
@@ -113,7 +113,7 @@ const projects = [
         />
       </a>
       <div>
-        <p class="font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-ink-dim)] m-0">the document</p>
+        <p class="font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-ink-dim)] m-0">Resume</p>
         <h1 class="mt-4 mb-0 font-serif text-[2rem] sm:text-[2.375rem] font-semibold leading-tight tracking-[-0.01em]">
           Maxfield Allison
         </h1>
@@ -121,9 +121,7 @@ const projects = [
           Solutions &amp; Infrastructure Architect · Platform Owner · Alabaster, Alabama
         </p>
         <p class="mt-5 mb-0 text-[0.9375rem] leading-relaxed text-[var(--color-ink-dim)] measure">
-          The full resume, set as a document and kept current. Download it, print
-          it, or read the whole thing below. They're the same file, generated
-          from this page.
+          You can read my resume below or download a copy to keep.
         </p>
         <div class="flex flex-wrap items-center gap-x-5 gap-y-3 mt-7 text-[0.9375rem] font-medium">
           <a
@@ -161,12 +159,7 @@ const projects = [
 
     <section class="mb-6">
       <p class="text-[var(--color-ink-dim)] leading-relaxed">
-        Solutions and infrastructure architect who owns a multi-region enterprise Azure platform
-        by day and operates a nine-node Talos Kubernetes cluster on Proxmox and Ceph by night. Ten
-        years customer-facing across enterprise accounts, now as the single global
-        escalation point and named application owner. I work fast by directing AI
-        agents while owning architecture, standards, and acceptance criteria.
-        Agent-assisted implementation is gated by linting, tests, and review.
+        I've spent ten years working with enterprise customers, from field support to global platform ownership. Today I'm the application owner and single global escalation point for an Azure platform serving thousands of devices across four regions. I contribute to architecture decisions, make the case for improvements, and work with the teams responsible for implementing them. Outside work, I run a Kubernetes homelab and direct AI-assisted projects, including dnsweaver.
       </p>
     </section>
 

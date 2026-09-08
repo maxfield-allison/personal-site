@@ -16,7 +16,7 @@ const flagshipRepo = flagship?.data.links.find((l) => /github\.com/i.test(l.url)
 const stars = await fetchStars(flagshipRepo);
 ---
 
-<Layout title="Work · Maxfield Allison" description="Projects and case studies: dnsweaver, a Kubernetes homelab, and this site." ogImage="/og/projects.png?v=1">
+<Layout title="Work · Maxfield Allison" description="The work behind an enterprise test environment, dnsweaver, an OPNsense contribution, and my homelab." ogImage="/og/projects.png?v=2">
   {/* Document header. The catalog reads as one numbered sequence: the flagship
       carries a plate, the rest are ruled entries, and the folios run in order
       so the hierarchy is legible without any change in chrome. */}
@@ -24,19 +24,19 @@ const stars = await fetchStars(flagshipRepo);
     <div class="grid gap-4 md:gap-10 md:grid-cols-[var(--rail)_minmax(0,1fr)] pt-16 pb-4 sm:pt-24">
       <div></div>
       <div>
-        <p class="font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-ink-dim)] m-0">the catalog</p>
+        <p class="font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-ink-dim)] m-0">Case Studies</p>
         <h1 class="mt-5 mb-0 font-serif text-[2.25rem] sm:text-[2.75rem] font-semibold leading-tight tracking-[-0.01em]">
           Work
         </h1>
         <p class="mt-5 mb-0 font-serif text-lg leading-[1.65] text-[var(--color-ink-dim)] max-w-[58ch]">
-          Things I've built and run. Each one is real, in use, and mine to maintain.
+          Projects I've worked on, the decisions behind them, and how far each one has come.
         </p>
         <div class="rule-double mt-7"></div>
       </div>
     </div>
   </section>
 
-  <DocSection label="the work" labelAs="h2" spacing="tight">
+  <DocSection label="The Work" labelAs="h2" spacing="tight">
     {
       flagship && (
         <ProjectCard project={flagship} variant="flagship" stars={stars}>

@@ -9,25 +9,25 @@ const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort(
 const fmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
 ---
 
-<Layout title="Field notes · Maxfield Allison" description="Short incident write-ups: what broke, what was diagnosed, and what changed afterwards." ogImage="/og/notes.png?v=1" noindex={notes.length === 0}>
+<Layout title="Field Notes · Maxfield Allison" description="Notes from troubleshooting and running the lab." ogImage="/og/notes.png?v=2" noindex={notes.length === 0}>
   <section class="max-w-[var(--container-shell)] mx-auto px-6">
     <div class="grid gap-4 md:gap-10 md:grid-cols-[var(--rail)_minmax(0,1fr)] pt-16 pb-4 sm:pt-24">
       <div></div>
       <div>
-        <p class="font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-ink-dim)] m-0">the margins</p>
+        <p class="font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-ink-dim)] m-0">From the Lab</p>
         <h1 class="mt-5 mb-0 font-serif text-[2.25rem] sm:text-[2.75rem] font-semibold leading-tight tracking-[-0.01em]">
-          Field notes
+          Field Notes
         </h1>
         <p class="mt-5 mb-0 font-serif text-lg leading-[1.65] text-[var(--color-ink-dim)] max-w-[58ch]">
-          Things that broke, what they turned out to be, and what changed afterwards. The wrong turns stay in.
+          Notes from troubleshooting and running the lab.
         </p>
         <div class="rule-double mt-7"></div>
       </div>
     </div>
   </section>
 
-  <DocSection label="the notes" labelAs="h2" spacing="tight">
-    {notes.length === 0 && <p class="text-[var(--color-ink-dim)] leading-relaxed">Nothing filed yet.</p>}
+  <DocSection label="The Notes" labelAs="h2" spacing="tight">
+    {notes.length === 0 && <p class="text-[var(--color-ink-dim)] leading-relaxed">I haven't published any notes here yet. You can find my current writing at <a href="https://probablyfine.dev/blog?utm_source=maxfieldallison&utm_medium=site&utm_campaign=notes" data-umami-event="outbound-probablyfine">probablyfine.dev</a>.</p>}
     <div class="border-t border-[var(--color-line)]">
       {notes.map((note, i) => (
         <article class="py-6 border-b border-[var(--color-line)]">

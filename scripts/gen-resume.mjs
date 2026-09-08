@@ -2,10 +2,21 @@
 // Requires a running preview server (pnpm preview) and playwright-core's chromium.
 //   Regenerate: pnpm preview & ; pnpm resume
 import { chromium } from 'playwright-core';
-import { execSync } from 'node:child_process';
+import { existsSync, readdirSync } from 'node:fs';
+import { homedir } from 'node:os';
+import { join } from 'node:path';
 
 const url = process.env.RESUME_URL || 'http://localhost:4327/resume';
-const shell = execSync('ls ~/.cache/ms-playwright/chromium_headless_shell-*/chrome-linux/headless_shell 2>/dev/null | head -1', { shell: '/bin/bash' }).toString().trim();
+// Playwright changed the Linux headless-shell path. Accept both cache layouts
+// and an explicit path for machines that keep their browser elsewhere.
+const cache = process.env.PLAYWRIGHT_BROWSERS_PATH || join(homedir(), '.cache/ms-playwright');
+const shells = existsSync(cache)
+  ? readdirSync(cache).filter((name) => name.startsWith('chromium_headless_shell-')).sort().reverse().flatMap((name) => [
+      join(cache, name, 'chrome-headless-shell-linux64/chrome-headless-shell'),
+      join(cache, name, 'chrome-linux/headless_shell'),
+    ])
+  : [];
+const shell = process.env.RESUME_CHROMIUM_PATH || shells.find((path) => existsSync(path));
 const pageMargin = { top: '0.5in', bottom: '0.5in', left: '0.7in', right: '0.7in' };
 
 const browser = await chromium.launch({ executablePath: shell || undefined });
@@ -15,6 +26,8 @@ await page.pdf({
   path: 'public/resume.pdf',
   format: 'Letter',
   printBackground: false,
+  tagged: true,
+  outline: true,
   // 0.5in verticals: the two-line Recognition block was spilling to a third
   // page at 0.6in, and a two-page resume is what recruiters and parsers expect.
   margin: pageMargin,

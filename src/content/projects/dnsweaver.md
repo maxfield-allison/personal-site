@@ -1,8 +1,8 @@
 ---
 title: dnsweaver
-summary: DNS records that follow the infrastructure instead of rotting behind it. Seven sources, eleven providers, one Go binary. I built it for my own lab and then spent months making it safe to hand to anyone else.
+summary: I wanted new services to get DNS records automatically and old records to go away. dnsweaver started in my lab, and then people I'd never met started using it.
 kind: open source
-role: Author and maintainer
+role: Product design and releases; AI agents write the code
 stack:
   - Go
   - Docker
@@ -20,50 +20,46 @@ date: 2026-01-15
 draft: false
 ---
 
-## It started because I wanted certificates
+## I Wanted Certificates
 
-What I actually wanted was internal TLS. Real certificates on internal services, issued automatically, with mutual TLS between them as the eventual goal. Enterprise patterns, open-source parts, sized for one person running it in a basement.
+What I actually wanted was internal TLS. Real certificates on internal services, issued automatically, with mutual TLS between them as the eventual goal. Before I could get very far with that, I needed to sort out DNS.
 
-You can issue a certificate against an IP address, so this isn't strictly a naming problem. But then the certificate is pinned to an address, and addresses are the thing I move. Names take that off the table, provided the names are true. So before any of it, every internal service needed a DNS record that was actually correct, and it needed to stay correct without me remembering.
+I wanted to reach services by name without worrying about where I'd moved them. That meant every internal service needed a correct DNS record, and it needed to stay correct without me remembering to update it.
 
-At the time I was still on Docker Swarm and hadn't committed to Kubernetes yet. I was also standing services up faster than I ever had, because I'd started pointing AI at the work. That velocity is what made it obvious. When you can spin up six things in an evening, doing DNS by hand stops being a chore and starts being the thing that's actually slowing you down.
+At the time I was still on Docker Swarm and hadn't committed to Kubernetes yet. I'd also started using AI to help set things up, so there were more services to keep track of. Creating a record was annoying enough, but remembering to remove it when I tore something down was worse.
 
 Then I opened my zones and looked properly. Pi-hole in front of unbound in front of Cloudflare, records for machines that no longer existed, records pointing at addresses I'd reassigned months earlier. Years of accumulated cruft and no quick way to tell what was real.
 
-## What it does
+## What It Does
 
 It reads hostnames from seven sources and reconciles records to match. Traefik, Caddy and nginx-proxy labels. Its own native labels. Kubernetes, Proxmox VE, Incus. A container starts or a VM boots and the record appears. They go away and so does the record.
 
 Eleven providers on the other side, from Technitium and Pi-hole and AdGuard out to Cloudflare. Internal and external records come from the same labels, which is the split-horizon case most tools make you configure twice.
 
-It only touches records it owns. Anything I made by hand it leaves alone. And even that is configurable with an environment variable.
+By default it only touches records it owns, so it leaves the ones I made by hand alone. That behavior is configurable too.
 
-## Then somebody I'd never met sent a patch
+## Someone Sent a Patch
 
-Someone went looking for a way to keep Technitium records in step with Traefik, which is the exact pair dnsweaver was born from, and found mine instead of writing their own. Through a search result, as far as either of us could work out afterwards.
-
-They hadn't only installed it. They'd found a bug and sent a fix before we ever spoke. Their machines are wired differently than mine, and dnsweaver was confidently picking the wrong network interface because of it. Classic "it works on my machine!"
+Someone went looking for a way to keep Technitium records in step with Traefik, which is the exact pair dnsweaver was born from, and found mine instead of writing their own. Through a search result, as far as either of us could work out afterwards. They hadn't only installed it. They'd found a bug and sent a fix before we ever spoke. Their machines are wired differently than mine, and dnsweaver was confidently picking the wrong network interface because of it. Classic "it works on my machine!"
 
 I cut a release with the fix in it that morning.
 
 Since then I've gone through the stargazers occasionally and found people from companies whose names I recognize immediately. I have no idea what any of them are doing with it but it's a good feeling and I'm still not used to it.
 
-## About who wrote it
+## Who Writes the Code
 
-AI wrote most of the code. I want to be exact about that, and then about what I actually did.
+AI agents write the code. I decide what the tool needs to do and how it should fit together, and I own the releases.
 
-I reviewed far more code than I produced. I ran adversarial passes on the architecture, red-team reviews, security reviews. I read how other open-licensed projects structured themselves and built standards off that rather than inventing my own. And I spent a long time in conversation with several different models, not to generate more, but to make sure I understood what I was assembling and catch obvious mistakes.
+Much of my work has been in conversation with those agents, comparing approaches and asking them to challenge the design. They also run code and security reviews. I need to understand the choices well enough to decide whether the result is something I want people using, and automated tests help check whether it does what we intended.
 
-I was able to read the code well before I could have written it. I kept working at it, and the only reason I put that much into it was that I intended to give it away. Left to myself I'd have shipped something that worked for me and moved on.
+It worked in my lab months before I made it public. I could have stopped there, but I wanted to give it away. That meant thinking about setups I don't have and failures I hadn't encountered myself. The first outside contribution found one of those anyway.
 
-It went public months after I got it working for myself. It's my first public project, and I don't put something out under my name until I'm as confident as I'm going to get that anything left is a rare edge case. The tests are real, not theater.
+## Making Room for Other Setups
 
-## What the last tool taught me
+The predecessor was a Technitium management tool modeled after Cloudflare Companion. It was tied to my setup. For dnsweaver I wanted sources and providers to be separate, so adding support for another platform wouldn't mean reworking the whole tool. That's how the provider list grew from two to eleven without much change to the core.
 
-The predecessor was a Technitium management tool, single-purpose and hard-wired modeled after Cloudflare Companion. It taught me to abstract the interfaces and make both ends pluggable, so sources and providers drop in without touching the engine. That's the whole design of dnsweaver, and it's why the provider list went from two to eleven without the core moving much.
+The webhook provider takes that a little further. It lets someone connect a DNS system that dnsweaver doesn't have a provider for yet, which saves them waiting for me to add one.
 
-The webhook provider is where that pays off hardest: point it at an endpoint and dnsweaver drives a DNS system I have never seen and did not write a line of code for.
+## More About dnsweaver
 
-## Related reading
-
-- [Why I built dnsweaver](https://probablyfine.dev/blog/why-i-built-dnsweaver) on the blog: the longer story, in a blunter voice.
+- [Why I built dnsweaver](https://probablyfine.dev/blog/why-i-built-dnsweaver) goes further into the design, including the Proxmox integration and split-horizon DNS.

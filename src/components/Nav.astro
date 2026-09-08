@@ -1,93 +1,29 @@
 ---
-const { pathname } = Astro.url;
-const isActive = (href: string) =>
-  href === '/' ? pathname === '/' : pathname.startsWith(href);
-
-interface NavLink {
-  href: string;
-  label: string;
-  external?: boolean;
-  umami?: string;
-  /** The one emphasised destination: rendered as a bordered pill, because the
-      resume is the highest-value thing on the site and the nav should say so. */
-  cta?: boolean;
-}
-
-const links: NavLink[] = [
-  { href: '/', label: 'Home' },
+const pathname = Astro.url.pathname.replace(/\.html$/, '');
+const links = [
   { href: '/about', label: 'About' },
   { href: '/projects', label: 'Work' },
   { href: '/uses', label: 'Uses' },
-  { href: 'https://probablyfine.dev?utm_source=maxfieldallison&utm_medium=site', label: 'Blog', external: true, umami: 'outbound-probablyfine' },
-  { href: 'https://github.com/maxfield-allison', label: 'GitHub', external: true, umami: 'outbound-github' },
-  { href: '/resume', label: 'Resume', cta: true, umami: 'nav-resume' },
+  { href: 'https://probablyfine.dev/blog?utm_source=maxfieldallison&utm_medium=site&utm_campaign=navigation', label: 'Writing', external: true },
+  { href: '/resume', label: 'Resume', umami: 'nav-resume' },
 ];
-
-const linkClass = (l: NavLink) => [
-  'no-underline hover:no-underline transition-colors',
-  l.cta
-    ? 'text-[var(--color-accent)] border border-[var(--color-line)] rounded-full px-3.5 py-1.5 hover:border-[var(--color-accent)]'
-    : !l.external && isActive(l.href)
-      ? 'text-[var(--color-ink)]'
-      : 'text-[var(--color-ink-dim)] hover:text-[var(--color-ink)]',
-];
-const relFor = (l: NavLink) => (l.label === 'GitHub' ? 'me noopener' : l.external ? 'noopener' : undefined);
+const current = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 ---
 
-<header
-  class="sticky top-0 z-40 bg-[var(--color-base)] border-b border-[var(--color-line)] print:static"
->
-  <nav aria-label="Primary" class="max-w-[var(--container-shell)] mx-auto px-6 h-16 flex items-center justify-between">
-    <a href="/" class="font-mono text-sm text-[var(--color-ink)] no-underline hover:no-underline">
-      <span class="inline-block w-2 h-2 bg-[var(--color-accent)] mr-2.5 align-middle" aria-hidden="true"></span>maxfield <span class="text-[var(--color-accent)]">.allison</span>
-    </a>
-
-    {/* Desktop: inline row */}
-    <div class="hidden sm:flex items-center gap-6 font-mono text-sm">
-      {
-        links.map((l) => (
-          <a
-            href={l.href}
-            rel={relFor(l)}
-            data-umami-event={l.external ? l.umami : undefined}
-            data-track={l.external ? undefined : l.umami}
-            aria-current={!l.external && isActive(l.href) ? 'page' : undefined}
-            class:list={linkClass(l)}
-          >
-            {l.label}
-          </a>
-        ))
-      }
+<header class="site-header">
+  <nav aria-label="Primary" class="page-shell site-nav">
+    <a href="/" class="site-name" aria-current={pathname === '/' ? 'page' : undefined}>Maxfield Allison<span aria-hidden="true">.</span></a>
+    <div class="desktop-links">
+      {links.map((link) => (
+        <a href={link.href} aria-current={!link.external && current(link.href) ? 'page' : undefined} data-umami-event={link.external ? 'outbound-probablyfine' : undefined} data-track={link.umami}>{link.label}</a>
+      ))}
     </div>
-
-    {/* Mobile: no-JS disclosure menu. ClientRouter re-renders the header on
-        navigation, so the menu resets to closed after each click. */}
-    <details class="sm:hidden relative open:[&_.chev]:rotate-180">
-      <summary
-        data-umami-event="nav-menu"
-        class="list-none [&::-webkit-details-marker]:hidden cursor-pointer text-[var(--color-ink-dim)] hover:text-[var(--color-ink)] flex items-center gap-1.5"
-        aria-label="Menu"
-      >
-        <span class="font-mono text-sm">menu</span>
-        <svg class="chev transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="m6 9 6 6 6-6" />
-        </svg>
-      </summary>
-      <div class="absolute right-0 top-full mt-2 z-50 w-44 rounded border border-[var(--color-line)] bg-[var(--color-surface)] p-2 flex flex-col font-mono text-sm shadow-lg">
-        {
-          links.map((l) => (
-            <a
-              href={l.href}
-              rel={relFor(l)}
-              data-umami-event={l.external ? l.umami : undefined}
-              data-track={l.external ? undefined : l.umami}
-              aria-current={!l.external && isActive(l.href) ? 'page' : undefined}
-              class:list={['px-2 py-1.5 rounded hover:bg-[var(--color-base)]', ...linkClass(l)]}
-            >
-              {l.label}
-            </a>
-          ))
-        }
+    <details class="mobile-nav">
+      <summary data-umami-event="nav-menu">Menu</summary>
+      <div class="mobile-links">
+        {links.map((link) => (
+          <a href={link.href} aria-current={!link.external && current(link.href) ? 'page' : undefined} data-umami-event={link.external ? 'outbound-probablyfine' : undefined} data-track={link.umami}>{link.label}</a>
+        ))}
       </div>
     </details>
   </nav>

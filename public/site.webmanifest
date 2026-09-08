@@ -1,14 +1,26 @@
 {
   "name": "Maxfield Allison",
   "short_name": "Maxfield",
-  "description": "Infrastructure engineer. Enterprise Azure by day, a Kubernetes homelab by night.",
+  "description": "Solutions and infrastructure architect. Enterprise platform design, delivery, and ownership.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0b0f14",
-  "theme_color": "#0b0f14",
+  "background_color": "#f4f0e8",
+  "theme_color": "#f4f0e8",
   "icons": [
-    { "src": "/favicon-32.png", "sizes": "32x32", "type": "image/png" },
-    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
-    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+    {
+      "src": "/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
   ]
 }
