@@ -51,6 +51,7 @@ const DECLARED = new Set([
   'outbound-bluesky',
   'outbound-facebook',
   'outbound-github',
+  'outbound-gitlab',
   'outbound-labs',     // probablyfine.dev/labs, from /uses
   'outbound-linkedin',
   'outbound-privacy',  // the shared privacy page, which lives on the other site
