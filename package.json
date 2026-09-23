@@ -9,16 +9,19 @@
   "scripts": {
     "predev": "node scripts/copy-fonts.mjs",
     "dev": "astro dev",
-    "prebuild": "node scripts/check-tracking.mjs && node scripts/copy-fonts.mjs && node scripts/gen-page-og.mjs",
+    "prebuild": "node scripts/shared/headers.mjs --check && node scripts/check-tracking.mjs && node scripts/copy-fonts.mjs && node scripts/gen-page-og.mjs",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "fonts": "node scripts/copy-fonts.mjs",
+    "headers": "node scripts/shared/headers.mjs",
     "og": "node scripts/gen-og.mjs",
     "og:pages": "node scripts/gen-page-og.mjs",
     "resume": "node scripts/gen-resume.mjs",
     "check": "astro check",
-    "check:tracking": "node scripts/check-tracking.mjs"
+    "check:headers": "node scripts/shared/headers.mjs --check",
+    "check:tracking": "node scripts/check-tracking.mjs",
+    "shared:check": "node scripts/shared/sync-shared.mjs --check --source"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
