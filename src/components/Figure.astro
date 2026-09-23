@@ -4,7 +4,8 @@
 // allowed a background fill, because they are objects sitting ON the page
 // rather than layout chrome.
 //
-// The caption is numbered ("fig. 1 — ...") because this site explains. The
+// The caption is numbered ("fig. 1 · ...") because this site explains. The
+// middle dot is the same separator the case-study kicker uses. The
 // sibling's topology diagram uses the same hairline vocabulary in the present
 // tense: it reports what is running, this reports what was built.
 interface Props {
@@ -22,5 +23,5 @@ const { n, caption, class: className } = Astro.props;
   <div class="plate arrive">
     <slot />
   </div>
-  <figcaption class="plate-caption">fig. {n} — {caption}</figcaption>
+  <figcaption class="plate-caption">fig. {n} · {caption}</figcaption>
 </figure>
