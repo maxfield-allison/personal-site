@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # ---- Build stage ----
-FROM node:22-alpine AS build
+FROM node:24-alpine AS build
 WORKDIR /app
 
 # Fonts for build-time OG card generation (sharp/librsvg renders SVG text using
@@ -21,7 +21,7 @@ COPY . .
 RUN pnpm build
 
 # ---- Runtime stage ----
-FROM nginx:1.29-alpine AS runtime
+FROM nginx:1.31-alpine AS runtime
 
 # Non-root: nginx:alpine ships an unprivileged config on 8080 via nginx-unprivileged,
 # but the stock image runs as root. We serve on 8080 and run as an unprivileged user.

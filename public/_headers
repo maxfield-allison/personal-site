@@ -1,13 +1,14 @@
-# Cloudflare Pages headers for the failover mirror.
+# GENERATED FILE. Do not edit by hand.
 #
-# The mirror serves the same static build as the K8s origin, but Pages does not
-# run nginx.conf — so without this file the mirror answers with no CSP, no
-# HSTS, and no framing protection. Since this site is served through the
-# failover Worker, every request that falls back would silently lose every
-# security header, exactly when the site is already having a bad day.
+# Cloudflare Pages headers for the failover mirror, rendered from
+# security-policy.mjs by scripts/shared/headers.mjs. Pages does not run
+# nginx.conf, so without this file the mirror would answer with no CSP, no
+# HSTS and no framing protection exactly when the origin is already down.
+# Change the policy and run `pnpm headers`; the build fails when this file
+# and the policy disagree.
 #
-# Keep in step with nginx.conf. The two are separate files by necessity, so a
-# change to the policy has to be made in both places.
+# Pages applies every matching rule, so a scoped rule lists only what
+# differs from /* and detaches ("! Name") any header it replaces.
 
 /*
   X-Content-Type-Options: nosniff

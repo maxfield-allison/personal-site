@@ -1,9 +1,14 @@
-node_modules
-dist
-.astro
-.git
-.github
-.vscode
+node_modules/
+dist/
+.astro/
+.git/
+.github/
+.vscode/
 *.log
 .DS_Store
 README.md
+
+# probablyfine-site arcade build caches; absent elsewhere, harmless there.
+.arcade-cache/
+.arcade-tools/
+.arcade-runtime/
