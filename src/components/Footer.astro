@@ -51,7 +51,9 @@ const year = new Date().getFullYear();
         Deliberately not duplicated here: two copies of a privacy policy drift,
         and a policy that quietly stops matching what the servers do is worse
         than a cross-domain link. Labelled with its destination so the hop to
-        another domain isn't a surprise. */}
+        another domain isn't a surprise. The accessibility statement covers both
+        sites the same way. It carries no data-umami-event: an event here would
+        have to be declared in check-tracking.mjs and on the privacy page. */}
     <p class="font-mono text-[11px] text-[var(--color-ink-dim)]">
       <a
         href="https://probablyfine.dev/privacy?utm_source=maxfieldallison&utm_medium=site"
@@ -59,7 +61,13 @@ const year = new Date().getFullYear();
         data-umami-event="outbound-privacy"
         class="hover:text-[var(--color-ink)]"
       >Privacy</a>
-      <span class="text-[var(--color-ink-dim)]"> · one policy for both sites, on probablyfine.dev</span>
+      <span class="text-[var(--color-ink-dim)]"> · </span>
+      <a
+        href="https://probablyfine.dev/accessibility?utm_source=maxfieldallison&utm_medium=site"
+        rel="noopener"
+        class="hover:text-[var(--color-ink)]"
+      >Accessibility</a>
+      <span class="text-[var(--color-ink-dim)]"> · one page each for both sites, on probablyfine.dev</span>
     </p>
     <p class="font-mono text-[11px] text-[var(--color-ink-dim)]">
       Self-hosted on a personal Kubernetes cluster with a Cloudflare Pages
