@@ -24,7 +24,7 @@
     "shared:check": "node scripts/shared/sync-shared.mjs --check --source"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/sitemap": "^3.7.4",
     "@fontsource-variable/inter": "5.3.0",
     "@fontsource-variable/jetbrains-mono": "5.3.0",
     "@fontsource-variable/source-serif-4": "5.3.0",
