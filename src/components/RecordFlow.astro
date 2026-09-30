@@ -58,35 +58,7 @@ const providers = ['cloudflare · technitium', 'pi-hole · and eight more', 'per
   <p data-flow-status role="status">Remove the example service to see which record is cleaned up.</p>
 </details>}
 </record-flow>
-<script>
-  class RecordFlow extends HTMLElement {
-    private controller?: AbortController;
-    private effects: Animation[] = [];
-    connectedCallback() {
-      this.controller?.abort(); this.controller = new AbortController();
-      const button = this.querySelector<HTMLButtonElement>('[data-service-toggle]');
-      if (!button) return; button.disabled = false;
-      const motion = matchMedia('(prefers-reduced-motion: reduce)');
-      const stop = () => { this.effects.forEach(effect => effect.cancel()); this.effects = []; };
-      button.addEventListener('click', () => {
-        stop(); const added = button.getAttribute('aria-pressed') !== 'true';
-        button.setAttribute('aria-pressed', String(added)); button.textContent = added ? 'Remove the example service' : 'Add an example service';
-        this.querySelector('[data-owned-record]')!.textContent = added ? '192.0.2.20 · managed by dnsweaver' : 'No managed record';
-        this.querySelector('[data-flow-status]')!.textContent = added ? 'The managed record was created. The manual record stayed unchanged.' : 'The managed record was removed. The manual record stayed unchanged.';
-        if (motion.matches || document.documentElement.classList.contains('response-still')) return;
-        this.querySelectorAll('[data-flow-layer]').forEach((layer, index) => {
-          this.effects.push(layer.animate([{boxShadow:'0 0 0 0 transparent'},{boxShadow:'0 0 0 2px var(--color-accent)'},{boxShadow:'0 0 0 0 transparent'}], {duration:600, delay:index*130}));
-        });
-      }, {signal:this.controller.signal});
-      motion.addEventListener('change', stop, {signal:this.controller.signal});
-      document.addEventListener('visibilitychange', stop, {signal:this.controller.signal});
-      document.addEventListener('response:still', stop, {signal:this.controller.signal});
-      window.addEventListener('pagehide', stop, {signal:this.controller.signal});
-    }
-    disconnectedCallback() { this.controller?.abort(); this.effects.forEach(effect => effect.cancel()); this.effects = []; }
-  }
-  if (!customElements.get('record-flow')) customElements.define('record-flow', RecordFlow);
-</script>
+<script is:inline type="module" src="/js/record-flow.js"></script>
 <style>
   record-flow{display:block}.flow-figure{perspective:1000px;padding-block:4px;transition:padding .4s}.flow-figure [data-flow-layer]{background:var(--color-base);transition:transform .4s,box-shadow .4s}record-flow:has(details[open]) .flow-figure{padding-block:24px}record-flow:has(details[open]) [data-flow-layer]{transform:rotateY(-8deg) translateZ(20px);box-shadow:5px 8px 0 color-mix(in srgb,var(--color-accent) 8%,transparent)}.flow-explanation{border-top:1px solid var(--color-line);margin-top:18px;padding-top:12px;font-size:.875rem;line-height:1.7}.flow-explanation summary{cursor:pointer;color:var(--color-accent);min-height:44px}.flow-explanation button{border:1px solid var(--color-line);padding:8px 12px;min-height:44px;border-radius:4px;cursor:pointer}.flow-records{border-block:1px solid var(--color-line);margin-top:16px}.flow-records p{display:flex;gap:12px;flex-wrap:wrap}.flow-records code{overflow-wrap:anywhere}@media(max-width:640px),(prefers-reduced-motion:reduce){record-flow:has(details[open]) [data-flow-layer]{transform:none;box-shadow:none}.flow-figure,.flow-figure [data-flow-layer]{transition:none}}
 </style>

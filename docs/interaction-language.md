@@ -32,3 +32,5 @@ Astro 7.3.4 can emit `Transition was skipped. skipTransition() called` when anot
 ## Portfolio
 
 The home page's native work disclosures reuse the published summaries. Case studies and notes get section navigation and optional bookmarks. The DNS record-flow illustration offers a local example in the case study; its ordinary card embed stays static to avoid nesting controls inside a link. The example uses documentation-only addresses and never contacts a DNS provider. Removing its managed record leaves the example manual record intact.
+
+The DNS illustration loads `/js/record-flow.js` as an external module. Keep it external: Astro can inline a small component script, but the Pages mirror uses `script-src 'self'` and rejects inline executable code. Verify the actual mirror as well as the primary origin.
