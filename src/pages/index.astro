@@ -43,31 +43,22 @@ const writing = [
     </aside>
   </section>
 
-  <section class="portfolio-section page-shell" aria-labelledby="work-title">
+  <section data-response-group class="portfolio-section page-shell" aria-labelledby="work-title">
     <div class="section-intro">
       <h2 id="work-title">Selected Work</h2>
     </div>
-    <article class="work-example">
-      <p class="eyebrow">Enterprise Architecture</p>
-      <div>
-        <h3><a href="/projects/test-environment" data-track="case-study-test-environment">Before It Hits Production</a></h3>
-        <p>Every change went straight to production. Getting a test environment approved took five months, from finding the right team to making the case for the money. I designed the environment, and the platform teams own the provisioning.</p>
-      </div>
-    </article>
-    <article class="work-example">
-      <p class="eyebrow">Open Source</p>
-      <div>
-        <h3><a href="/projects/dnsweaver" data-track="case-study-dnsweaver">DNS That Keeps Up</a></h3>
-        <p>I'd remove a service and forget its DNS record. After enough of that, I wanted a tool that would clean up after it. That's dnsweaver. I own the design and releases, with AI agents writing the code.</p>
-      </div>
-    </article>
-    <article class="work-example">
-      <p class="eyebrow">Upstream Contribution</p>
-      <div>
-        <h3><a href="/projects/opnsense-frr" data-track="case-study-opnsense-frr">The Issue a Bot Closed</a></h3>
-        <p>The BGP setting I needed wasn't exposed in the interface. An issue asking for it sat unresolved until a bot closed it. I picked it up, and the change shipped upstream.</p>
-      </div>
-    </article>
+    <details data-response data-response-disclosure class="work-example work-disclosure">
+      <summary><span class="eyebrow">Enterprise Architecture</span><span class="work-summary-title">Before It Hits Production</span><span class="work-open" aria-hidden="true">+</span></summary>
+      <div data-response-content class="work-summary-content"><p>Every change went straight to production. Getting a test environment approved took five months, from finding the right team to making the case for the money. I designed the environment, and the platform teams own the provisioning.</p><a href="/projects/test-environment" data-track="case-study-test-environment">Read the case study →</a></div>
+    </details>
+    <details data-response data-response-disclosure class="work-example work-disclosure">
+      <summary><span class="eyebrow">Open Source</span><span class="work-summary-title">DNS That Keeps Up</span><span class="work-open" aria-hidden="true">+</span></summary>
+      <div data-response-content class="work-summary-content"><p>I'd remove a service and forget its DNS record. After enough of that, I wanted a tool that would clean up after it. That's dnsweaver. I own the design and releases, with AI agents writing the code.</p><a href="/projects/dnsweaver" data-track="case-study-dnsweaver">Read the case study →</a></div>
+    </details>
+    <details data-response data-response-disclosure class="work-example work-disclosure">
+      <summary><span class="eyebrow">Upstream Contribution</span><span class="work-summary-title">The Issue a Bot Closed</span><span class="work-open" aria-hidden="true">+</span></summary>
+      <div data-response-content class="work-summary-content"><p>The BGP setting I needed wasn't exposed in the interface. An issue asking for it sat unresolved until a bot closed it. I picked it up, and the change shipped upstream.</p><a href="/projects/opnsense-frr" data-track="case-study-opnsense-frr">Read the case study →</a></div>
+    </details>
     <p class="section-more"><a href="/projects">All case studies <span aria-hidden="true">→</span></a></p>
   </section>
 

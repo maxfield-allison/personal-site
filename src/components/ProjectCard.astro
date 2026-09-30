@@ -28,6 +28,7 @@ const folio = `No. ${order}`;
 {
   variant === 'flagship' ? (
     <a
+      data-response
       href={href}
       data-track={`case-study-${project.id}`}
       class="group block bg-[var(--color-surface)] border border-[var(--color-line)] p-6 sm:p-8 no-underline hover:no-underline hover:border-[var(--color-accent)]/60 transition-colors text-[var(--color-ink)]"
@@ -49,6 +50,7 @@ const folio = `No. ${order}`;
     </a>
   ) : (
     <a
+      data-response
       href={href}
       data-track={`case-study-${project.id}`}
       class="group grid grid-cols-[3.5rem_minmax(0,1fr)] gap-x-5 border-t border-[var(--color-line)] py-6 no-underline hover:no-underline text-[var(--color-ink)]"

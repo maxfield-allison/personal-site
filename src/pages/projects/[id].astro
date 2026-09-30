@@ -122,11 +122,11 @@ const softwareLd = repoLink
 
         {project.id === 'dnsweaver' && (
           <Figure n={1} caption="record flow: seven sources reconciled to eleven providers" class="mt-9">
-            <RecordFlow />
+            <RecordFlow interactive />
           </Figure>
         )}
 
-        <div class="prose-content space-y-4 text-[var(--color-ink-dim)] leading-relaxed pt-4">
+        <div data-reading-content class="prose-content space-y-4 text-[var(--color-ink-dim)] leading-relaxed pt-4">
           <Content />
         </div>
         <Dinkus />
