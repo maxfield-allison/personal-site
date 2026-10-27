@@ -22,7 +22,7 @@ links:
 featured: true
 order: 8
 date: 2026-10-27
-draft: true
+draft: false
 ---
 
 ## I already had the GPU

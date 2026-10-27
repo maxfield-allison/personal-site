@@ -21,7 +21,7 @@ links:
 featured: true
 order: 7
 date: 2026-10-27
-draft: true
+draft: false
 ---
 
 ## The reader shouldn't need my workflow

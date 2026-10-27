@@ -56,28 +56,33 @@ const experience = [
 const projects = [
   {
     name: 'dnsweaver',
+    href: 'https://maxfieldallison.com/projects/dnsweaver',
     detail:
       'Open-source tool that keeps DNS records in step with containers and VMs, including support for Technitium, Pi-hole, AdGuard, and Cloudflare. I own the design and releases; AI agents write the code. CI checks tests and security before release.',
   },
   {
-    name: 'GitLab, GitOps & Kubernetes Homelab',
+    name: 'Plate|Fold',
+    href: 'https://maxfieldallison.com/projects/platefold',
     detail:
-      'Nine Talos Kubernetes nodes on a five-node Proxmox/Ceph cluster, with ArgoCD managing application configuration. GitLab runs on a separate VM, with Linux, macOS, and Windows runners. GitLab and the databases stay outside Kubernetes to avoid depending on that cluster during recovery. I run the lab with AI-assisted implementation, secret scanning in CI, and monitoring through Prometheus and Alertmanager.',
+      'Defined and released Plate|Fold, a cross-platform document-to-PDF tool that keeps wide diagrams and tables readable; directed AI implementation and owned product and release decisions.',
   },
   {
-    name: 'AI Agent Coordination (private)',
+    name: 'Vacancyd',
+    href: 'https://maxfieldallison.com/projects/vacancyd',
     detail:
-      'Designing a system for multiple AI agents to work on shared projects. Each has a scoped identity, work is recorded in GitLab, and separate read and write access keeps permissions explicit. Scheduled jobs start by reporting findings; I check the results before allowing specific changes.',
+      'Defined and released Vacancyd, a Rust service that gates borrowed inference work against owner policy and available resources; directed AI implementation and tested its behavior on my workstation.',
+  },
+  {
+    name: 'GitLab, GitOps & Kubernetes Homelab',
+    href: 'https://maxfieldallison.com/projects/homelab',
+    detail:
+      'Talos Kubernetes on Proxmox/Ceph, with ArgoCD managing application configuration. GitLab and the databases stay outside Kubernetes to avoid depending on that cluster during recovery. Linux, macOS and Windows runners support AI-assisted implementation, CI secret scanning and release checks, with Prometheus and Alertmanager for monitoring.',
   },
   {
     name: 'OPNsense (upstream)',
+    href: 'https://maxfieldallison.com/projects/opnsense-frr',
     detail:
       'Two contributions merged upstream: traffic-shaper packet length (core, 2020) and BGP ECMP maximum-paths with documentation (FRR plugin, 2026, shipped in 1.52).',
-  },
-  {
-    name: 'maxfieldallison.com',
-    detail:
-      'This site runs on my Kubernetes cluster, with a Cloudflare Pages copy available for failover.',
   },
 ];
 ---
@@ -101,9 +106,9 @@ const projects = [
         This is the one light element on the site: it reads as a sheet of paper
         lying on the desk, an object on the page rather than page chrome. */}
     <section class="no-print grid gap-8 sm:gap-10 sm:grid-cols-[minmax(0,13rem)_minmax(0,1fr)] items-start mb-14">
-      <a href="/resume.pdf" data-umami-event="resume-download" class="block group no-underline hover:no-underline">
+      <a href="/resume.pdf?v=24d7890597c2" data-umami-event="resume-download" class="block group no-underline hover:no-underline">
         <img
-          src="/resume-cover.png?v=82ac1d5c"
+          src="/resume-cover.png?v=a18dddb9a77f"
           alt="First page of the resume PDF"
           width="816"
           height="1056"
@@ -125,7 +130,7 @@ const projects = [
         </p>
         <div class="flex flex-wrap items-center gap-x-5 gap-y-3 mt-7 text-[0.9375rem] font-medium">
           <a
-            href="/resume.pdf"
+            href="/resume.pdf?v=24d7890597c2"
             data-umami-event="resume-download"
             class="border border-[var(--color-accent)] rounded-sm px-5 py-2.5 no-underline hover:no-underline hover:bg-[var(--color-accent)]/[0.08] transition-colors"
             >Download PDF →</a
@@ -159,7 +164,7 @@ const projects = [
 
     <section class="mb-6">
       <p class="text-[var(--color-ink-dim)] leading-relaxed">
-        I've spent ten years working with enterprise customers, from field support to global platform ownership. Today I'm the application owner and single global escalation point for an Azure platform serving thousands of devices across four regions. I contribute to architecture decisions, make the case for improvements, and work with the teams responsible for implementing them. Outside work, I run a Kubernetes homelab and direct AI-assisted projects, including dnsweaver.
+        I've spent ten years working with enterprise customers, from field support to global platform ownership. Today I'm the application owner and single global escalation point for an Azure platform serving thousands of devices across four regions. I contribute to architecture decisions, make the case for improvements, and work with the teams responsible for implementing them. Outside work, I run a Kubernetes homelab and direct AI-assisted software projects, including dnsweaver, Plate|Fold and Vacancyd.
       </p>
     </section>
 
@@ -188,7 +193,7 @@ const projects = [
       {
         projects.map((p) => (
           <div class="mb-3">
-            <h3 class="font-semibold text-[var(--color-ink)] text-sm">{p.name}</h3>
+            <h3 class="font-semibold text-[var(--color-ink)] text-sm"><a href={p.href}>{p.name}</a></h3>
             <p class="text-sm text-[var(--color-ink-dim)] leading-relaxed">{p.detail}</p>
           </div>
         ))
