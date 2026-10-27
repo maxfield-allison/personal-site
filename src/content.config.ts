@@ -9,6 +9,8 @@ const projects = defineCollection({
     title: z.string(),
     summary: z.string(),
     role: z.string().optional(),
+    // A project license is independent of the portfolio site's code license.
+    license: z.string().url().optional(),
     // Short lowercase classifier shown in the case-study kicker, e.g.
     // "open source". Sits next to the folio: "case study no. 1 · open source".
     kind: z.string().optional(),

@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { title, summary, role, kind, stack, links, order } = project.data;
+const { title, summary, role, kind, stack, links, order, license } = project.data;
 const { Content } = await render(project);
 
 const site = Astro.site ?? 'https://maxfieldallison.com';
@@ -49,7 +49,7 @@ const softwareLd = repoLink
       codeRepository: repoLink.url,
       programmingLanguage: stack.includes('Go') ? 'Go' : stack[0],
       author: { '@type': 'Person', name: 'Maxfield Allison', url: site },
-      license: 'https://opensource.org/licenses/MIT',
+      license,
     }
   : null;
 ---

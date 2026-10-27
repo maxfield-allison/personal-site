@@ -1,6 +1,7 @@
 ---
 title: Vacancyd
 summary: I had AI services that needed more compute and a powerful GPU already sitting in my workstation. Vacancyd makes the spare capacity available while keeping the owner in control.
+license: https://www.apache.org/licenses/LICENSE-2.0
 kind: independent software
 problem: AI services needed compute while an existing workstation had spare capacity its owner still needed to control.
 outcome: Released a resource-admission service with owner controls, configurable reclaim behavior and documented Windows and Linux support.

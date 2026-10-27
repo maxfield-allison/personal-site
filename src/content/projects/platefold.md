@@ -1,6 +1,7 @@
 ---
 title: Plate|Fold
 summary: Generated technical documents were easy for me to produce and awkward for other people to read. Plate|Fold turns them into PDFs with room for the diagrams.
+license: https://opensource.org/licenses/MIT
 kind: independent software
 problem: Readers needed generated Markdown and Mermaid documentation in a familiar format, with diagrams they could read.
 outcome: Released a multi-format PDF tool with per-figure page sizing and desktop, command-line and server interfaces.
