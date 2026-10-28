@@ -83,7 +83,7 @@ nav[aria-label='Primary'] a {
 }
 .reading-tools {
   position: sticky;
-  top: var(--response-nav-height, 64px);
+  top: var(--reading-tools-top, 0px);
   z-index: 25;
   background: var(--color-base);
   border-block: 1px solid var(--color-line);
@@ -92,8 +92,8 @@ nav[aria-label='Primary'] a {
   align-items: center;
   flex-wrap: wrap;
   padding: 8px 0;
-  margin: 24px auto 12px;
-  max-width: var(--measure-read, 100%);
+  margin: 0 0 1.5rem;
+  width: 100%;
   font: 12px/1.5 var(--font-mono);
 }
 .reading-tools-static {
@@ -269,7 +269,7 @@ nav[aria-label='Primary'] a {
 }
 
 [data-reading-content] :is(h2[id], h3[id], [data-reading-heading]) {
-  scroll-margin-top: 100px;
+  scroll-margin-top: var(--reading-heading-offset, 100px);
 }
 
 body {

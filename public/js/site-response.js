@@ -46,15 +46,22 @@ function mount() {
   const header = document.querySelector(
     'header:has(nav[aria-label="Primary"])',
   );
-  if (header) {
-    resizeObserver = new ResizeObserver(() =>
-      document.documentElement.style.setProperty(
-        '--response-nav-height',
-        `${header.getBoundingClientRect().height}px`,
-      ),
+  const syncReadingOffsets = () => {
+    // A normal header scrolls away. Only a fixed or sticky header can cover
+    // the viewport top and needs space above the reading controls.
+    const headerPosition = header && getComputedStyle(header).position;
+    const top = headerPosition === 'fixed' || headerPosition === 'sticky'
+      ? Math.max(0, header.getBoundingClientRect().bottom)
+      : 0;
+    const height = tools.hidden ? 0 : tools.getBoundingClientRect().height;
+    document.documentElement.style.setProperty('--reading-tools-top', `${top}px`);
+    document.documentElement.style.setProperty(
+      '--reading-heading-offset', `${top + height + 24}px`,
     );
-    resizeObserver.observe(header);
-  }
+  };
+  resizeObserver = new ResizeObserver(syncReadingOffsets);
+  if (header) resizeObserver.observe(header);
+  resizeObserver.observe(tools);
   let frame = 0;
   const layers = [];
   const cleanups = [];
@@ -141,10 +148,8 @@ function mount() {
     tools.querySelector('[data-open-contents]').disabled = !headings.length;
     const updateHeading = () => {
       frame = 0;
-      const cutoff =
-        (header?.getBoundingClientRect().height || 64) +
-        tools.getBoundingClientRect().height +
-        80;
+      syncReadingOffsets();
+      const cutoff = tools.getBoundingClientRect().bottom + 24;
       const active = headings
         .filter((el) => el.getBoundingClientRect().top < cutoff)
         .at(-1);

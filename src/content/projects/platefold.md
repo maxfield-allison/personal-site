@@ -26,42 +26,45 @@ draft: false
 
 ## The reader shouldn't need my workflow
 
-I was working on automatic solution documentation and discovery. The system produced a lot of Markdown, and I'd made liberal use of Mermaid diagrams to explain how things fitted together. That worked for me. Most of the people who needed the documents weren't familiar with Markdown. I could explain the format and help everyone get a reader working, but PDF made more sense. They could open it with software they already had. I could keep the workflow that was producing the documentation.
+For another project, I'd built a system that generated documentation as Markdown files. I used Mermaid diagrams to explain how things fit together. Most of the people who needed those documents weren't familiar with Markdown, and I didn't want to make them learn a new set of tools just to read the result. PDF let them use software they already had while I kept the workflow that produced the documentation.
 
-The conversion was the problem. Mermaid support was patchy, and rendering a diagram wasn't enough if the export squeezed all its labels into a normal text column. A technically complete document could still be difficult to understand. That was the reason for md2pdf, the small utility that became Plate|Fold.
+Getting a useful PDF was harder. Some converters didn't support Mermaid, and a diagram was still unreadable if the export squeezed all its labels into the text column. That's why I started md2pdf, the small utility that became Plate|Fold.
 
 ## Give the figure a page that fits
 
-The page should adapt to the content.
+Plate|Fold measures each figure and looks for a page that keeps it readable. It starts with the text column, then tries a landscape page, a larger sheet, or a page sized to the figure.
 
-Normal text should stay on a normal page. A wide diagram might need a landscape plate, a larger sheet, or a page cut to its proportions.
+That lets a wide diagram have its own page while the rest of the document stays on normal-sized pages. Tables follow the same process.
 
-Plate|Fold measures the figure and works up that placement ladder. A single PDF can contain several page sizes, so a wide diagram gets the space it needs without making every paragraph in the document live on an enormous sheet. The same idea applies to tables.
+<figure class="placement-example">
+  <p class="placement-example__title">More room when the figure needs it</p>
+  <ol class="placement-options">
+    <li><strong>Text column</strong><span>Keep a small figure beside the text.</span></li>
+    <li><strong>Landscape page</strong><span>Turn the page to give a wider figure more room.</span></li>
+    <li><strong>Larger sheet</strong><span>Use a larger page when landscape still isn't enough.</span></li>
+    <li><strong>Custom page</strong><span>Size the page to the figure's proportions.</span></li>
+  </ol>
+  <figcaption>This illustrates the page-selection process. <a href="https://maxfield-allison.github.io/platefold/assets/samples/ladder-tour.pdf">Open the sample PDF to see the actual output.</a></figcaption>
+</figure>
 
-![Seven pages from the public ladder-tour sample, shown at a common scale to compare ordinary pages with wider plates and a custom-width page.](/images/projects/platefold-ladder-tour.png)
-
-*Example output from the public sample document. The pages share one scale; the changes in width are part of the PDF. [Read the sample at full size](https://maxfield-allison.github.io/platefold/assets/samples/ladder-tour.pdf).*
-
-
-## Expand around the working engine
+## Build around the renderer
 
 The original tool was Windows-focused. I wanted a product people could use from a desktop, a command line or a browser, and I wanted it to handle more than Markdown.
 
-The existing renderer remained the engine. A Tauri desktop shell and packaged Python worker added the native interface, while the command line and authenticated Linux browser server exposed the same conversion work in other settings. Those boundaries let a new delivery surface join without replacing the renderer underneath it.
+I chose to keep the rendering engine and build other interfaces around it. The desktop app uses Tauri with a packaged Python worker. The command line and authenticated Linux browser server use the same conversion engine, so adding a way to use the tool doesn't mean replacing the renderer.
 
-Format support grew in a similar way. Markdown, CSV, TSV, DOCX and XLSX have direct import paths. Legacy formats can use a separately installed converter. Word documents are reflowed into Plate|Fold's layout rather than reproduced page for page, and spreadsheets become sections and tables. Those are deliberate product boundaries; converting every possible document is the longer-term ambition.
+The supported inputs grew beyond Markdown to include CSV, TSV, DOCX and XLSX. DOC, ODT and RTF require a separately installed converter. Word documents are reflowed into Plate|Fold's layout, and spreadsheets become sections and tables. Supporting more formats is part of the plan; the current release doesn't try to reproduce every document page for page.
 
 ## My own installs changed the product
 
-I set the requirements and reviewed the architectural choices, with AI agents writing the implementation and helping with tests and documentation. Installing and using the candidates gave me a different kind of feedback.
+I set the requirements and reviewed the architectural choices, with AI agents writing the implementation and helping with tests and documentation.
 
-Dark exports had white margins. Extraction made startup feel slow. I wanted the workspace to stay put as the content changed. Those observations became changes to the output and interface. Later, exporting a 92-page CSV exposed a preview that was doing the work of paginating the whole document before showing its first page.
+Dark exports had white margins. The installer took too long to unpack its files. I wanted the workspace to stay put as the content changed. That feedback led to changes in the output and interface. Later, exporting a 92-page CSV exposed a preview that was doing the work of paginating the whole document before showing its first page.
 
 I also wanted accessibility considered from the first release. The output includes tagged PDF structure and automated checks. That is useful work, but it does not establish PDF/UA or WCAG conformance, and the product does not claim either.
 
 ## From a useful utility to a public release
 
-[Plate|Fold 1.0.3](https://github.com/maxfield-allison/platefold/releases/tag/v1.0.3) ships Windows x64 and Linux x86-64 desktop packages, a signed and notarized Apple Silicon macOS package, command-line interfaces and container images. The release process checks the actual packaged files as well as the source, including native installation and update paths within the documented platform coverage.
+[Plate|Fold 1.0.3](https://github.com/maxfield-allison/platefold/releases/tag/v1.0.3) ships Windows x64 and Linux x86-64 desktop packages, a signed and notarized Apple Silicon macOS package, command-line interfaces and container images. Release checks cover the packaged files as well as the source, including the installation and update paths listed in the platform documentation.
 
-There are limits. Font differences can change pagination, Excel charts are not converted, and macOS has less hands-on coverage than Windows and Linux. Those belong in the documentation so someone can decide whether the tool fits their work.
-
+There are limits. Font differences can change pagination, Excel charts are not converted, and macOS has less hands-on testing than Windows and Linux. The documentation spells those out so people can decide whether the tool fits their work.
