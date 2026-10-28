@@ -39,8 +39,8 @@ That lets a wide diagram have its own page while the rest of the document stays 
 <figure class="placement-example">
   <p class="placement-example__title">More room when the figure needs it</p>
   <ol class="placement-options">
-    <li><strong>Text column</strong><span>Keep a small figure beside the text.</span></li>
-    <li><strong>Landscape page</strong><span>Turn the page to give a wider figure more room.</span></li>
+    <li><strong>Text column</strong><span>Keep a small figure in the text column.</span></li>
+    <li><strong>Landscape page</strong><span>Use a landscape page to give a wider figure more room.</span></li>
     <li><strong>Larger sheet</strong><span>Use a larger page when landscape still isn't enough.</span></li>
     <li><strong>Custom page</strong><span>Size the page to the figure's proportions.</span></li>
   </ol>
