@@ -149,12 +149,12 @@ function mount() {
     const updateHeading = () => {
       frame = 0;
       syncReadingOffsets();
-      // Native anchor scrolling adds the root's scroll padding to the
-      // heading margin. Include it so an anchored heading is current.
+      // Anchors and button focus can leave a heading just below the controls.
+      // Keep that heading current within the reading band below the toolbar.
       const scrollPadding = Number.parseFloat(
         getComputedStyle(document.documentElement).scrollPaddingTop,
       ) || 0;
-      const cutoff = tools.getBoundingClientRect().bottom + 24 + scrollPadding;
+      const cutoff = tools.getBoundingClientRect().bottom + 80 + scrollPadding;
       const active = headings
         .filter((el) => el.getBoundingClientRect().top <= cutoff + 1)
         .at(-1);
